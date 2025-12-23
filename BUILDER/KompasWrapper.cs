@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BladePlugin
+namespace KompasBuilder
 {
     internal class KompasWrapper
     {
@@ -55,9 +55,9 @@ namespace BladePlugin
         private bool _editStatus = false;
 
         /// <summary>
-        /// Запуск Kompas 3D V23
+        /// Запуск Kompas-3D V23
         /// </summary>
-        /// <exception cref="Exception"> Ошибка запуска Kompas 3D V23</exception>
+        /// <exception cref="Exception"> Ошибка запуска Kompas-3D V23</exception>
         public void StartKompas()
         {
             try
@@ -84,7 +84,7 @@ namespace BladePlugin
         }
 
         /// <summary>
-        /// Создание документа внутри Kompas 3D V23
+        /// Создание документа внутри Kompas-3D V23
         /// </summary>
         /// <exception cref="ArgumentException">Ошибка запуска документа</exception>
         public void CreateFile()
@@ -105,7 +105,7 @@ namespace BladePlugin
         /// <summary>
         /// Функция создание скетча
         /// </summary>
-        /// <param name="plane">Плоскоть на которой строется</param>
+        /// <param name="plane">Плоскость построения</param>
         /// <param name="sketch">Ссылка на поле скетча</param>
         public void CreateSketch(short plane, ref ksEntity sketch)
         {

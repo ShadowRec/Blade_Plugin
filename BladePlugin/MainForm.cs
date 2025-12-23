@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using KompasAPI7;
 using Kompas6API5;
 using System.Runtime.InteropServices;
+using CORE;
+using KompasBuilder;
 
 namespace BladePlugin
 {
@@ -55,6 +57,76 @@ namespace BladePlugin
         private void MainFormLoad(object sender, EventArgs e)
         {
             _parameters = new Parameters();
+
+            //Установка длины по умолчанию
+            _parameters.NumericalParameters[ParameterType.BladeLength].Value = 300;
+            _bladeLengthCurr = 300;
+
+            _parameters.SetDependencies(
+                             _parameters.NumericalParameters[ParameterType.BladeLength],
+                             _parameters.NumericalParameters[ParameterType.PeakLenght], 1.0 / 6.0, 0
+                            );
+            UpdateToolTip(
+                TextBoxPeakLength,
+                _parameters.NumericalParameters[ParameterType.PeakLenght].MaxValue,
+                _parameters.NumericalParameters[ParameterType.PeakLenght].MinValue
+                );
+
+            _parameters.SetDependencies(
+                            _parameters.NumericalParameters[ParameterType.BladeLength],
+                            _parameters.NumericalParameters[ParameterType.BindingLength],
+                            1, 0
+                            );
+
+            UpdateToolTip(
+            TextBoxBindingLength,
+            _parameters.NumericalParameters[ParameterType.BindingLength].MaxValue,
+            _parameters.NumericalParameters[ParameterType.BindingLength].MinValue
+            );
+
+            //Установка ширины по умолчанию
+            _parameters.NumericalParameters[ParameterType.BladeWidth].Value = 40;
+            _bladeWidthCurr = 40;
+
+            _parameters.SetDependencies(
+                            _parameters.NumericalParameters[ParameterType.BladeWidth],
+                            _parameters.NumericalParameters[ParameterType.EdgeWidth], 3.0 / 6.0, 1.0 / 6.0
+                            );
+            UpdateToolTip(
+                TextBoxEdgeWidth,
+                _parameters.NumericalParameters[ParameterType.EdgeWidth].MaxValue,
+                _parameters.NumericalParameters[ParameterType.EdgeWidth].MinValue
+                );
+
+            //Установка толщины по умолчанию
+            _parameters.NumericalParameters[ParameterType.BladeThickness].Value = 2;
+            _bladeThickCurr = 2;
+
+            //Установка длины острия по умолчанию
+            _parameters.NumericalParameters[ParameterType.PeakLenght].Value = 40;
+            _peakLengthCurr = 40;
+
+            //Установка ширины лезвия по умолчанию
+            _parameters.NumericalParameters[ParameterType.EdgeWidth].Value = 14;
+            _edgeWidthCurr = 14;
+
+            //Установка длины крепления по умолчанию
+            _parameters.NumericalParameters[ParameterType.BindingLength].Value = 300;
+            _bindingLengthCurr = 300;
+
+            //Установка наличия острия по умолчанию (Есть)
+            _parameters.BladeExistence = true;
+
+            //Установка типа клинка по умолчанию (Односторонний)
+            _parameters.BladeType = false;
+            
+            //Установка типа крепления по умолчанию (Накладное)
+            _parameters.BindingType=BindingType.ForOverlays;
+
+            ComboBoxTypeBlade.SelectedIndex = 0;
+            ComboBoxTypeBinding.SelectedIndex = 2;
+            CheckBoxPeakBlade.Checked = true;
+
             _builder = new Builder();
         }
 
@@ -69,9 +141,9 @@ namespace BladePlugin
                     {
                         _parameters.NumericalParameters[ParameterType.BladeLength].Value = value;
                         _bladeLengthCurr= value;  
-                        _parameters.SetDependenses(
-                            _parameters.NumericalParameters[ParameterType.BladeLength],
-                            _parameters.NumericalParameters[ParameterType.PeakLenght], 1.0 / 6.0, 0
+                        _parameters.SetDependencies(
+                             _parameters.NumericalParameters[ParameterType.BladeLength],
+                             _parameters.NumericalParameters[ParameterType.PeakLenght], 1.0 / 6.0, 0
                             );
                         UpdateToolTip(
                             TextBoxPeakLength,
@@ -82,7 +154,7 @@ namespace BladePlugin
 
                         if ((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.Insert)
                         {
-                            _parameters.SetDependenses(
+                            _parameters.SetDependencies(
                             _parameters.NumericalParameters[ParameterType.BladeLength],
                             _parameters.NumericalParameters[ParameterType.BindingLength], 3.0 / 4.0, 0
                             );
@@ -97,7 +169,7 @@ namespace BladePlugin
                         if ((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.Through ||
                             (BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.ForOverlays)
                         {
-                            _parameters.SetDependenses(
+                            _parameters.SetDependencies(
                             _parameters.NumericalParameters[ParameterType.BladeLength],
                             _parameters.NumericalParameters[ParameterType.BindingLength],
                             1, 0
@@ -124,24 +196,24 @@ namespace BladePlugin
                         TextBoxLength.Text = _bladeLengthCurr.ToString();
                     }
                 }
-
+                SetDefault();
             }
             catch (Exception ex)
             {
                 TextBoxLength.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += "В поле 'Длина Клинка' было введено неккоректное значение /n";
+                    TextBoxError.Text += "В поле 'Длина Клинка' было введено некорректное значение /n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += " В поле 'Длина Клинка' было введено  значение, что меньше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Длина Клинка' было введено  значение, что меньше диапазона допустимых значений!/n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += " В поле 'Длина Клинка' было введено  значение, что больше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Длина Клинка' было введено  значение, что больше диапазона допустимых значений!/n";
                 }
 
             }
@@ -160,7 +232,7 @@ namespace BladePlugin
 
         private void TextBoxPeakLengthLeave(object sender, EventArgs e)
         {
-            SetDefault();
+            
             try
             {
                 if (TextBoxPeakLength.Text != "")
@@ -183,30 +255,31 @@ namespace BladePlugin
                         TextBoxPeakLength.Text = _peakLengthCurr.ToString();
                     }
                 }
+                SetDefault();
             }
             catch (Exception ex)
             {
                 TextBoxPeakLength.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += "В поле 'Длина острия' было введено неккоректное значение /n";
+                    TextBoxError.Text += "В поле 'Длина острия' было введено некорректное значение /n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += " В поле 'Длина острия' было введено  значение, что меньше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Длина острия' было введено  значение, что меньше диапазона допустимых значений!/n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += " В поле 'Длина острия' было введено  значение, что больше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Длина острия' было введено  значение, что больше диапазона допустимых значений!/n";
                 }
             }
         }
 
         private void TextBoxBindingLengthLeave(object sender, EventArgs e)
         {
-            SetDefault();
+           
             try
             {
                 if (TextBoxBindingLength.Text != "")
@@ -229,30 +302,31 @@ namespace BladePlugin
                         TextBoxBindingLength.Text = _bindingLengthCurr.ToString();
                     }
                 }
+                SetDefault();
             }
             catch (Exception ex)
             {
                 TextBoxBindingLength.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += "В поле 'Длина крепления' было введено неккоректное значение \n";
+                    TextBoxError.Text += "В поле 'Длина крепления' было введено некорректное значение \n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += " В поле 'Длина крепления' было введено  значение, что меньше диапозона допустимых значений!\n";
+                    TextBoxError.Text += " В поле 'Длина крепления' было введено  значение, что меньше диапазона допустимых значений!\n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += " В поле 'Длина крепления' было введено  значение, что больше диапозона допустимых значений!\n";
+                    TextBoxError.Text += " В поле 'Длина крепления' было введено  значение, что больше диапазона допустимых значений!\n";
                 }
             }
         }
 
         private void TextBoxWidthLeave(object sender, EventArgs e)
         {
-            SetDefault();
+            
             try
             {
                 if (TextBoxWidth.Text != "")
@@ -263,7 +337,7 @@ namespace BladePlugin
                         _parameters.NumericalParameters[ParameterType.BladeWidth].Value = value;
                         _bladeWidthCurr=value;
 
-                        _parameters.SetDependenses(
+                        _parameters.SetDependencies(
                             _parameters.NumericalParameters[ParameterType.BladeWidth],
                             _parameters.NumericalParameters[ParameterType.EdgeWidth], 3.0 / 6.0, 1.0 / 6.0
                             );
@@ -286,6 +360,7 @@ namespace BladePlugin
                         TextBoxWidth.Text = _bladeWidthCurr.ToString();
                     }
                 }
+                SetDefault();
 
             }
             catch (Exception ex)
@@ -293,17 +368,17 @@ namespace BladePlugin
                 TextBoxWidth.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += "В поле 'Ширина клинка' было введено неккоректное значение /n";
+                    TextBoxError.Text += "В поле 'Ширина клинка' было введено некорректное значение /n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += " В поле 'Ширина клинка' было введено  значение, что меньше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Ширина клинка' было введено  значение, что меньше диапазона допустимых значений!/n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += " В поле 'Ширина клинка' было введено  значение, что больше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Ширина клинка' было введено  значение, что больше диапазона допустимых значений!/n";
                 }
 
             }
@@ -311,7 +386,7 @@ namespace BladePlugin
 
         private void TextBoxEdgeWidthLeave(object sender, EventArgs e)
         {
-            SetDefault();
+            
             try
             {
                 if (TextBoxEdgeWidth.Text != "")
@@ -334,30 +409,31 @@ namespace BladePlugin
                         TextBoxEdgeWidth.Text = _edgeWidthCurr.ToString();
                     }
                 }
+                SetDefault();
             }
             catch (Exception ex)
             {
                 TextBoxEdgeWidth.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += "В поле 'Ширина лезвия' было введено неккоректное значение \n";
+                    TextBoxError.Text += "В поле 'Ширина лезвия' было введено некорректное значение \n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += " В поле 'Ширина лезвия' было введено  значение, что меньше диапозона допустимых значений!\n";
+                    TextBoxError.Text += " В поле 'Ширина лезвия' было введено  значение, что меньше диапазона допустимых значений!\n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += " В поле 'Ширина лезвия' было введено  значение, что больше диапозона допустимых значений!\n";
+                    TextBoxError.Text += " В поле 'Ширина лезвия' было введено  значение, что больше диапазона допустимых значений!\n";
                 }
             }
         }
 
-        private void ComboBoxTypeBindingLeave(object sender, EventArgs e)
+        private void ComboBoxTypeSelectedIndexChanged(object sender, EventArgs e)
         {
-            SetDefault();
+            
             if (ComboBoxTypeBinding.SelectedIndex != -1)
             {
                 _parameters.BindingType = (BindingType)ComboBoxTypeBinding.SelectedIndex;
@@ -365,7 +441,7 @@ namespace BladePlugin
                 {
                     if ((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.Insert)
                     {
-                        _parameters.SetDependenses(
+                        _parameters.SetDependencies(
                         _parameters.NumericalParameters[ParameterType.BladeLength],
                         _parameters.NumericalParameters[ParameterType.BindingLength], 3.0 / 4.0, 0
                         );
@@ -380,7 +456,7 @@ namespace BladePlugin
                     if ((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.Through ||
                         (BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.ForOverlays)
                     {
-                        _parameters.SetDependenses(
+                        _parameters.SetDependencies(
                         _parameters.NumericalParameters[ParameterType.BladeLength],
                         _parameters.NumericalParameters[ParameterType.BindingLength],
                         1, 0
@@ -395,11 +471,12 @@ namespace BladePlugin
                     }
                 }
             }
+            
 
         }
 
         /// <summary>
-        /// Проверка зависымых параметров
+        /// Проверка зависимых параметров
         /// </summary>
         /// <param name="target">Ссылка на текстовое поле для парсинга</param>
         /// <param name="parametertype">Тип зависимого параметра</param>
@@ -428,34 +505,36 @@ namespace BladePlugin
                 target_control.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += $"В поле '{target_label}' было введено неккоректное значение /n";
+                    TextBoxError.Text += $"В поле '{target_label}' было введено некорректное значение /n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += $" В поле '{target_label}' было введено  значение, что меньше диапозона допустимых значений!/n";
+                    TextBoxError.Text += $" В поле '{target_label}' было введено  значение, что меньше диапазона допустимых значений!/n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += $" В поле '{target_label}' было введено  значение, что больше диапозона допустимых значений!/n";
+                    TextBoxError.Text += $" В поле '{target_label}' было введено  значение, что больше диапазона допустимых значений!/n";
                 }
             }
         }
 
         private void ComboBoxTypeBladeLeave(object sender, EventArgs e)
         {
-            SetDefault();
+           
             if (ComboBoxTypeBlade.SelectedIndex != -1)
             {
                 _parameters.BladeType = (ComboBoxTypeBlade.SelectedIndex == 1);
             }
+            SetDefault();
         }
 
         private void CheckBoxEndBladeCheckedChanged(object sender, EventArgs e)
         {
+           
+            _parameters.BladeExistence = CheckBoxPeakBlade.Checked;
             SetDefault();
-            _parameters.BladeExistance = CheckBoxPeakBlade.Checked;
         }
 
         /// <summary>
@@ -514,9 +593,9 @@ namespace BladePlugin
         }
 
         /// <summary>
-        /// Полная проверка заполнености параметров
+        /// Полная проверка полноты параметров
         /// </summary>
-        /// <returns>Возвращает TRUE, если все пареметры заполнены, FALSE если есть пустой параметер</returns>
+        /// <returns>Возвращает TRUE, если все параметры заполнены, FALSE если есть пустой параметр</returns>
         private bool CheckAll()
         {
             try
@@ -594,7 +673,7 @@ namespace BladePlugin
 
         private void TextBoxBladeThicknessLeave(object sender, EventArgs e)
         {
-            SetDefault();
+           
             try
             {
                 if (TextBoxBladeThickness.Text != "")
@@ -617,24 +696,24 @@ namespace BladePlugin
                         TextBoxBladeThickness.Text = _bladeThickCurr.ToString();
                     }
                 }
-
+                SetDefault();
             }
             catch (Exception ex)
             {
                 TextBoxWidth.ForeColor = Color.Red;
                 if (ex.Message == "value_is_invalid")
                 {
-                    TextBoxError.Text += "В поле 'Толщина клинка' было введено неккоректное значение /n";
+                    TextBoxError.Text += "В поле 'Толщина клинка' было введено некорректное значение /n";
                 }
 
                 if (ex.Message == "Value_small")
                 {
-                    TextBoxError.Text += " В поле 'Толщина клинка' было введено  значение, что меньше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Толщина клинка' было введено  значение, что меньше диапазона допустимых значений!/n";
                 }
 
                 if (ex.Message == "Value_TooBig")
                 {
-                    TextBoxError.Text += " В поле 'Толщина клинка' было введено  значение, что больше диапозона допустимых значений!/n";
+                    TextBoxError.Text += " В поле 'Толщина клинка' было введено  значение, что больше диапазона допустимых значений!/n";
                 }
 
             }
@@ -644,6 +723,7 @@ namespace BladePlugin
         {
            if(CheckAll())
             {
+                SetDefault();
                 _builder.BuildBlade(_parameters);
                 Console.Write("Starting Building");
             }  

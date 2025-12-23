@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BladePlugin
+namespace CORE
 {
     public enum BindingType
     {
-        Insert,
-        Through,
-        ForOverlays,
-        None
+        Insert, // Всадное крепление
+        Through, // Сквозное крепление 
+        ForOverlays, //Накладное крепления
+        None // Крепление отсутствует
     }
 }

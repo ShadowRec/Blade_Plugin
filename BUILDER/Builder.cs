@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CORE;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace BladePlugin
+namespace KompasBuilder
 {
     public class Builder
     {
@@ -28,23 +29,26 @@ namespace BladePlugin
                                           parameters.NumericalParameters[ParameterType.BladeWidth].Value,
                                           parameters.NumericalParameters[ParameterType.BindingLength].Value,
                                           parameters.BindingType,
-                                          parameters.BladeExistance,
+                                          parameters.BladeExistence,
                                           parameters.BladeType
                                );
                 DrawDirection(parameters.NumericalParameters[ParameterType.BladeLength].Value,
                     parameters.NumericalParameters[ParameterType.PeakLenght].Value,
                     parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
                     parameters.NumericalParameters[ParameterType.BladeWidth].Value,
-                    true, parameters.BladeExistance
+                    parameters.BladeType, parameters.BladeExistence
                     );
                 DrawEdgeForm(parameters.NumericalParameters[ParameterType.BladeThickness].Value,
                     parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
                     parameters.NumericalParameters[ParameterType.BladeWidth].Value);
                 ExtrudeMainPart(parameters.NumericalParameters[ParameterType.BladeThickness].Value);
                 CreateEdge();
-                MakeHoles(parameters.NumericalParameters[ParameterType.BindingLength].Value,
-                          parameters.NumericalParameters[ParameterType.BladeWidth].Value
-                    );
+                if (parameters.BindingType == BindingType.ForOverlays)
+                {
+                    MakeHoles(parameters.NumericalParameters[ParameterType.BindingLength].Value,
+                              parameters.NumericalParameters[ParameterType.BladeWidth].Value
+                        );
+                }
             }
             else
             {
@@ -54,7 +58,7 @@ namespace BladePlugin
                                           parameters.NumericalParameters[ParameterType.BladeWidth].Value,
                                           parameters.NumericalParameters[ParameterType.BindingLength].Value,
                                           parameters.BindingType,
-                                          parameters.BladeExistance,
+                                          parameters.BladeExistence,
                                           parameters.BladeType
                                );
                 DrawDirection(parameters.NumericalParameters[ParameterType.BladeLength].Value,
@@ -63,7 +67,7 @@ namespace BladePlugin
                     parameters.NumericalParameters[ParameterType.BladeWidth].Value,
                     parameters.BladeType,
                     true,
-                    parameters.BladeExistance
+                    parameters.BladeExistence
                     );
                 DrawEdgeForm(parameters.NumericalParameters[ParameterType.BladeThickness].Value,
                     parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
@@ -77,7 +81,7 @@ namespace BladePlugin
                     parameters.NumericalParameters[ParameterType.BladeWidth].Value,
                     parameters.BladeType,
                     false,
-                    parameters.BladeExistance
+                    parameters.BladeExistence
                     );
                 DrawEdgeForm(parameters.NumericalParameters[ParameterType.BladeThickness].Value,
                     parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
@@ -98,7 +102,7 @@ namespace BladePlugin
             _wrapper.CreateFile();
         }
         /// <summary>
-        /// Функция строющая основной скетч
+        /// Функция построения основного скетча
         /// </summary>
         /// <param name="bladelength">Длина клинка</param>
         /// <param name="peaklength">Длина острия</param>
@@ -166,15 +170,15 @@ namespace BladePlugin
 
             if (bintype == BindingType.ForOverlays)
             {
-                _wrapper.DrawLine(ORIGIN, ORIGIN, bladewidth, -binlength);
+                _wrapper.DrawLine(ORIGIN, ORIGIN, ORIGIN, -binlength);
                 _wrapper.DrawLine(bladewidth, ORIGIN, bladewidth, -binlength);
-                _wrapper.DrawLine(bladewidth, -binlength, bladewidth, -binlength);
+                _wrapper.DrawLine(ORIGIN, -binlength, bladewidth, -binlength);
             }
             _wrapper.EndSkethEdit();
         }
 
         /// <summary>
-        /// Функция строющая траекторию для лезвия
+        /// Функция построения траектории лезвия
         /// </summary>
         /// <param name="bladelength">Длина клинка</param>
         /// <param name="peaklength">Длина острия</param>
@@ -243,7 +247,7 @@ namespace BladePlugin
         }
 
         /// <summary>
-        /// Функция строющая скетч формы лезвия
+        /// Функция построения скетча формы лезвия
         /// </summary>
         /// <param name="thickness">Толщина клинка</param>
         /// <param name="edgewidth">Ширина острия</param>

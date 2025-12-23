@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace BladePlugin
+namespace CORE
 {
     public class Parameters
     {
@@ -41,7 +41,7 @@ namespace BladePlugin
             NumericalParameter binlength = new NumericalParameter();
             
 
-            //Занесения значений параметров в словарь с соотвествующими ключами
+            //Занесения значений параметров в словарь с соответствующими ключами
             NumericalParameters = new Dictionary<ParameterType,NumericalParameter>()
             {
                 [ParameterType.BladeLength] = bladelength ,
@@ -53,28 +53,46 @@ namespace BladePlugin
             };
 
         }
-        public bool BladeExistance { get; set; } // False - Острие у клинка нету, True - Острие у клинка есть
-        public bool BladeType {  get; set; } // False - односторонний, True - Двусторонний
+        /// <summary>
+        ///  False - Острие у клинка нету, True - Острие у клинка есть
+        /// </summary>
+        public bool BladeExistence { get; set; }
+        /// <summary>
+        /// False - односторонний, True - Двусторонний
+        /// </summary>
+        public bool BladeType {  get; set; } 
+        /// <summary>
+        /// Тип крепления
+        /// </summary>
         public BindingType BindingType { get; set; }
+        /// <summary>
+        /// Перечень численных параметров
+        /// </summary>
         public Dictionary<ParameterType, NumericalParameter> NumericalParameters { get; set; }
 
         /// <summary>
         /// Выставляет максимальное и минимальное(Если такое задано) значения для параметра
         /// </summary>
-        /// <param name="independ"> Параметр на основе которого будет вычислятся макс и мин значения</param>
-        /// <param name="depend"> Параметр к которому будет примернятся максимально и минимальное значение</param>
-        /// <param name="maxratio"> Соотношение велечин для максимального значения</param>
-        /// <param name="minratio">Соотношение велечин для минимального значения</param>
-        public void SetDependenses(NumericalParameter independ,NumericalParameter depend, double maxratio, double minratio=0)
+        /// <param name="independ"> Параметр на основе которого будет вычисляться макс и мин значения</param>
+        /// <param name="depend"> Параметр к которому будет применяться максимально и минимальное значение</param>
+        /// <param name="maxratio"> Соотношение величин для максимального значения</param>
+        /// <param name="minratio">Соотношение величин для минимального значения</param>
+        public void SetDependencies(NumericalParameter independ, NumericalParameter depend, double maxratio, double minratio = 0)
         {
-            depend.MaxValue = independ.Value * maxratio;
-            if (minratio != 0)
-            {
-                depend.MinValue = independ.Value * minratio;
+            if (maxratio > 0 && minratio>=0) {
+                depend.MaxValue = independ.Value * maxratio;
+                if (minratio != 0)
+                {
+                    depend.MinValue = independ.Value * minratio;
+                }
+                else
+                {
+                    depend.MinValue = depend.MaxValue * 0.1;
+                }
             }
             else
             {
-                depend.MinValue = depend.MaxValue * 0.1;
+                throw new ArgumentException("ratios_negative");
             }
         }
     }

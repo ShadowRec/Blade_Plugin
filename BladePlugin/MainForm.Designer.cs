@@ -73,9 +73,9 @@
             this.BladeLengthLabel.ForeColor = System.Drawing.Color.Black;
             this.BladeLengthLabel.Location = new System.Drawing.Point(12, 49);
             this.BladeLengthLabel.Name = "BladeLengthLabel";
-            this.BladeLengthLabel.Size = new System.Drawing.Size(175, 25);
+            this.BladeLengthLabel.Size = new System.Drawing.Size(210, 25);
             this.BladeLengthLabel.TabIndex = 1;
-            this.BladeLengthLabel.Text = "Длина клинка L1:";
+            this.BladeLengthLabel.Text = "Длина клинка        L1:";
             // 
             // TextBoxLength
             // 
@@ -83,6 +83,7 @@
             this.TextBoxLength.Name = "TextBoxLength";
             this.TextBoxLength.Size = new System.Drawing.Size(118, 22);
             this.TextBoxLength.TabIndex = 3;
+            this.TextBoxLength.Text = "300";
             this.Max_Min_Value.SetToolTip(this.TextBoxLength, "Допустимые значения: 30..1200мм");
             this.TextBoxLength.Leave += new System.EventHandler(this.TextBoxLengthLeave);
             // 
@@ -92,6 +93,7 @@
             this.TextBoxWidth.Name = "TextBoxWidth";
             this.TextBoxWidth.Size = new System.Drawing.Size(121, 22);
             this.TextBoxWidth.TabIndex = 5;
+            this.TextBoxWidth.Text = "40";
             this.Max_Min_Value.SetToolTip(this.TextBoxWidth, "Допустимые значения: 9..60мм");
             this.TextBoxWidth.Leave += new System.EventHandler(this.TextBoxWidthLeave);
             // 
@@ -101,9 +103,9 @@
             this.BladeWidthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.BladeWidthLabel.Location = new System.Drawing.Point(12, 168);
             this.BladeWidthLabel.Name = "BladeWidthLabel";
-            this.BladeWidthLabel.Size = new System.Drawing.Size(193, 25);
+            this.BladeWidthLabel.Size = new System.Drawing.Size(208, 25);
             this.BladeWidthLabel.TabIndex = 4;
-            this.BladeWidthLabel.Text = "Ширина клинка W1:";
+            this.BladeWidthLabel.Text = "Ширина клинка    W1:";
             // 
             // BladeTypeLabel
             // 
@@ -121,6 +123,7 @@
             this.TextBoxBladeThickness.Name = "TextBoxBladeThickness";
             this.TextBoxBladeThickness.Size = new System.Drawing.Size(121, 22);
             this.TextBoxBladeThickness.TabIndex = 7;
+            this.TextBoxBladeThickness.Text = "2";
             this.Max_Min_Value.SetToolTip(this.TextBoxBladeThickness, "Допустимые значения:1..3мм");
             this.TextBoxBladeThickness.Leave += new System.EventHandler(this.TextBoxBladeThicknessLeave);
             // 
@@ -140,6 +143,7 @@
             this.TextBoxEdgeWidth.Name = "TextBoxEdgeWidth";
             this.TextBoxEdgeWidth.Size = new System.Drawing.Size(121, 22);
             this.TextBoxEdgeWidth.TabIndex = 13;
+            this.TextBoxEdgeWidth.Text = "14";
             this.Max_Min_Value.SetToolTip(this.TextBoxEdgeWidth, "Для отображения введите значение в поле \"Ширина Клинка\"");
             this.TextBoxEdgeWidth.Leave += new System.EventHandler(this.TextBoxEdgeWidthLeave);
             // 
@@ -149,9 +153,9 @@
             this.EdgeWidthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.EdgeWidthLabel.Location = new System.Drawing.Point(12, 232);
             this.EdgeWidthLabel.Name = "EdgeWidthLabel";
-            this.EdgeWidthLabel.Size = new System.Drawing.Size(195, 25);
+            this.EdgeWidthLabel.Size = new System.Drawing.Size(210, 25);
             this.EdgeWidthLabel.TabIndex = 12;
-            this.EdgeWidthLabel.Text = "Ширина лезвия W3:";
+            this.EdgeWidthLabel.Text = "Ширина лезвия    W3:";
             // 
             // PeakExistanceLabel
             // 
@@ -179,6 +183,7 @@
             this.TextBoxPeakLength.Name = "TextBoxPeakLength";
             this.TextBoxPeakLength.Size = new System.Drawing.Size(118, 22);
             this.TextBoxPeakLength.TabIndex = 15;
+            this.TextBoxPeakLength.Text = "40";
             this.Max_Min_Value.SetToolTip(this.TextBoxPeakLength, "Для отображения введите значение в поле \"Длина клинка\"");
             this.TextBoxPeakLength.Leave += new System.EventHandler(this.TextBoxPeakLengthLeave);
             // 
@@ -188,12 +193,13 @@
             this.PeakLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.PeakLengthLabel.Location = new System.Drawing.Point(12, 83);
             this.PeakLengthLabel.Name = "PeakLengthLabel";
-            this.PeakLengthLabel.Size = new System.Drawing.Size(177, 25);
+            this.PeakLengthLabel.Size = new System.Drawing.Size(212, 25);
             this.PeakLengthLabel.TabIndex = 14;
-            this.PeakLengthLabel.Text = "Длина острия L3:";
+            this.PeakLengthLabel.Text = "Длина острия        L3:";
             // 
             // ComboBoxTypeBlade
             // 
+            this.ComboBoxTypeBlade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxTypeBlade.FormattingEnabled = true;
             this.ComboBoxTypeBlade.Items.AddRange(new object[] {
             "Односторонний",
@@ -216,6 +222,7 @@
             // 
             // ComboBoxTypeBinding
             // 
+            this.ComboBoxTypeBinding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxTypeBinding.FormattingEnabled = true;
             this.ComboBoxTypeBinding.Items.AddRange(new object[] {
             "Всадное",
@@ -226,7 +233,7 @@
             this.ComboBoxTypeBinding.Name = "ComboBoxTypeBinding";
             this.ComboBoxTypeBinding.Size = new System.Drawing.Size(121, 24);
             this.ComboBoxTypeBinding.TabIndex = 20;
-            this.ComboBoxTypeBinding.Leave += new System.EventHandler(this.ComboBoxTypeBindingLeave);
+            this.ComboBoxTypeBinding.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTypeSelectedIndexChanged);
             // 
             // TextBoxBindingLength
             // 
@@ -234,6 +241,7 @@
             this.TextBoxBindingLength.Name = "TextBoxBindingLength";
             this.TextBoxBindingLength.Size = new System.Drawing.Size(118, 22);
             this.TextBoxBindingLength.TabIndex = 22;
+            this.TextBoxBindingLength.Text = "300";
             this.Max_Min_Value.SetToolTip(this.TextBoxBindingLength, "Для отображения введите значение в поле \"Длина клинка\" и выберете \"Тип Крепления\"" +
         "");
             this.TextBoxBindingLength.Leave += new System.EventHandler(this.TextBoxBindingLengthLeave);
@@ -242,7 +250,7 @@
             // 
             this.BindingLengthLabel.AutoSize = true;
             this.BindingLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.BindingLengthLabel.Location = new System.Drawing.Point(19, 117);
+            this.BindingLengthLabel.Location = new System.Drawing.Point(12, 117);
             this.BindingLengthLabel.Name = "BindingLengthLabel";
             this.BindingLengthLabel.Size = new System.Drawing.Size(210, 25);
             this.BindingLengthLabel.TabIndex = 21;
@@ -278,6 +286,12 @@
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
             // 
+            // Max_Min_Value
+            // 
+            this.Max_Min_Value.AutoPopDelay = 5000;
+            this.Max_Min_Value.InitialDelay = 15;
+            this.Max_Min_Value.ReshowDelay = 50;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -305,6 +319,7 @@
             this.Controls.Add(this.TextBoxLength);
             this.Controls.Add(this.BladeLengthLabel);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "MainForm";
             this.Text = "Клинок для ножа";
             this.Load += new System.EventHandler(this.MainFormLoad);
