@@ -437,6 +437,12 @@ namespace BladePlugin
             if (ComboBoxTypeBinding.SelectedIndex != -1)
             {
                 _parameters.BindingType = (BindingType)ComboBoxTypeBinding.SelectedIndex;
+                if((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.None)
+                {
+                    TextBoxBindingLength.ReadOnly = true;
+                    Max_Min_Value.SetToolTip(TextBoxBindingLength,"У клинка выбрано отсутствие крепления");
+                }
+
                 if (_parameters.NumericalParameters[ParameterType.BladeLength].Value != 0)
                 {
                     if ((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.Insert)
@@ -452,6 +458,7 @@ namespace BladePlugin
                         _parameters.NumericalParameters[ParameterType.BindingLength].MinValue
                         );
                         CheckDepended(TextBoxBindingLength, ParameterType.BindingLength, "Длина Крепления");
+                        TextBoxBindingLength.ReadOnly = false;
                     }
                     if ((BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.Through ||
                         (BindingType)ComboBoxTypeBinding.SelectedIndex == BindingType.ForOverlays)
@@ -468,8 +475,10 @@ namespace BladePlugin
                         _parameters.NumericalParameters[ParameterType.BindingLength].MinValue
                         );
                         CheckDepended(TextBoxBindingLength, ParameterType.BindingLength, "Длина Крепления");
+                        TextBoxBindingLength.ReadOnly = false;
                     }
                 }
+                SetDefault();
             }
             
 
