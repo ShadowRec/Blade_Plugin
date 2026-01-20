@@ -7,8 +7,8 @@
     <ProjectGuid>{B1A26DF2-D0F7-4604-A70F-782E2C803933}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BUILDER</RootNamespace>
-    <AssemblyName>BUILDER</AssemblyName>
+    <RootNamespace>Builder</RootNamespace>
+    <AssemblyName>Builder</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -63,11 +63,12 @@
     <Compile Include="Builder.cs" />
     <Compile Include="KompasWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SketchesTypes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\CORE.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3f0419fc-802e-4802-a773-c77736b1bb0f}</Project>
-      <Name>CORE</Name>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

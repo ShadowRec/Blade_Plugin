@@ -4,15 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CORE
+namespace Core
 {
+    //TODO: XML done
+    /// <summary>
+    /// Типы параметров
+    /// </summary>
     public enum ParameterType
     {
-        BladeLength, // Длина клинка
-        BindingLength, // Длина крепления
-        BladeWidth, // Ширина клинка
-        BladeThickness, // Толщина клинка
-        EdgeWidth, // Ширина лезвия
-        PeakLenght // Длина острия
+        /// <summary>
+        /// Длина клинка
+        /// </summary>
+        BladeLength, 
+        /// <summary>
+        /// Длина крепления
+        /// </summary>
+        BindingLength, 
+        /// <summary>
+        /// Ширина клинка
+        /// </summary>
+        BladeWidth, 
+        /// <summary>
+        /// Толщина клинка
+        /// </summary>
+        BladeThickness, 
+        /// <summary>
+        /// Ширина лезвия
+        /// </summary>
+        EdgeWidth, 
+        /// <summary>
+        /// Длина острия
+        /// </summary>
+        PeakLenght,
+        /// <summary>
+        /// Тип крепления
+        /// </summary>
+        BindingType,
+        /// <summary>
+        /// Тип клинка
+        /// </summary>
+        BladeType
+
     }
 }

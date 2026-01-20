@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 
-namespace CORE
+namespace Core
 {
+    //TODO: XML done
+    /// <summary>
+    /// Численные параметры клинка
+    /// </summary>
     public class NumericalParameter
     {
         /// <summary>
@@ -26,16 +31,66 @@ namespace CORE
         /// </summary>
         public double MinValue
         {
+            //TODO: validation done
             get { return _minValue; }
-            set { _minValue = value; }
+            set {
+                if (value > 0)
+                {
+                    if (MinValue != 0 && MaxValue != 0)
+                    {
+                        if (MaxValue > MinValue)
+                        {
+                            _minValue = value;
+                        }
+                        else
+                        {
+                            throw new ParameterException(ExceptionType.MaxGreaterMinException);
+                        }
+                    }
+                    else
+                    {
+                        _minValue = value;
+                    }
+                }
+                else
+                {
+                    throw new ParameterException(ExceptionType.MinValueNegativeException);
+                }
+            }
         }
         /// <summary>
         /// Свойство, возвращающее _maxValue
         /// </summary>
         public double MaxValue
         {
+            //TODO: validation done
+
             get { return _maxValue; }
-            set { _maxValue = value; }
+            set
+            {
+                if(value > 0)
+                {
+                    if (MinValue != 0 && MaxValue != 0)
+                    {
+                        if (MaxValue > MinValue)
+                        {
+                            _maxValue = value;
+                        }
+                        else
+                        {
+                            throw new ParameterException(ExceptionType.MaxGreaterMinException);
+                        }
+                    }
+                    else
+                    {
+                        _maxValue = value;
+                    }
+                }
+                else
+                {
+                    throw new ParameterException(ExceptionType.MinValueNegativeException);
+                }
+            }
         }
 
         /// <summary>
@@ -43,7 +98,8 @@ namespace CORE
         /// </summary>
         public double Value
         {
-            get {
+            get 
+            {
                 return _value; 
             }
             set 
@@ -57,16 +113,18 @@ namespace CORE
         /// Функция валидации значения параметра 
         /// </summary>
         /// <param name="value">Валидируемое значение</param>
-        /// <exception cref="ArgumentException">Исключение, вызванное тем, что вводное значение не прошло валидацию</exception>
+        /// <exception cref="ArgumentException">Исключение, вызванное тем,
+        /// что вводное значение не прошло валидацию</exception>
         private void Validate(double value)
         {
+            //TODO: rafactor done
             if (value < MinValue)
             {
-                throw new ArgumentException("Value_small");
+                throw new ParameterException(ExceptionType.TooSmallException);
             }
             if (value > MaxValue) 
             {
-                throw new ArgumentException("Value_TooBig");
+                throw new ParameterException(ExceptionType.TooBigException);
             }
         } 
     }

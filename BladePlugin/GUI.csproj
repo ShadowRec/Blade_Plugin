@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F1F8EFF2-CEA6-4BEB-8C85-C4A86921FBB7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>BladePlugin</RootNamespace>
-    <AssemblyName>BladePlugin</AssemblyName>
+    <RootNamespace>GUI</RootNamespace>
+    <AssemblyName>GUI</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -84,6 +84,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -99,13 +100,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BUILDER\BUILDER.csproj">
+    <ProjectReference Include="..\BUILDER\Builder.csproj">
       <Project>{b1a26df2-d0f7-4604-a70f-782e2c803933}</Project>
-      <Name>BUILDER</Name>
+      <Name>Builder</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\CORE.csproj">
+    <ProjectReference Include="..\Core\Core.csproj">
       <Project>{3f0419fc-802e-4802-a773-c77736b1bb0f}</Project>
-      <Name>CORE</Name>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

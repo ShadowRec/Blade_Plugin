@@ -4,13 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CORE
+namespace Core
 {
+    //TODO: XML done
+    /// <summary>
+    /// Тип крепления
+    /// </summary>
     public enum BindingType
     {
-        Insert, // Всадное крепление
-        Through, // Сквозное крепление 
-        ForOverlays, //Накладное крепления
-        None // Крепление отсутствует
+        /// <summary>
+        /// Всадное крепление
+        /// </summary>
+        Insert, // 
+        /// <summary>
+        /// Сквозное крепление
+        /// </summary>
+        Through,
+        /// <summary>
+        ///Накладное крепления
+        /// </summary>
+        ForOverlays,
+        /// <summary>
+        /// Крепление отсутствует 
+        /// </summary>
+        None
     }
 }

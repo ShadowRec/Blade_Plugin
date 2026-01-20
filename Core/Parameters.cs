@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace CORE
+namespace Core
 {
+    //TODO: XML done
+    /// <summary>
+    /// Класс, хранящий все параметры клинка
+    /// </summary>
     public class Parameters
     {
         /// <summary>
@@ -18,7 +21,7 @@ namespace CORE
             //Инициализация параметра длины клинка
             NumericalParameter bladelength = new NumericalParameter();
             bladelength.MinValue = 30;
-            bladelength.MaxValue= 1200;
+            bladelength.MaxValue = 1200;
 
             //Инициализация параметра ширины клинка
             NumericalParameter bladewidth = new NumericalParameter();
@@ -35,51 +38,66 @@ namespace CORE
 
             //Инициализация параметра длины острия
             NumericalParameter peaklength = new NumericalParameter();
-           
 
             //Инициализация параметра длины крепления
             NumericalParameter binlength = new NumericalParameter();
-            
 
-            //Занесения значений параметров в словарь с соответствующими ключами
-            NumericalParameters = new Dictionary<ParameterType,NumericalParameter>()
+            //Занесения значений параметров в словарь 
+            //с соответствующими ключами
+            NumericalParameters = new Dictionary<
+                ParameterType, NumericalParameter>()
             {
-                [ParameterType.BladeLength] = bladelength ,
+                [ParameterType.BladeLength] = bladelength,
                 [ParameterType.BladeWidth] = bladewidth,
                 [ParameterType.BladeThickness] = bladethick,
                 [ParameterType.EdgeWidth] = edgewidth,
                 [ParameterType.PeakLenght] = peaklength,
                 [ParameterType.BindingLength] = binlength,
             };
-
         }
+
         /// <summary>
-        ///  False - Острие у клинка нету, True - Острие у клинка есть
+        /// False - Острие у клинка нету, 
+        /// True - Острие у клинка есть
         /// </summary>
         public bool BladeExistence { get; set; }
+
         /// <summary>
-        /// False - односторонний, True - Двусторонний
+        /// False - односторонний, 
+        /// True - Двусторонний
         /// </summary>
-        public bool BladeType {  get; set; } 
+        public bool BladeType { get; set; }
+
         /// <summary>
         /// Тип крепления
         /// </summary>
         public BindingType BindingType { get; set; }
+
         /// <summary>
         /// Перечень численных параметров
         /// </summary>
-        public Dictionary<ParameterType, NumericalParameter> NumericalParameters { get; set; }
+        public Dictionary<ParameterType, NumericalParameter>
+            NumericalParameters
+        { get; set; }
 
         /// <summary>
-        /// Выставляет максимальное и минимальное(Если такое задано) значения для параметра
+        /// Выставляет максимальное и минимальное(Если такое задано) 
+        /// значения для параметра
         /// </summary>
-        /// <param name="independ"> Параметр на основе которого будет вычисляться макс и мин значения</param>
-        /// <param name="depend"> Параметр к которому будет применяться максимально и минимальное значение</param>
-        /// <param name="maxratio"> Соотношение величин для максимального значения</param>
-        /// <param name="minratio">Соотношение величин для минимального значения</param>
-        public void SetDependencies(NumericalParameter independ, NumericalParameter depend, double maxratio, double minratio = 0)
+        /// <param name="independ">Параметр на основе которого будет 
+        /// вычисляться макс и мин значения</param>
+        /// <param name="depend">Параметр к которому будет применяться 
+        /// максимально и минимальное значение</param>
+        /// <param name="maxratio">Соотношение величин для 
+        /// максимального значения</param>
+        /// <param name="minratio">Соотношение величин для 
+        /// минимального значения</param>
+        public void SetDependencies(NumericalParameter independ,
+            NumericalParameter depend, double maxratio,
+            double minratio = 0)
         {
-            if (maxratio > 0 && minratio>=0) {
+            if (maxratio > 0 && minratio >= 0)
+            {
                 depend.MaxValue = independ.Value * maxratio;
                 if (minratio != 0)
                 {
@@ -92,7 +110,8 @@ namespace CORE
             }
             else
             {
-                throw new ArgumentException("ratios_negative");
+                //TODO: refactor DONE
+                throw new ParameterException(ExceptionType.RatioNegativeException);
             }
         }
     }

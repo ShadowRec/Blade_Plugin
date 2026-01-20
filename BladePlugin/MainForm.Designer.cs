@@ -1,4 +1,4 @@
-﻿namespace BladePlugin
+﻿namespace GUI
 {
     partial class MainForm
     {
@@ -356,4 +356,3 @@
         private System.Windows.Forms.ToolTip Max_Min_Value;
     }
 }
-

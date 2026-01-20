@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingType.cs" />
+    <Compile Include="ExeptionType.cs" />
     <Compile Include="NumericalParameter.cs" />
+    <Compile Include="ParameterExeption.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="ParameterType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
