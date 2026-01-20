@@ -38,13 +38,15 @@ namespace Core
                 {
                     if (MinValue != 0 && MaxValue != 0)
                     {
-                        if (MaxValue > MinValue)
+                        if (value < MaxValue)
                         {
                             _minValue = value;
                         }
                         else
                         {
-                            throw new ParameterException(ExceptionType.MaxGreaterMinException);
+                            throw new ParameterException(
+                                ExceptionType.MinGreaterMaxException
+                                );
                         }
                     }
                     else
@@ -54,7 +56,9 @@ namespace Core
                 }
                 else
                 {
-                    throw new ParameterException(ExceptionType.MinValueNegativeException);
+                    throw new ParameterException(
+                        ExceptionType.MinValueNegativeException
+                        );
                 }
             }
         }
@@ -72,13 +76,15 @@ namespace Core
                 {
                     if (MinValue != 0 && MaxValue != 0)
                     {
-                        if (MaxValue > MinValue)
+                        if (value > MinValue)
                         {
                             _maxValue = value;
                         }
                         else
                         {
-                            throw new ParameterException(ExceptionType.MaxGreaterMinException);
+                            throw new ParameterException(
+                                ExceptionType.MaxLesserrMinException
+                                );
                         }
                     }
                     else
@@ -88,7 +94,9 @@ namespace Core
                 }
                 else
                 {
-                    throw new ParameterException(ExceptionType.MinValueNegativeException);
+                    throw new ParameterException(
+                        ExceptionType.MaxValueNegativeException
+                        );
                 }
             }
         }
@@ -117,14 +125,16 @@ namespace Core
         /// что вводное значение не прошло валидацию</exception>
         private void Validate(double value)
         {
-            //TODO: rafactor done
+            //TODO: refactor done
             if (value < MinValue)
             {
-                throw new ParameterException(ExceptionType.TooSmallException);
+                throw new ParameterException(
+                    ExceptionType.TooSmallException);
             }
             if (value > MaxValue) 
             {
-                throw new ParameterException(ExceptionType.TooBigException);
+                throw new ParameterException(
+                    ExceptionType.TooBigException);
             }
         } 
     }

@@ -13,17 +13,9 @@ namespace CoreUnitTests
         public void Setup()
         {
             _parameters = new Parameters();
-            FillValues();
-        }
-
-        /// <summary>
-        /// Выставление значений для работы тестов  
-        /// </summary>
-        private void FillValues()
-        {
             _parameters.NumericalParameters[ParameterType.BladeWidth].Value = 40;
+           
         }
-
         /// <summary>
         /// Тестирование функции SetDependencies класса Parameters
         /// </summary>
@@ -34,15 +26,11 @@ namespace CoreUnitTests
         [TestCase(2.0 / 4, 0.0)]
         public void SetDependenciesMaxMinTest(double maxRatio, double minRatio)
         {
-            // Act
-        
             _parameters.SetDependencies(
                 _parameters.NumericalParameters[ParameterType.BladeWidth],
                 _parameters.NumericalParameters[ParameterType.EdgeWidth],
                 maxRatio,
                 minRatio);
-
-            // Assert
             double expectedMaxValue = _parameters.NumericalParameters[ParameterType.BladeWidth].Value * maxRatio;
             double expectedMinValue;
 
@@ -72,7 +60,6 @@ namespace CoreUnitTests
         [TestCase(-2.0 / 4, -1/2)]
         public void SetDependenciesExceptionTest(double minratio, double maxratio)
         {
-            // Act & Assert
             var exception = Assert.Throws<ParameterException>(() =>
             {
                 _parameters.SetDependencies(
@@ -91,11 +78,7 @@ namespace CoreUnitTests
         [Test]
         public void SetBindingTypeTest()
         {
-            // Act
-            
             _parameters.BindingType = BindingType.Through;
-
-            // Assert
             Assert.That(_parameters.BindingType, Is.EqualTo(BindingType.Through));
         }
 
@@ -105,11 +88,7 @@ namespace CoreUnitTests
         [Test]
         public void SetBladeExistenceTest()
         {
-            // Act
-            
             _parameters.BladeExistence = true;
-
-            // Assert
             Assert.That(_parameters.BladeExistence, Is.True);
         }
 
@@ -119,11 +98,7 @@ namespace CoreUnitTests
         [Test]
         public void SetBladeTypeTest()
         {
-            // Act
-            
             _parameters.BladeType = true;
-
-            // Assert
             Assert.That(_parameters.BladeType, Is.True);
         }
 
@@ -133,12 +108,9 @@ namespace CoreUnitTests
         [Test]
         public void AdditionalNUnitFeaturesExample()
         {
-            // Arrange
-           
             _parameters.BladeExistence = true;
             _parameters.BindingType = BindingType.Through;
 
-            // Assert с использованием нескольких утверждений
             Assert.Multiple(() =>
             {
                 Assert.That(_parameters.BladeExistence, Is.True);

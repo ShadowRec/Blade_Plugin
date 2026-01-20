@@ -10,7 +10,8 @@ using SketchesType;
 namespace KompasBuilder
 {
     /// <summary>
-    /// Класс, отвечающий за постройку объекта при помощи API Kompas-3D V23
+    /// Класс, отвечающий за постройку объекта 
+    /// при помощи API Kompas-3D V23
     /// </summary>
     public class Builder
     {
@@ -31,33 +32,46 @@ namespace KompasBuilder
             if (!parameters.BladeType)
             {
                 DrawMainSketch(
-                    parameters.NumericalParameters[ParameterType.BladeLength].Value,
-                    parameters.NumericalParameters[ParameterType.PeakLenght].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BindingLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.PeakLenght].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BindingLength].Value,
                     parameters.BindingType,
                     parameters.BladeExistence,
                     parameters.BladeType
                 );
 
                 DrawDirection(
-                    parameters.NumericalParameters[ParameterType.BladeLength].Value,
-                    parameters.NumericalParameters[ParameterType.PeakLenght].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.PeakLenght].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value,
                     parameters.BladeType,
                     parameters.BladeExistence
                 );
 
                 DrawEdgeForm(
-                    parameters.NumericalParameters[ParameterType.BladeThickness].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value
+                    parameters.NumericalParameters[
+                        ParameterType.BladeThickness].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value
                 );
 
                 ExtrudeMainPart(
-                    parameters.NumericalParameters[ParameterType.BladeThickness].Value
+                    parameters.NumericalParameters[
+                        ParameterType.BladeThickness].Value
                 );
 
                 CreateEdge();
@@ -65,61 +79,83 @@ namespace KompasBuilder
                 if (parameters.BindingType == BindingType.ForOverlays)
                 {
                     MakeHoles(
-                        parameters.NumericalParameters[ParameterType.BindingLength].Value,
-                        parameters.NumericalParameters[ParameterType.BladeWidth].Value
+                        parameters.NumericalParameters[
+                            ParameterType.BindingLength].Value,
+                        parameters.NumericalParameters[
+                            ParameterType.BladeWidth].Value
                     );
                 }
             }
             else
             {
                 DrawMainSketch(
-                    parameters.NumericalParameters[ParameterType.BladeLength].Value,
-                    parameters.NumericalParameters[ParameterType.PeakLenght].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BindingLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.PeakLenght].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BindingLength].Value,
                     parameters.BindingType,
                     parameters.BladeExistence,
                     parameters.BladeType
                 );
 
                 DrawDirection(
-                    parameters.NumericalParameters[ParameterType.BladeLength].Value,
-                    parameters.NumericalParameters[ParameterType.PeakLenght].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.PeakLenght].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value,
                     parameters.BladeType,
                     true,
                     parameters.BladeExistence
                 );
 
                 DrawEdgeForm(
-                    parameters.NumericalParameters[ParameterType.BladeThickness].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value
+                    parameters.NumericalParameters[
+                        ParameterType.BladeThickness].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value
                 );
 
                 ExtrudeMainPart(
-                    parameters.NumericalParameters[ParameterType.BladeThickness].Value
+                    parameters.NumericalParameters[
+                        ParameterType.BladeThickness].Value
                 );
 
                 CreateEdge();
                 _wrapper.SetEdgeSketchNull();
 
                 DrawDirection(
-                    parameters.NumericalParameters[ParameterType.BladeLength].Value,
-                    parameters.NumericalParameters[ParameterType.PeakLenght].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.PeakLenght].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value,
                     parameters.BladeType,
                     false,
                     parameters.BladeExistence
                 );
 
                 DrawEdgeForm(
-                    parameters.NumericalParameters[ParameterType.BladeThickness].Value,
-                    parameters.NumericalParameters[ParameterType.EdgeWidth].Value,
-                    parameters.NumericalParameters[ParameterType.BladeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeThickness].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value,
                     false
                 );
 
@@ -145,7 +181,8 @@ namespace KompasBuilder
         /// <param name="bladewidth">Ширина клинка</param>
         /// <param name="binlength">Длина крепления</param>
         /// <param name="bintype">Тип крепления</param>
-        /// <param name="existance">TRUE- острие существует, FALSE- отсутствует</param>
+        /// <param name="existance">TRUE- острие существует, 
+        /// FALSE- отсутствует</param>
         /// <param name="bladetype">TRUE - тип клинка "двусторонний",
         /// FALSE - тип клинка "односторонний"</param>
         private void DrawMainSketch(double bladelength, double peaklength,
@@ -158,8 +195,6 @@ namespace KompasBuilder
             const double bindingLeftIntendDownFirst = 0.5;
             const double bindingLeftIntendDownSecond = 0.55;
             const double bindingLenghtShortage = 0.1;
-
-            
 
             _wrapper.ChooseSketch(SketchesTypes.MainString);
 
@@ -201,7 +236,7 @@ namespace KompasBuilder
             {
                 _wrapper.DrawLine(0, 0, bladewidth * bindingLeftIntendUp,
                     -binlength * bindingLenghtShortage);
-                _wrapper.DrawLine(bladewidth, 0, 
+                _wrapper.DrawLine(bladewidth, 0,
                     bladewidth * bindingRightIntendDown,
                     -binlength * bindingLenghtShortage);
 
@@ -261,7 +296,8 @@ namespace KompasBuilder
         /// FALSE - тип клинка "односторонний"</param>
         /// <param name="mainedge">TRUE - Основное лезвия,
         /// FALSE- Второстепенное лезвие</param>
-        /// <param name="existance">TRUE- острие существует, FALSE- отсутствует</param>
+        /// <param name="existance">TRUE- острие существует, 
+        /// FALSE- отсутствует</param>
         private void DrawDirection(double bladelength, double peaklength,
             double edgewidth, double bladewidth, bool bladetype,
             bool mainedge = false, bool existance = true)
@@ -271,10 +307,11 @@ namespace KompasBuilder
             {
                 if (!bladetype)
                 {
-                    _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
+                    _wrapper.ChooseSketch(
+                        SketchesTypes.EdgeDirectionString);
                     _wrapper.DrawLine(0, 0, 0, bladelength - peaklength);
                     //TODO: to const done
-                    _wrapper.CreateArc(0, bladelength - peaklength, 
+                    _wrapper.CreateArc(0, bladelength - peaklength,
                         edgewidth,
                         bladelength * lengthShortage,
                         bladewidth, bladelength);
@@ -285,7 +322,8 @@ namespace KompasBuilder
                     if (mainedge)
                     {
                         //TODO: static class with const string DONE?
-                        _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
+                        _wrapper.ChooseSketch(
+                            SketchesTypes.EdgeDirectionString);
                         _wrapper.DrawLine(0, 0, 0, bladelength - peaklength);
                         _wrapper.DrawLine(0, bladelength - peaklength,
                             bladewidth / 2, bladelength);
@@ -293,10 +331,12 @@ namespace KompasBuilder
                     }
                     else
                     {
-                        _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
+                        _wrapper.ChooseSketch(
+                            SketchesTypes.EdgeDirectionString);
                         _wrapper.DrawLine(bladewidth, 0, bladewidth,
                             bladelength - peaklength);
-                        _wrapper.DrawLine(bladewidth, bladelength - peaklength,
+                        _wrapper.DrawLine(bladewidth,
+                            bladelength - peaklength,
                             bladewidth / 2, bladelength);
                         _wrapper.EndSkethEdit();
                     }
@@ -306,7 +346,8 @@ namespace KompasBuilder
             {
                 if (!bladetype)
                 {
-                    _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
+                    _wrapper.ChooseSketch(
+                        SketchesTypes.EdgeDirectionString);
                     _wrapper.DrawLine(0, 0, 0, bladelength - peaklength);
                     _wrapper.EndSkethEdit();
                 }
@@ -314,14 +355,17 @@ namespace KompasBuilder
                 {
                     if (mainedge)
                     {
-                        _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
+                        _wrapper.ChooseSketch(
+                            SketchesTypes.EdgeDirectionString);
                         _wrapper.DrawLine(0, 0, 0, bladelength);
                         _wrapper.EndSkethEdit();
                     }
                     else
                     {
-                        _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
-                        _wrapper.DrawLine(bladewidth, 0, bladewidth, bladelength);
+                        _wrapper.ChooseSketch(
+                            SketchesTypes.EdgeDirectionString);
+                        _wrapper.DrawLine(bladewidth, 0,
+                            bladewidth, bladelength);
                         _wrapper.EndSkethEdit();
                     }
                 }
@@ -345,8 +389,10 @@ namespace KompasBuilder
                 _wrapper.DrawLine(0, 0, 0, -thickness / 2);
                 _wrapper.DrawLine(0, 0, 0, thickness / 2);
 
-                _wrapper.DrawLine(0, thickness / 2, edgewidth, thickness / 2);
-                _wrapper.DrawLine(0, -thickness / 2, edgewidth, -thickness / 2);
+                _wrapper.DrawLine(0, thickness / 2,
+                    edgewidth, thickness / 2);
+                _wrapper.DrawLine(0, -thickness / 2,
+                    edgewidth, -thickness / 2);
 
                 _wrapper.DrawLine(edgewidth, thickness / 2, 0, 0);
                 _wrapper.DrawLine(edgewidth, -thickness / 2, 0, 0);
@@ -355,8 +401,10 @@ namespace KompasBuilder
             else
             {
                 _wrapper.ChooseSketch(SketchesTypes.EdgeString);
-                _wrapper.DrawLine(bladewidth, 0, bladewidth, -thickness / 2);
-                _wrapper.DrawLine(bladewidth, 0, bladewidth, thickness / 2);
+                _wrapper.DrawLine(bladewidth, 0,
+                    bladewidth, -thickness / 2);
+                _wrapper.DrawLine(bladewidth, 0,
+                    bladewidth, thickness / 2);
 
                 _wrapper.DrawLine(bladewidth, thickness / 2,
                     bladewidth - edgewidth, thickness / 2);

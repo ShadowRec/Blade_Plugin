@@ -7,7 +7,7 @@ using System.Text;
 using Core;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Service
 {
     public class ParameterException:Exception
     {
