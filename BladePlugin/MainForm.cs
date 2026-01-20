@@ -249,7 +249,8 @@ namespace GUI
                     }
                     else
                     {
-                        throw new ParameterException(ExceptionType.InvalidException);
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
                 else
@@ -265,7 +266,7 @@ namespace GUI
             catch (ParameterException ex)
             {
                 TextBoxLength.ForeColor = Color.Red;
-                if (ex.ExceptionType==ExceptionType.InvalidException)
+                if (ex.ExceptionType == ExceptionType.InvalidException)
                 {
                     TextBoxError.Text += "В поле 'Длина Клинка' было " +
                         "введено некорректное значение /n";
@@ -291,8 +292,10 @@ namespace GUI
         /// Обновления текста ToolTip
         /// </summary>
         /// <param name="target">Ссылка на поле, чей ToolTip обновляется</param>
-        /// <param name="maxvalue">Максимальное значение допустимого диапазона</param>
-        /// <param name="minvalue">Минимальное значение допустимого диапазона</param>
+        /// <param name="maxvalue">
+        /// Максимальное значение допустимого диапазона</param>
+        /// <param name="minvalue">
+        /// Минимальное значение допустимого диапазона</param>
         private void UpdateToolTip(object target, double maxvalue,
             double minvalue)
         {
@@ -322,7 +325,8 @@ namespace GUI
                     }
                     else
                     {
-                        throw new ParameterException(ExceptionType.InvalidException);
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
                 else
@@ -337,7 +341,7 @@ namespace GUI
             catch (ParameterException ex)
             {
                 TextBoxPeakLength.ForeColor = Color.Red;
-                if (ex.ExceptionType== ExceptionType.InvalidException)
+                if (ex.ExceptionType == ExceptionType.InvalidException)
                 {
                     TextBoxError.Text += "В поле 'Длина острия' было " +
                         "введено некорректное значение /n";
@@ -381,7 +385,8 @@ namespace GUI
                     }
                     else
                     {
-                        throw new ParameterException(ExceptionType.InvalidException);
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
                 else
@@ -397,7 +402,7 @@ namespace GUI
             catch (ParameterException ex)
             {
                 TextBoxBindingLength.ForeColor = Color.Red;
-                if (ex.ExceptionType== ExceptionType.InvalidException)
+                if (ex.ExceptionType == ExceptionType.InvalidException)
                 {
                     TextBoxError.Text += "В поле 'Длина крепления' было " +
                         "введено некорректное значение \n";
@@ -457,7 +462,8 @@ namespace GUI
                     }
                     else
                     {
-                        throw new ParameterException(ExceptionType.InvalidException);
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
                 else
@@ -472,7 +478,7 @@ namespace GUI
             catch (ParameterException ex)
             {
                 TextBoxWidth.ForeColor = Color.Red;
-                if (ex.ExceptionType== ExceptionType.InvalidException)
+                if (ex.ExceptionType == ExceptionType.InvalidException)
                 {
                     TextBoxError.Text += "В поле 'Ширина клинка' было " +
                         "введено некорректное значение /n";
@@ -516,7 +522,8 @@ namespace GUI
                     }
                     else
                     {
-                       throw new ParameterException(ExceptionType.InvalidException);;
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
                 else
@@ -655,7 +662,8 @@ namespace GUI
                     }
                     else
                     {
-                       throw new ParameterException(ExceptionType.InvalidException);;
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
             }
@@ -777,12 +785,16 @@ namespace GUI
             {
                 if (ComboBoxTypeBinding.SelectedIndex == -1)
                 {
-                    throw new ParameterException(ExceptionType.NullException,ParameterType.BindingType);
+                    throw new ParameterException(
+                        ExceptionType.NullException,
+                        ParameterType.BindingType);
                 }
 
                 if (ComboBoxTypeBlade.SelectedIndex == -1)
                 {
-                    throw new ParameterException(ExceptionType.NullException, ParameterType.BladeLength);
+                    throw new ParameterException(
+                        ExceptionType.NullException,
+                        ParameterType.BladeLength);
                 }
 
                 foreach (var parameter in _parameters.NumericalParameters)
@@ -790,7 +802,9 @@ namespace GUI
                     if (parameter.Value == null ||
                         parameter.Value.Value == 0)
                     {
-                        throw new ParameterException(ExceptionType.NullException, parameter.Key);
+                        throw new ParameterException(
+                            ExceptionType.NullException,
+                            parameter.Key);
                     }
                 }
                 return true;
@@ -798,8 +812,8 @@ namespace GUI
             //TODO: refactor DONE
             catch (ParameterException ex)
             {
-                if (ex.ExceptionType== ExceptionType.NullException&&
-                    ex.ParameterType== ParameterType.BindingType)
+                if (ex.ExceptionType == ExceptionType.NullException &&
+                    ex.ParameterType == ParameterType.BindingType)
                 {
                     BindingLabel.ForeColor = Color.Red;
                     TextBoxError.Text += "Не выбран тип крепления!\n";
@@ -885,7 +899,8 @@ namespace GUI
                     }
                     else
                     {
-                        throw new ParameterException(ExceptionType.InvalidException);
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
                     }
                 }
                 else
@@ -902,7 +917,7 @@ namespace GUI
             {
                 //TODO: refactor DONE
                 TextBoxBladeThickness.ForeColor = Color.Red;
-                if (ex.ExceptionType== ExceptionType.InvalidException)
+                if (ex.ExceptionType == ExceptionType.InvalidException)
                 {
                     TextBoxError.Text += "В поле 'Толщина клинка' было " +
                         "введено некорректное значение /n";

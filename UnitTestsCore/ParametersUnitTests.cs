@@ -13,41 +13,58 @@ namespace CoreUnitTests
         public void Setup()
         {
             _parameters = new Parameters();
-            _parameters.NumericalParameters[ParameterType.BladeWidth].Value = 40;
-           
+            _parameters.NumericalParameters[
+                ParameterType.BladeWidth].Value = 40;
         }
+
         /// <summary>
         /// “естирование функции SetDependencies класса Parameters
         /// </summary>
-        /// <param name="maxRatio">—оотношение величин дл€ максимального значени€</param>
-        /// <param name="minRatio">—оотношение величин дл€ минимального значени€</param>
+        /// <param name="maxRatio">
+        /// —оотношение величин дл€ максимального значени€</param>
+        /// <param name="minRatio">
+        /// —оотношение величин дл€ минимального значени€</param>
         [Test]
         [TestCase(3.0 / 4, 1.0 / 4)]
         [TestCase(2.0 / 4, 0.0)]
-        public void SetDependenciesMaxMinTest(double maxRatio, double minRatio)
+        public void SetDependenciesMaxMinTest(
+            double maxRatio, double minRatio)
         {
             _parameters.SetDependencies(
                 _parameters.NumericalParameters[ParameterType.BladeWidth],
                 _parameters.NumericalParameters[ParameterType.EdgeWidth],
                 maxRatio,
                 minRatio);
-            double expectedMaxValue = _parameters.NumericalParameters[ParameterType.BladeWidth].Value * maxRatio;
+
+            double expectedMaxValue =
+                _parameters.NumericalParameters[
+                    ParameterType.BladeWidth].Value * maxRatio;
             double expectedMinValue;
 
             if (minRatio != 0)
             {
-                expectedMinValue = _parameters.NumericalParameters[ParameterType.BladeWidth].Value * minRatio;
+                expectedMinValue =
+                    _parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value * minRatio;
             }
             else
             {
-                expectedMinValue = _parameters.NumericalParameters[ParameterType.EdgeWidth].MaxValue * 0.1;
+                expectedMinValue =
+                    _parameters.NumericalParameters[
+                        ParameterType.EdgeWidth].MaxValue * 0.1;
             }
 
-            double resultMaxValue = _parameters.NumericalParameters[ParameterType.EdgeWidth].MaxValue;
-            double resultMinValue = _parameters.NumericalParameters[ParameterType.EdgeWidth].MinValue;
+            double resultMaxValue =
+                _parameters.NumericalParameters[
+                    ParameterType.EdgeWidth].MaxValue;
+            double resultMinValue =
+                _parameters.NumericalParameters[
+                    ParameterType.EdgeWidth].MinValue;
 
-            Assert.That(resultMaxValue, Is.EqualTo(expectedMaxValue));
-            Assert.That(resultMinValue, Is.EqualTo(expectedMinValue));
+            Assert.That(resultMaxValue,
+                Is.EqualTo(expectedMaxValue));
+            Assert.That(resultMinValue,
+                Is.EqualTo(expectedMinValue));
         }
 
         /// <summary>
@@ -56,20 +73,24 @@ namespace CoreUnitTests
         [Test]
         [TestCase(3.0 / 4, -1.0 / 4)]
         [TestCase(-2.0 / 4, 0.0)]
-        [TestCase(-2.0 / 4, 1/8)]
-        [TestCase(-2.0 / 4, -1/2)]
-        public void SetDependenciesExceptionTest(double minratio, double maxratio)
+        [TestCase(-2.0 / 4, 1 / 8)]
+        [TestCase(-2.0 / 4, -1 / 2)]
+        public void SetDependenciesExceptionTest(
+            double minratio, double maxratio)
         {
             var exception = Assert.Throws<ParameterException>(() =>
             {
                 _parameters.SetDependencies(
-                    _parameters.NumericalParameters[ParameterType.BladeWidth],
-                    _parameters.NumericalParameters[ParameterType.EdgeWidth],
+                    _parameters.NumericalParameters[
+                        ParameterType.BladeWidth],
+                    _parameters.NumericalParameters[
+                        ParameterType.EdgeWidth],
                     maxratio,
                     minratio);
             });
 
-            Assert.That(exception.ExceptionType, Is.EqualTo(ExceptionType.RatioNegativeException));
+            Assert.That(exception.ExceptionType,
+                Is.EqualTo(ExceptionType.RatioNegativeException));
         }
 
         /// <summary>
@@ -79,7 +100,8 @@ namespace CoreUnitTests
         public void SetBindingTypeTest()
         {
             _parameters.BindingType = BindingType.Through;
-            Assert.That(_parameters.BindingType, Is.EqualTo(BindingType.Through));
+            Assert.That(_parameters.BindingType,
+                Is.EqualTo(BindingType.Through));
         }
 
         /// <summary>
@@ -103,7 +125,8 @@ namespace CoreUnitTests
         }
 
         /// <summary>
-        /// ѕример дополнительного теста с разными типами утверждений NUnit
+        /// ѕример дополнительного теста 
+        /// с разными типами утверждений NUnit
         /// </summary>
         [Test]
         public void AdditionalNUnitFeaturesExample()
@@ -114,7 +137,8 @@ namespace CoreUnitTests
             Assert.Multiple(() =>
             {
                 Assert.That(_parameters.BladeExistence, Is.True);
-                Assert.That(_parameters.BindingType, Is.EqualTo(BindingType.Through));
+                Assert.That(_parameters.BindingType,
+                    Is.EqualTo(BindingType.Through));
             });
         }
     }

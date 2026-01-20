@@ -64,7 +64,8 @@ namespace KompasBuilder
         /// <summary>
         /// Запуск Kompas-3D V23
         /// </summary>
-        /// <exception cref="Exception"> Ошибка запуска Kompas-3D V23</exception>
+        /// <exception cref="Exception"> 
+        /// Ошибка запуска Kompas-3D V23</exception>
         public void StartKompas()
         {
             try
@@ -83,8 +84,7 @@ namespace KompasBuilder
                 if (_kompas == null)
                 {
                     throw new ParameterException(
-                        ExceptionType.KompasOpenErrorException
-                        );
+                        ExceptionType.KompasOpenErrorException);
                 }
             }
             catch (COMException)
@@ -112,8 +112,7 @@ namespace KompasBuilder
             catch
             {
                 throw new ParameterException(
-                    ExceptionType.PartBuildingErrorException
-                    );
+                    ExceptionType.PartBuildingErrorException);
             }
         }
 
