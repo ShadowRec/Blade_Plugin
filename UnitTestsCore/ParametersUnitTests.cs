@@ -7,8 +7,10 @@ namespace CoreUnitTests
     [TestFixture]
     public class ParametersUnitTests
     {
+        //TODO: XML
         private Parameters _parameters;
 
+        //TODO: refactor
         [SetUp]
         public void Setup()
         {
@@ -17,6 +19,7 @@ namespace CoreUnitTests
                 ParameterType.BladeWidth].Value = 40;
         }
 
+        //TODO: incoding
         /// <summary>
         /// Тестирование функции SetDependencies класса Parameters
         /// </summary>

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //TODO: XML done
     /// <summary>
     /// Численные параметры клинка
     /// </summary>
@@ -18,22 +17,25 @@ namespace Core
         /// Минимальное значение параметра
         /// </summary>
         private double _minValue;
+
         /// <summary>
         /// Максимальное значение параметра
         /// </summary>
         private double _maxValue;
+
         /// <summary>
         /// Значение параметра
         /// </summary>
         private double _value;
+
         /// <summary>
         /// Свойство, возвращающее _minValue
         /// </summary>
         public double MinValue
         {
-            //TODO: validation done
             get { return _minValue; }
             set {
+                //TODO: duplication
                 if (value > 0)
                 {
                     if (MinValue != 0 && MaxValue != 0)
@@ -67,13 +69,12 @@ namespace Core
         /// </summary>
         public double MaxValue
         {
-            //TODO: validation done
-
             get { return _maxValue; }
             set
             {
                 if(value > 0)
                 {
+                    //TODO: duplication
                     if (MinValue != 0 && MaxValue != 0)
                     {
                         if (value > MinValue)
@@ -125,7 +126,6 @@ namespace Core
         /// что вводное значение не прошло валидацию</exception>
         private void Validate(double value)
         {
-            //TODO: refactor done
             if (value < MinValue)
             {
                 throw new ParameterException(

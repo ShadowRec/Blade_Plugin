@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace UnitTestsCore
 {
+    //TODO: XML
     internal class ParameterExceptionUnitTests
     {
+        //TODO: description
         [Test]
         public void ParameterExceptionConstructorTests()
         {

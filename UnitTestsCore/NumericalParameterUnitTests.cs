@@ -15,8 +15,9 @@ namespace UnitTestsCore
         [TestFixture]
         public class NumericalParameterTest
         {
+            //TODO: XML
             private Parameters _parameters;
-
+            //TODO: refactor
             [SetUp]
             public void Setup()
             {
@@ -36,6 +37,7 @@ namespace UnitTestsCore
                     ParameterType.PeakLenght].Value = 15;
             }
 
+            //TODO: description
             /// <summary>
             /// Проверка валидации значения
             /// </summary>
@@ -146,6 +148,7 @@ namespace UnitTestsCore
             [Test]
             [TestCase(4, false)]
             [TestCase(4, true)]
+            //TODO: rename
             public void MinSetTest(double minValue, bool valuesNULL)
             {
                 if (!valuesNULL)

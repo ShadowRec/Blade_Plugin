@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //TODO: XML done
     /// <summary>
     /// Класс, хранящий все параметры клинка
     /// </summary>
@@ -76,9 +75,20 @@ namespace Core
         /// <summary>
         /// Перечень численных параметров
         /// </summary>
-        public Dictionary<ParameterType, NumericalParameter>
-            NumericalParameters
-        { get; set; }
+        public Dictionary<ParameterType, NumericalParameter> 
+            NumericalParameters { get; set; }
+
+        //public void SetParameter(ParameterType type, double value)
+        //{
+        //    try
+        //    {
+        //        NumericalParameters[type].Value = value;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ParameterException(typeof(ex), type);
+        //    }
+        //}
 
         /// <summary>
         /// Выставляет максимальное и минимальное(Если такое задано) 
@@ -110,7 +120,6 @@ namespace Core
             }
             else
             {
-                //TODO: refactor DONE
                 throw new ParameterException(ExceptionType.RatioNegativeException);
             }
         }

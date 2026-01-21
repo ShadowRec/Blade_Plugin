@@ -185,6 +185,7 @@ namespace KompasBuilder
         /// FALSE- отсутствует</param>
         /// <param name="bladetype">TRUE - тип клинка "двусторонний",
         /// FALSE - тип клинка "односторонний"</param>
+        /// //TODO: RSDN
         private void DrawMainSketch(double bladelength, double peaklength,
             double edgewidth, double bladewidth, double binlength,
             BindingType bintype, bool existance, bool bladetype)
@@ -231,7 +232,6 @@ namespace KompasBuilder
                 _wrapper.DrawLine(0, 0, bladewidth, 0);
             }
 
-            //TODO: to const done
             if (bintype == BindingType.Insert)
             {
                 _wrapper.DrawLine(0, 0, bladewidth * bindingLeftIntendUp,
@@ -298,6 +298,7 @@ namespace KompasBuilder
         /// FALSE- Второстепенное лезвие</param>
         /// <param name="existance">TRUE- острие существует, 
         /// FALSE- отсутствует</param>
+        /// //TODO: RSDN
         private void DrawDirection(double bladelength, double peaklength,
             double edgewidth, double bladewidth, bool bladetype,
             bool mainedge = false, bool existance = true)
@@ -310,7 +311,6 @@ namespace KompasBuilder
                     _wrapper.ChooseSketch(
                         SketchesTypes.EdgeDirectionString);
                     _wrapper.DrawLine(0, 0, 0, bladelength - peaklength);
-                    //TODO: to const done
                     _wrapper.CreateArc(0, bladelength - peaklength,
                         edgewidth,
                         bladelength * lengthShortage,
@@ -321,7 +321,6 @@ namespace KompasBuilder
                 {
                     if (mainedge)
                     {
-                        //TODO: static class with const string DONE?
                         _wrapper.ChooseSketch(
                             SketchesTypes.EdgeDirectionString);
                         _wrapper.DrawLine(0, 0, 0, bladelength - peaklength);
@@ -449,13 +448,13 @@ namespace KompasBuilder
         /// </summary>
         /// <param name="binlen">Длина крепления</param>
         /// <param name="width">Ширина</param>
+        /// //TODO: RSDN
         private void MakeHoles(double binlen, double width)
         {
             const double upIntend = 0.2;
             const double downIntend = 0.8;
             const double widthShortage = 0.2;
             _wrapper.ChooseSketch(SketchesTypes.HolesString);
-            //TODO: to const done
             _wrapper.CreateCircle(width / 2, -binlen * upIntend,
                 (width * widthShortage) / 2);
             _wrapper.CreateCircle(width / 2, -binlen * downIntend,

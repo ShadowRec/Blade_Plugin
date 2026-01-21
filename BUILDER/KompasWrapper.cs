@@ -12,7 +12,6 @@ using Core;
 
 namespace KompasBuilder
 {
-    //TODO: XML done
     /// <summary>
     /// Класс, выполняющий функции связи с Kompas-3D 
     /// Через API
@@ -23,38 +22,47 @@ namespace KompasBuilder
         /// Поле, хранящее объект компаса
         /// </summary>
         private KompasObject _kompas;
+
         /// <summary>
         /// Поле, хранящее объект документа
         /// </summary>
         private ksDocument3D _document;
+
         /// <summary>
         /// Поле, хранящее объект детали
         /// </summary>
         private ksPart _part;
+
         /// <summary>
         /// Поле, хранящее основной скетч
         /// </summary>
         private ksEntity _mainSketch;
+
         /// <summary>
         /// Поле, хранящее траектория лезвия
         /// </summary>
         private ksEntity _edgeDircectionSketch;
+
         /// <summary>
         /// Поле, хранящее скетч, формирующий лезвие
         /// </summary>
         private ksEntity _edgeSketch;
+
         /// <summary>
         /// Поле, хранящее скетч отверстий
         /// </summary>
         private ksEntity _holesSketch;
+
         /// <summary>
         /// Поле, хранящее редактор текущего выбранного скетча
         /// </summary>
         private ksSketchDefinition _sketchDefinition;
+
         /// <summary>
         /// Поле, хранящее редактируемый скетч
         /// </summary>
         private ksDocument2D _sketchEdit;
+
         /// <summary>
         /// TRUE - Открыт скетч для редактирования, 
         /// FALSE - Редактирование не занято
@@ -145,6 +153,7 @@ namespace KompasBuilder
                 _editStatus = false;
             }
 
+            //TODO: switch-case
             if (target == "Main")
             {
                 if (_mainSketch == null)

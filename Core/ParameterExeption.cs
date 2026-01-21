@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    //TODO: XML
     public class ParameterException:Exception
     {
         public ParameterException(ExceptionType exceptionType)

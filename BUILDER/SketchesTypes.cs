@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SketchesType
 {
+    //TODO: XML
     internal class SketchesTypes
     {
         public const  string MainString = "Main";

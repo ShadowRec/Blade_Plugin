@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //TODO: XML done
     /// <summary>
     /// Тип крепления
     /// </summary>
@@ -15,15 +14,18 @@ namespace Core
         /// <summary>
         /// Всадное крепление
         /// </summary>
-        Insert, // 
+        Insert,
+
         /// <summary>
         /// Сквозное крепление
         /// </summary>
         Through,
+
         /// <summary>
         ///Накладное крепления
         /// </summary>
         ForOverlays,
+
         /// <summary>
         /// Крепление отсутствует 
         /// </summary>

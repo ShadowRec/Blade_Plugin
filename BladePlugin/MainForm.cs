@@ -15,10 +15,10 @@ using KompasBuilder;
 
 namespace GUI
 {
-    //TODO: rsdn done
+    //TODO: rsdn
     public partial class MainForm : Form
     {
-        //TODO: rsdn done?
+        //TODO: rsdn
         public MainForm()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace GUI
         /// </summary>
         private Parameters _parameters;
 
-        //TODO: rsdn done
+        //TODO: refactor
         /// <summary>
         /// Текущее значение длины клинка
         /// </summary>
@@ -60,7 +60,6 @@ namespace GUI
         /// </summary>
         private double _edgeWidthCurrent;
 
-        //TODO: rsdn done?
         /// <summary>
         /// Функция, выполняющая действия при запуске программы
         /// </summary>
@@ -809,69 +808,51 @@ namespace GUI
                 }
                 return true;
             }
-            //TODO: refactor DONE
             catch (ParameterException ex)
             {
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.BindingType)
+                if (ex.ExceptionType == ExceptionType.NullException)
                 {
-                    BindingLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не выбран тип крепления!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.BladeType)
-                {
-                    BladeTypeLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не выбран тип клинка!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.BladeLength)
-                {
-                    BladeLengthLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не введено значение в поле " +
-                        "'Длина клинка'!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.PeakLenght)
-                {
-                    PeakLengthLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не введено значение в поле " +
-                        "'Длина острия'!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.BindingLength)
-                {
-                    BindingLengthLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не введено значение в поле " +
-                        "'Длина крепления'!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.BladeWidth)
-                {
-                    BladeWidthLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не введено значение в поле " +
-                        "'Ширина клинка'!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.BladeThickness)
-                {
-                    BladeThickLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не введено значение в поле " +
-                        "'Толщина клинка'!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.NullException &&
-                    ex.ParameterType == ParameterType.EdgeWidth)
-                {
-                    EdgeWidthLabel.ForeColor = Color.Red;
-                    TextBoxError.Text += "Не введено значение в поле " +
-                        "'Ширина Лезвия'!\n";
+                    switch (ex.ParameterType)
+                    {
+                        case ParameterType.BindingType:
+                            BindingLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не выбран тип крепления!\n";
+                            break;
+                        case ParameterType.BladeType:
+                            BladeTypeLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не выбран тип клинка!\n";
+                            break;
+                        case ParameterType.BladeLength:
+                            BladeLengthLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не введено значение в поле " +
+                                "'Длина клинка'!\n";
+                            break;
+                        case ParameterType.PeakLenght:
+                            PeakLengthLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не введено значение в поле " +
+                                "'Длина острия'!\n";
+                            break;
+                        case ParameterType.BindingLength:
+                            BindingLengthLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не введено значение в поле " +
+                                "'Длина крепления'!\n";
+                            break;
+                        case ParameterType.BladeWidth:
+                            BladeWidthLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не введено значение в поле " +
+                                "'Ширина клинка'!\n";
+                            break;
+                        case ParameterType.BladeThickness:
+                            BladeThickLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не введено значение в поле " +
+                                "'Толщина клинка'!\n";
+                            break;
+                        case ParameterType.EdgeWidth:
+                            EdgeWidthLabel.ForeColor = Color.Red;
+                            TextBoxError.Text += "Не введено значение в поле " +
+                                "'Ширина Лезвия'!\n";
+                            break;
+                    }
                 }
                 return false;
             }
@@ -915,7 +896,7 @@ namespace GUI
             }
             catch (ParameterException ex)
             {
-                //TODO: refactor DONE
+                //TODO: refactor
                 TextBoxBladeThickness.ForeColor = Color.Red;
                 if (ex.ExceptionType == ExceptionType.InvalidException)
                 {
