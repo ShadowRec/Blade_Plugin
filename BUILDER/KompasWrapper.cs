@@ -44,6 +44,16 @@ namespace KompasBuilder
         /// </summary>
         private ksEntity _edgeSketch;
         /// <summary>
+        /// Поле, хранящее скетч, направляющий заточку серрейтора
+        /// </summary>
+        private ksEntity _serreitorDircectionSketch;
+        /// <summary>
+        /// Поле, хранящее скетч, формирующий заточку серрейтора
+        /// </summary>
+        private ksEntity _serreitoredgeSketch;
+        /// <summary>
+        /// Поле, хранящее скетч отверстий
+        /// <summary>
         /// Поле, хранящее скетч отверстий
         /// </summary>
         private ksEntity _holesSketch;
@@ -220,7 +230,44 @@ namespace KompasBuilder
                         (short)Obj3dType.o3d_planeXOY));
                 }
             }
-
+            if (target == "SerreitorDirection")
+            {
+                if (_edgeDircectionSketch == null)
+                {
+                    CreateSketch(
+                        (short)Obj3dType.o3d_planeXOY,
+                        ref _serreitorDircectionSketch);
+                }
+                else
+                {
+                    _sketchDefinition =
+                        (ksSketchDefinition)
+                        _serreitorDircectionSketch.GetDefinition();
+                    _sketchDefinition.SetPlane((ksEntity)
+                        _part.GetDefaultEntity(
+                        (short)Obj3dType.o3d_planeXOY));
+                }
+                _editStatus = true;
+            }
+            if (target == "SerreitorEdge")
+            {
+                if (_serreitoredgeSketch == null)
+                {
+                    CreateSketch(
+                        (short)Obj3dType.o3d_planeXOZ,
+                        ref _serreitoredgeSketch);
+                }
+                else
+                {
+                    _sketchDefinition =
+                        (ksSketchDefinition)
+                        _serreitoredgeSketch.GetDefinition();
+                    _sketchDefinition.SetPlane((ksEntity)
+                        _part.GetDefaultEntity(
+                        (short)Obj3dType.o3d_planeXOZ));
+                }
+                _editStatus = true;
+            }
             _sketchEdit =
                 (ksDocument2D)_sketchDefinition.BeginEdit();
         }

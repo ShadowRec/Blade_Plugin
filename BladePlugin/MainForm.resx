@@ -1856,10 +1856,10 @@
         37r3XvfuvdEy+aP/ABaPjf8A+Lk/Gj/34FJ7GPJn+5G//wDSovv+0d+om92/9w+Rv/Fp2j/tOh6//9k=
 </value>
   </data>
-  <metadata name="Max_Min_Value.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+  <metadata name="SerreitorToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>178, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
+    <value>93</value>
   </metadata>
 </root>

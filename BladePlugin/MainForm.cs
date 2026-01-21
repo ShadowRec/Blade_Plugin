@@ -59,6 +59,14 @@ namespace GUI
         /// Текущее значение ширины лезвия
         /// </summary>
         private double _edgeWidthCurrent;
+        /// <summary>
+        /// Текущее значение длины серрейтора
+        /// </summary>
+        private double _serreitorLengthCurrent;
+        /// <summary>
+        /// Текущее значение глубины серрейтора
+        /// </summary>
+        private double _serreitorDepthCurrent;
 
         //TODO: rsdn done?
         /// <summary>
@@ -154,6 +162,59 @@ namespace GUI
             ComboBoxTypeBlade.SelectedIndex = 0;
             ComboBoxTypeBinding.SelectedIndex = 2;
             CheckBoxPeakBlade.Checked = true;
+
+            //Установка Длины серрейтора по умолчанию
+            _parameters.NumericalParameters[
+                ParameterType.SerreitorLength]
+                .Value = 90;
+            _serreitorLengthCurrent = 90;
+
+            _parameters.SetDependencies(
+                _parameters.NumericalParameters[
+                    ParameterType.BladeLength],
+                _parameters.NumericalParameters[
+                    ParameterType.SerreitorLength],
+                3/10, 6/10
+            );
+
+            UpdateToolTip(
+                SerreitorLengthTextBox,
+                _parameters.NumericalParameters[
+                    ParameterType.SerreitorLength]
+                    .MaxValue,
+                _parameters.NumericalParameters[
+                    ParameterType.SerreitorLength]
+                    .MinValue
+            );
+
+            //Установка Длины серрейтора по умолчанию
+            _parameters.NumericalParameters[
+                ParameterType.SerreitorDepth]
+                .Value = 4.2;
+            _serreitorLengthCurrent = 4.2;
+
+            _parameters.SetDependencies(
+                _parameters.NumericalParameters[
+                    ParameterType.EdgeWidth],
+                _parameters.NumericalParameters[
+                    ParameterType.SerreitorDepth],
+                3 / 10, 6 / 10
+            );
+
+            UpdateToolTip(
+                SerreitorDepthTextBox,
+                _parameters.NumericalParameters[
+                    ParameterType.SerreitorDepth]
+                    .MaxValue,
+                _parameters.NumericalParameters[
+                    ParameterType.SerreitorDepth]
+                    .MinValue
+            );
+
+            ///Установка типа серрейтора по умолчанию
+            _parameters.SerreitorType = SerreitorType.AlternationSerreitor;
+            SerreitorTypeComboBox.SelectedIndex = 0;
+            _parameters.SerreitorExistance = true;
 
             _builder = new Builder();
         }
@@ -772,6 +833,14 @@ namespace GUI
             {
                 TextBoxBladeThickness.Text = _bladeThickCurrent.ToString();
             }
+            if (_serreitorLengthCurrent != 0)
+            {
+                SerreitorLengthTextBox.Text = _serreitorLengthCurrent.ToString();
+            }
+            if (_serreitorDepthCurrent != 0)
+            {
+                SerreitorDepthTextBox.Text = _serreitorDepthCurrent.ToString();
+            }
         }
 
         /// <summary>
@@ -953,6 +1022,129 @@ namespace GUI
                 _builder.BuildBlade(_parameters);
                 Console.Write("Starting Building");
             }
+        }
+        /// <summary>
+        /// Функция, выполняющая действия при выходе
+        /// с текст бокса "Длина серрейтора"
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший данную функцию</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        private void SerreitorLengthTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (SerreitorLengthTextBox.Text != "")
+                {
+                    double value = 0;
+                    if (double.TryParse(SerreitorLengthTextBox.Text,
+                        out value)
+                        || value != 0)
+                    {
+                        _parameters.NumericalParameters[
+                        ParameterType.SerreitorLength].Value = value;
+                        _serreitorLengthCurrent = value;
+                    }
+                    else
+                    {
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
+                    }
+                }
+                else
+                {
+                    if (_serreitorLengthCurrent != 0)
+                    {
+                        SerreitorLengthTextBox.Text =
+                            _serreitorLengthCurrent.ToString();
+                    }
+                }
+                SetDefault();
+            }
+            catch (ParameterException ex)
+            {
+                SerreitorLengthTextBox.ForeColor = Color.Red;
+                if (ex.ExceptionType == ExceptionType.InvalidException)
+                {
+                    TextBoxError.Text += "В поле 'Длина серрейтора' было " +
+                        "введено некорректное значение /n";
+                }
+
+                if (ex.ExceptionType == ExceptionType.TooBigException)
+                {
+                    TextBoxError.Text += "В поле 'Длина серрейтора' было " +
+                        "введено значение, что меньше диапазона " +
+                        "допустимых значений!/n";
+                }
+
+                if (ex.ExceptionType == ExceptionType.TooSmallException)
+                {
+                    TextBoxError.Text += "В поле 'Длина серрейтора' было " +
+                        "введено значение, что меньше диапазона " +
+                        "допустимых значений!/n";
+                }
+            }
+        }
+
+        private void SerreitorDepthTextBox_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                if (SerreitorDepthTextBox.Text != "")
+                {
+                    double value = 0;
+                    if (double.TryParse(SerreitorDepthTextBox.Text,
+                        out value)
+                        || value != 0)
+                    {
+                        _parameters.NumericalParameters[
+                        ParameterType.SerreitorDepth].Value = value;
+                        _serreitorDepthCurrent = value;
+                    }
+                    else
+                    {
+                        throw new ParameterException(
+                            ExceptionType.InvalidException);
+                    }
+                }
+                else
+                {
+                    if (_serreitorDepthCurrent != 0)
+                    {
+                        SerreitorDepthTextBox.Text =
+                            _serreitorDepthCurrent.ToString();
+                    }
+                }
+                SetDefault();
+            }
+            catch (ParameterException ex)
+            {
+                SerreitorDepthTextBox.ForeColor = Color.Red;
+                if (ex.ExceptionType == ExceptionType.InvalidException)
+                {
+                    TextBoxError.Text += "В поле 'Глубина серрейтора' было " +
+                        "введено некорректное значение /n";
+                }
+
+                if (ex.ExceptionType == ExceptionType.TooBigException)
+                {
+                    TextBoxError.Text += "В поле 'Глубина серрейтора' было " +
+                        "введено значение, что меньше диапазона " +
+                        "допустимых значений!/n";
+                }
+
+                if (ex.ExceptionType == ExceptionType.TooSmallException)
+                {
+                    TextBoxError.Text += "В поле 'Глубина серрейтора' было " +
+                        "введено значение, что меньше диапазона " +
+                        "допустимых значений!/n";
+                }
+            }
+        }
+
+        private void serreitorCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _parameters.SerreitorExistance = serreitorCheckBox.Checked;
+            SetDefault();
         }
     }
 }

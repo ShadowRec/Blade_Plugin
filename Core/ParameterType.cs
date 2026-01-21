@@ -43,7 +43,18 @@ namespace Core
         /// <summary>
         /// Тип клинка
         /// </summary>
-        BladeType
-
+        BladeType,
+        /// <summary>
+        /// Тип серрейтора
+        /// </summary>
+        SerreitorType,
+        /// <summary>
+        /// Глубина серрейтора
+        /// </summary>
+        SerreitorDepth,
+        /// <summary>
+        /// Длина серрейтора
+        /// </summary>
+        SerreitorLength
     }
 }

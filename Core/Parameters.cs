@@ -42,6 +42,12 @@ namespace Core
             //Инициализация параметра длины крепления
             NumericalParameter binlength = new NumericalParameter();
 
+            //Инициализация параметра длины серрейтора
+            NumericalParameter serrlength = new NumericalParameter();
+
+            //Инициализация параметра глубины серрейтора
+            NumericalParameter serrdepth =  new NumericalParameter();
+
             //Занесения значений параметров в словарь 
             //с соответствующими ключами
             NumericalParameters = new Dictionary<
@@ -53,6 +59,8 @@ namespace Core
                 [ParameterType.EdgeWidth] = edgewidth,
                 [ParameterType.PeakLenght] = peaklength,
                 [ParameterType.BindingLength] = binlength,
+                [ParameterType.SerreitorLength] = serrlength,
+                [ParameterType.SerreitorDepth] = serrdepth
             };
         }
 
@@ -72,6 +80,13 @@ namespace Core
         /// Тип крепления
         /// </summary>
         public BindingType BindingType { get; set; }
+
+        /// <summary>
+        /// Тип серрейтора
+        /// </summary>
+        public SerreitorType SerreitorType { get; set; }
+
+        public bool SerreitorExistance { get; set; }
 
         /// <summary>
         /// Перечень численных параметров
