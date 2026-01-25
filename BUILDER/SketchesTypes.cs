@@ -13,5 +13,7 @@ namespace SketchesType
         public const string EdgeDirectionString = "EdgeDirection";
         public const string EdgeString = "Edge";
         public const string HolesString = "Holes";
+        public const string SerreitorDirectionString = "SerreitorDirection";
+        public const string SerreitorEdgeString = "SerreitorEdge";
     }
 }

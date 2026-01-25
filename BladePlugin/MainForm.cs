@@ -1,24 +1,32 @@
-﻿using System;
+﻿using Core;
+using Kompas6API5;
+using KompasAPI7;
+using KompasBuilder;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using KompasAPI7;
-using Kompas6API5;
-using System.Runtime.InteropServices;
-using Core;
-using KompasBuilder;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GUI
 {
-    //TODO: rsdn
+    //TODO: rsdn done
+    /// <summary>
+    /// Класс формы главного меню
+    /// </summary>
     public partial class MainForm : Form
     {
-        //TODO: rsdn
+        //TODO: rsdn done?
+        /// <summary>
+        /// Конструктор класса MainForm
+        /// где расставляются все компоненты
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -34,32 +42,74 @@ namespace GUI
         /// </summary>
         private Parameters _parameters;
 
-        //TODO: refactor
-        /// <summary>
-        /// Текущее значение длины клинка
-        /// </summary>
-        private double _bladeLengthCurrent;
-        /// <summary>
-        /// Текущее значение длины крепления
-        /// </summary>
-        private double _bindingLengthCurrent;
-        /// <summary>
-        /// Текущее значение длины острия
-        /// </summary>
-        private double _peakLengthCurrent;
-        /// <summary>
-        /// Текущее значение ширины клинка
-        /// </summary>
-        private double _bladeWidthCurrent;
-        /// <summary>
-        /// Текущее значение толщины клинка
-        /// </summary>
-        private double _bladeThickCurrent;
-        /// <summary>
-        /// Текущее значение ширины лезвия
-        /// </summary>
-        private double _edgeWidthCurrent;
+        private Dictionary<ParameterType, double> _currentParameters =
+            new Dictionary<ParameterType, double>() 
+            {
+                [ParameterType.BladeLength] = 300,
+                [ParameterType.BladeWidth] = 40,
+                [ParameterType.BladeThickness] = 2,
+                [ParameterType.EdgeWidth] = 14,
+                [ParameterType.PeakLenght] = 40,
+                [ParameterType.BindingLength] = 300,
+                [ParameterType.SerreitorLength] = 90,
+                [ParameterType.SerreitorDepth] = 4.2
+            };
+        private Dictionary<ParameterType, string> _parametersStrings=
+            new Dictionary<ParameterType, string>()
+            {
+                [ParameterType.BladeLength] = "В поле 'Длина клинка'",
+                [ParameterType.BladeWidth] = "В поле 'Ширина клинка'",
+                [ParameterType.BladeThickness] = "В поле 'толщина Клинка'",
+                [ParameterType.EdgeWidth] = "В поле 'Ширина лезвия'",
+                [ParameterType.PeakLenght] = "В поле 'Длина острия'",
+                [ParameterType.BindingLength] = "В поле 'Длина крепление'",
+                [ParameterType.SerreitorLength] = "В поле 'Длина серрейтора'",
+                [ParameterType.SerreitorDepth] = "В поле 'Глубина серрейтора'"
+            };
+        private Dictionary<ExceptionType, string> _exceptionsStrings =
+            new Dictionary<ExceptionType, string>()
+            {
+                [ExceptionType.NullException] = "не было значения!",
+                [ExceptionType.InvalidException] = "было введено неккоректное значение!",
+                [ExceptionType.TooSmallException] = "было введено значение, что меньше диапазона допустимых значений!",
+                [ExceptionType.TooBigException] = "было введено значение, что больше диапазона допустимых значений!",
+                [ExceptionType.RatioNegativeException] = "возникла ошибка на уровне кода, введенное соотношение ниже нуля!",
+                [ExceptionType.MaxValueNegativeException] = "возникла ошибка на уровне кода, введенное максимальное значение ниже нуля!",
+                [ExceptionType.MinValueNegativeException] = "возникла ошибка на уровне кода, введенное минимальное значение ниже нуля!",
+                [ExceptionType.KompasOpenErrorException] = "Возникла ошибка при попытке открытия Kompas-3D",
+                [ExceptionType.MaxLesserrMinException] = "возникла ошибка на уровне кода, максимальное значение меньше минимального!",
+                [ExceptionType.MinGreaterMaxException] = "возникла ошибка на уровне кода, минимальное значение больше максимального!",
+                [ExceptionType.PartBuildingErrorException] = "Возникла ошибка при поппытке построить деталь!"
+            };
+        private Dictionary<ParameterType, Control> _parametersTextBoxes;
+        private Dictionary<ParameterType, Control> _parametersLabels;
 
+        private Dictionary<(ParameterType, ParameterType),
+            (double, double)> _parametersRatios =
+            new Dictionary<(ParameterType, ParameterType),
+                (double, double)>()
+            {
+                [(ParameterType.BladeLength, ParameterType.PeakLenght)] 
+                = (1.0 / 6.0, 0),
+                [(ParameterType.BladeLength, ParameterType.BindingLength)] 
+                = (1,0),
+                [(ParameterType.BladeWidth, ParameterType.EdgeWidth)] = 
+                (3.0 / 6.0,
+                1.0 / 6.0),
+                [(ParameterType.BladeLength, ParameterType.SerreitorLength)]=
+                (3.0 / 10, 15.0 / 100.0),
+                [(ParameterType.EdgeWidth, ParameterType.SerreitorDepth)]=
+                (3.0 / 10, 15.0 / 100.0)
+            };
+        private Dictionary<BindingType, (double,double)> _bindingRatios =
+            new Dictionary<BindingType, (double, double)>()
+            {
+                [BindingType.ForOverlays] = (1, 0),
+                [BindingType.Insert] = (3.0/4.0,0),
+                [BindingType.Through] = (1, 0),
+                [BindingType.None] = (1, 0)
+            };
+        //TODO: rsdn done?
         /// <summary>
         /// Функция, выполняющая действия при запуске программы
         /// </summary>
@@ -67,79 +117,60 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
+            _builder = new Builder();
+            _parametersTextBoxes = new
+            Dictionary<ParameterType, Control>()
+            {
+                [ParameterType.BladeLength] = TextBoxLength,
+                [ParameterType.BladeWidth] = TextBoxWidth,
+                [ParameterType.BladeThickness] = TextBoxBladeThickness,
+                [ParameterType.EdgeWidth] = TextBoxEdgeWidth,
+                [ParameterType.PeakLenght] = TextBoxPeakLength,
+                [ParameterType.BindingLength] = TextBoxBindingLength,
+                [ParameterType.SerreitorLength] = SerreitorLengthTextBox,
+                [ParameterType.SerreitorDepth] = SerreitorDepthTextBox
+            };
+            _parametersLabels = new Dictionary<ParameterType, Control>()
+            {
+                [ParameterType.BladeLength] = BladeLengthLabel,
+                [ParameterType.BladeWidth] = BladeWidthLabel,
+                [ParameterType.BladeThickness] = BladeThickLabel,
+                [ParameterType.EdgeWidth] = EdgeWidthLabel,
+                [ParameterType.PeakLenght] = PeakLengthLabel,
+                [ParameterType.BindingLength] = BindingLabel,
+                [ParameterType.SerreitorLength] = SerreitorLengthLabel,
+                [ParameterType.SerreitorDepth] = SerreitorDepthLabel
+            };
             _parameters = new Parameters();
-
             //Установка длины по умолчанию
             _parameters.NumericalParameters[ParameterType.BladeLength]
                 .Value = 300;
-            _bladeLengthCurrent = 300;
+            SetDependenciesAndUpdate(ParameterType.BladeLength,
+                ParameterType.PeakLenght);
+            SetDependenciesAndUpdate(ParameterType.BladeLength,
+                ParameterType.BindingLength);
 
-            _parameters.SetDependencies(
-                _parameters.NumericalParameters[ParameterType.BladeLength],
-                _parameters.NumericalParameters[ParameterType.PeakLenght],
-                1.0 / 6.0, 0
-            );
-
-            UpdateToolTip(
-                TextBoxPeakLength,
-                _parameters.NumericalParameters[ParameterType.PeakLenght]
-                    .MaxValue,
-                _parameters.NumericalParameters[ParameterType.PeakLenght]
-                    .MinValue
-            );
-
-            _parameters.SetDependencies(
-                _parameters.NumericalParameters[ParameterType.BladeLength],
-                _parameters.NumericalParameters[ParameterType.BindingLength],
-                1, 0
-            );
-
-            UpdateToolTip(
-                TextBoxBindingLength,
-                _parameters.NumericalParameters[ParameterType.BindingLength]
-                    .MaxValue,
-                _parameters.NumericalParameters[ParameterType.BindingLength]
-                    .MinValue
-            );
-
-            //Установка ширины по умолчанию
             _parameters.NumericalParameters[ParameterType.BladeWidth]
                 .Value = 40;
-            _bladeWidthCurrent = 40;
 
-            _parameters.SetDependencies(
-                _parameters.NumericalParameters[ParameterType.BladeWidth],
-                _parameters.NumericalParameters[ParameterType.EdgeWidth],
-                3.0 / 6.0, 1.0 / 6.0
-            );
-
-            UpdateToolTip(
-                TextBoxEdgeWidth,
-                _parameters.NumericalParameters[ParameterType.EdgeWidth]
-                    .MaxValue,
-                _parameters.NumericalParameters[ParameterType.EdgeWidth]
-                    .MinValue
-            );
+            SetDependenciesAndUpdate(ParameterType.BladeWidth,
+                ParameterType.EdgeWidth);
 
             //Установка толщины по умолчанию
             _parameters.NumericalParameters[ParameterType.BladeThickness]
                 .Value = 2;
-            _bladeThickCurrent = 2;
 
             //Установка длины острия по умолчанию
             _parameters.NumericalParameters[ParameterType.PeakLenght]
                 .Value = 40;
-            _peakLengthCurrent = 40;
 
             //Установка ширины лезвия по умолчанию
             _parameters.NumericalParameters[ParameterType.EdgeWidth]
                 .Value = 14;
-            _edgeWidthCurrent = 14;
 
             //Установка длины крепления по умолчанию
             _parameters.NumericalParameters[ParameterType.BindingLength]
                 .Value = 300;
-            _bindingLengthCurrent = 300;
 
             //Установка наличия острия по умолчанию (Есть)
             _parameters.BladeExistence = true;
@@ -149,12 +180,28 @@ namespace GUI
 
             //Установка типа крепления по умолчанию (Накладное)
             _parameters.BindingType = BindingType.ForOverlays;
-
             ComboBoxTypeBlade.SelectedIndex = 0;
             ComboBoxTypeBinding.SelectedIndex = 2;
             CheckBoxPeakBlade.Checked = true;
 
-            _builder = new Builder();
+            //Установка Длины серрейтора по умолчанию
+            SetDependenciesAndUpdate(ParameterType.BladeLength,
+                ParameterType.SerreitorLength);
+            _parameters.NumericalParameters[
+                ParameterType.SerreitorLength]
+                .Value = 90;
+
+            //Установка Глубины серрейтора по умолчанию
+            SetDependenciesAndUpdate(ParameterType.EdgeWidth,
+                ParameterType.SerreitorDepth);
+            _parameters.NumericalParameters[
+                ParameterType.SerreitorDepth]
+                .Value = 4.2;
+            ///Установка типа серрейтора по умолчанию
+            _parameters.SerreitorType = SerreitorType.AlternationSerreitor;
+            SerreitorTypeComboBox.SelectedIndex = 0;
+            _parameters.SerreitorExistance = true;
+            serreitorCheckBox.Checked = true;
         }
 
         /// <summary>
@@ -165,126 +212,13 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void TextBoxLengthLeave(object sender, EventArgs e)
         {
-            try
-            {
-                if (TextBoxLength.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(TextBoxLength.Text, out value)
-                        || value != 0)
-                    {
-                        _parameters.NumericalParameters[
-                            ParameterType.BladeLength].Value = value;
-                        _bladeLengthCurrent = value;
-
-                        _parameters.SetDependencies(
-                            _parameters.NumericalParameters[
-                                ParameterType.BladeLength],
-                            _parameters.NumericalParameters[
-                                ParameterType.PeakLenght],
-                            1.0 / 6.0, 0
-                        );
-
-                        UpdateToolTip(
-                            TextBoxPeakLength,
-                            _parameters.NumericalParameters[
-                                ParameterType.PeakLenght].MaxValue,
-                            _parameters.NumericalParameters[
-                                ParameterType.PeakLenght].MinValue
-                        );
-
-                        CheckDepended(TextBoxPeakLength,
-                            ParameterType.PeakLenght, "Длина острия");
-
-                        if ((BindingType)ComboBoxTypeBinding.SelectedIndex
-                            == BindingType.Insert)
-                        {
-                            _parameters.SetDependencies(
-                                _parameters.NumericalParameters[
-                                    ParameterType.BladeLength],
-                                _parameters.NumericalParameters[
-                                    ParameterType.BindingLength],
-                                3.0 / 4.0, 0
-                            );
-
-                            UpdateToolTip(
-                                TextBoxBindingLength,
-                                _parameters.NumericalParameters[
-                                    ParameterType.BindingLength].MaxValue,
-                                _parameters.NumericalParameters[
-                                    ParameterType.BindingLength].MinValue
-                            );
-
-                            CheckDepended(TextBoxBindingLength,
-                                ParameterType.BindingLength,
-                                "Длина Крепления");
-                        }
-
-                        if ((BindingType)ComboBoxTypeBinding.SelectedIndex
-                            == BindingType.Through ||
-                            (BindingType)ComboBoxTypeBinding.SelectedIndex
-                            == BindingType.ForOverlays)
-                        {
-                            _parameters.SetDependencies(
-                                _parameters.NumericalParameters[
-                                    ParameterType.BladeLength],
-                                _parameters.NumericalParameters[
-                                    ParameterType.BindingLength],
-                                1, 0
-                            );
-
-                            UpdateToolTip(
-                                TextBoxBindingLength,
-                                _parameters.NumericalParameters[
-                                    ParameterType.BindingLength].MaxValue,
-                                _parameters.NumericalParameters[
-                                    ParameterType.BindingLength].MinValue
-                            );
-
-                            CheckDepended(TextBoxBindingLength,
-                                ParameterType.BindingLength,
-                                "Длина Крепления");
-                        }
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-                else
-                {
-                    if (_bladeLengthCurrent != 0)
-                    {
-                        TextBoxLength.Text = _bladeLengthCurrent.ToString();
-                    }
-                }
-                SetDefault();
-            }
-            //TODO: refactor DONE
-            catch (ParameterException ex)
-            {
-                TextBoxLength.ForeColor = Color.Red;
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += "В поле 'Длина Клинка' было " +
-                        "введено некорректное значение /n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooSmallException)
-                {
-                    TextBoxError.Text += "В поле 'Длина Клинка' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!/n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += "В поле 'Длина Клинка' было " +
-                        "введено значение, что больше диапазона " +
-                        "допустимых значений!/n";
-                }
-            }
+            ParseTextBox(ParameterType.BladeLength,
+               new ParameterType[3]
+               {
+                   ParameterType.BindingLength,
+                   ParameterType.PeakLenght,
+                   ParameterType.SerreitorLength,
+               });
         }
 
         /// <summary>
@@ -310,56 +244,8 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void TextBoxPeakLengthLeave(object sender, EventArgs e)
         {
-            try
-            {
-                if (TextBoxPeakLength.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(TextBoxPeakLength.Text, out value)
-                        || value != 0)
-                    {
-                        _parameters.NumericalParameters[
-                            ParameterType.PeakLenght].Value = value;
-                        _peakLengthCurrent = value;
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-                else
-                {
-                    if (_peakLengthCurrent != 0)
-                    {
-                        TextBoxPeakLength.Text = _peakLengthCurrent.ToString();
-                    }
-                }
-                SetDefault();
-            }
-            catch (ParameterException ex)
-            {
-                TextBoxPeakLength.ForeColor = Color.Red;
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += "В поле 'Длина острия' было " +
-                        "введено некорректное значение /n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooSmallException)
-                {
-                    TextBoxError.Text += "В поле 'Длина острия' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!/n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += "В поле 'Длина острия' было " +
-                        "введено значение, что больше диапазона " +
-                        "допустимых значений!/n";
-                }
-            }
+            ParseTextBox(ParameterType.PeakLenght,
+               new ParameterType[0]);
         }
 
         /// <summary>
@@ -370,57 +256,8 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void TextBoxBindingLengthLeave(object sender, EventArgs e)
         {
-            try
-            {
-                if (TextBoxBindingLength.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(TextBoxBindingLength.Text, out value)
-                        || value != 0)
-                    {
-                        _parameters.NumericalParameters[
-                            ParameterType.BindingLength].Value = value;
-                        _bindingLengthCurrent = value;
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-                else
-                {
-                    if (_bindingLengthCurrent != 0)
-                    {
-                        TextBoxBindingLength.Text =
-                            _bindingLengthCurrent.ToString();
-                    }
-                }
-                SetDefault();
-            }
-            catch (ParameterException ex)
-            {
-                TextBoxBindingLength.ForeColor = Color.Red;
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += "В поле 'Длина крепления' было " +
-                        "введено некорректное значение \n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooSmallException)
-                {
-                    TextBoxError.Text += "В поле 'Длина крепления' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += "В поле 'Длина крепления' было " +
-                        "введено значение, что больше диапазона " +
-                        "допустимых значений!\n";
-                }
-            }
+            ParseTextBox(ParameterType.BindingLength,
+               new ParameterType[0]);
         }
 
         /// <summary>
@@ -431,72 +268,11 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void TextBoxWidthLeave(object sender, EventArgs e)
         {
-            try
-            {
-                if (TextBoxWidth.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(TextBoxWidth.Text, out value)
-                        || value != 0)
-                    {
-                        _parameters.NumericalParameters[
-                            ParameterType.BladeWidth].Value = value;
-                        _bladeWidthCurrent = value;
-
-                        _parameters.SetDependencies(
-                            _parameters.NumericalParameters[
-                                ParameterType.BladeWidth],
-                            _parameters.NumericalParameters[
-                                ParameterType.EdgeWidth],
-                            3.0 / 6.0, 1.0 / 6.0
-                        );
-
-                        UpdateToolTip(
-                            TextBoxEdgeWidth,
-                            _parameters.NumericalParameters[
-                                ParameterType.EdgeWidth].MaxValue,
-                            _parameters.NumericalParameters[
-                                ParameterType.EdgeWidth].MinValue
-                        );
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-                else
-                {
-                    if (_bladeWidthCurrent != 0)
-                    {
-                        TextBoxWidth.Text = _bladeWidthCurrent.ToString();
-                    }
-                }
-                SetDefault();
-            }
-            catch (ParameterException ex)
-            {
-                TextBoxWidth.ForeColor = Color.Red;
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += "В поле 'Ширина клинка' было " +
-                        "введено некорректное значение /n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += "В поле 'Ширина клинка' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!/n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooSmallException)
-                {
-                    TextBoxError.Text += "В поле 'Ширина клинка' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!/n";
-                }
-            }
+            ParseTextBox(ParameterType.BladeWidth,
+               new ParameterType[1]
+               {
+                   ParameterType.EdgeWidth
+               });
         }
 
         /// <summary>
@@ -507,56 +283,8 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void TextBoxEdgeWidthLeave(object sender, EventArgs e)
         {
-            try
-            {
-                if (TextBoxEdgeWidth.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(TextBoxEdgeWidth.Text, out value)
-                        || value != 0)
-                    {
-                        _parameters.NumericalParameters[
-                            ParameterType.EdgeWidth].Value = value;
-                        _edgeWidthCurrent = value;
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-                else
-                {
-                    if (_edgeWidthCurrent != 0)
-                    {
-                        TextBoxEdgeWidth.Text = _edgeWidthCurrent.ToString();
-                    }
-                }
-                SetDefault();
-            }
-            catch (ParameterException ex)
-            {
-                TextBoxEdgeWidth.ForeColor = Color.Red;
-                if (ex.Message == "value_is_invalid")
-                {
-                    TextBoxError.Text += "В поле 'Ширина лезвия' было " +
-                        "введено некорректное значение \n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += "В поле 'Ширина лезвия' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!\n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += "В поле 'Ширина лезвия' было " +
-                        "введено значение, что больше диапазона " +
-                        "допустимых значений!\n";
-                }
-            }
+            ParseTextBox(ParameterType.EdgeWidth,
+                new ParameterType[0]);
         }
 
         /// <summary>
@@ -573,6 +301,11 @@ namespace GUI
                 _parameters.BindingType =
                     (BindingType)ComboBoxTypeBinding.SelectedIndex;
 
+                _parametersRatios[(ParameterType.BladeLength,
+                    ParameterType.BindingType)]
+                    =
+                    _bindingRatios[(BindingType)
+                    ComboBoxTypeBinding.SelectedIndex];
                 if ((BindingType)ComboBoxTypeBinding.SelectedIndex
                     == BindingType.None)
                 {
@@ -587,109 +320,18 @@ namespace GUI
                     if ((BindingType)ComboBoxTypeBinding.SelectedIndex
                         == BindingType.Insert)
                     {
-                        _parameters.SetDependencies(
-                            _parameters.NumericalParameters[
-                                ParameterType.BladeLength],
-                            _parameters.NumericalParameters[
-                                ParameterType.BindingLength],
-                            3.0 / 4.0, 0
-                        );
+                        SetDependenciesAndUpdate(ParameterType.BladeLength, ParameterType.BindingLength);
 
-                        UpdateToolTip(
-                            TextBoxBindingLength,
-                            _parameters.NumericalParameters[
-                                ParameterType.BindingLength].MaxValue,
-                            _parameters.NumericalParameters[
-                                ParameterType.BindingLength].MinValue
-                        );
-
-                        CheckDepended(TextBoxBindingLength,
-                            ParameterType.BindingLength, "Длина Крепления");
+                        TryParseTextBox(ParameterType.BindingLength);
                         TextBoxBindingLength.ReadOnly = false;
-                    }
-
-                    if ((BindingType)ComboBoxTypeBinding.SelectedIndex
-                        == BindingType.Through ||
-                        (BindingType)ComboBoxTypeBinding.SelectedIndex
-                        == BindingType.ForOverlays)
-                    {
-                        _parameters.SetDependencies(
-                            _parameters.NumericalParameters[
-                                ParameterType.BladeLength],
-                            _parameters.NumericalParameters[
-                                ParameterType.BindingLength],
-                            1, 0
-                        );
-
-                        UpdateToolTip(
-                            TextBoxBindingLength,
-                            _parameters.NumericalParameters[
-                                ParameterType.BindingLength].MaxValue,
-                            _parameters.NumericalParameters[
-                                ParameterType.BindingLength].MinValue
-                        );
-
-                        CheckDepended(TextBoxBindingLength,
-                            ParameterType.BindingLength, "Длина Крепления");
-                        TextBoxBindingLength.ReadOnly = false;
-                    }
+                    }                   
                 }
                 SetDefault();
             }
         }
 
-        /// <summary>
-        /// Проверка зависимых параметров
-        /// </summary>
-        /// <param name="target">Ссылка на текстовое поле для парсинга</param>
-        /// <param name="parametertype">Тип зависимого параметра</param>
-        /// <param name="target_label">Имя параметра для отображения 
-        /// в окне ошибок</param>
-        private void CheckDepended(object target, ParameterType parametertype,
-            string target_label)
-        {
-            Control target_control = (Control)target;
-            try
-            {
-                if (target_control.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(target_control.Text, out value))
-                    {
-                        _parameters.NumericalParameters[parametertype].Value
-                            = value;
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-            }
-            catch (ParameterException ex)
-            {
-                target_control.ForeColor = Color.Red;
-                if (ex.Message == "value_is_invalid")
-                {
-                    TextBoxError.Text += $"В поле '{target_label}' было " +
-                        "введено некорректное значение /n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += $"В поле '{target_label}' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!/n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += $"В поле '{target_label}' было " +
-                        "введено значение, что больше диапазона " +
-                        "допустимых значений!/n";
-                }
-            }
-        }
+        
+        
 
         /// <summary>
         /// Функция, выполняющая действия при выходе
@@ -725,51 +367,15 @@ namespace GUI
         /// </summary>
         private void SetDefault()
         {
-            TextBoxLength.ForeColor = Color.Black;
-            TextBoxPeakLength.ForeColor = Color.Black;
-            TextBoxBindingLength.ForeColor = Color.Black;
-            TextBoxWidth.ForeColor = Color.Black;
-            TextBoxEdgeWidth.ForeColor = Color.Black;
-            TextBoxBladeThickness.ForeColor = Color.Black;
-            TextBoxError.Text = "";
-
-            BindingLabel.ForeColor = Color.Black;
-            BladeTypeLabel.ForeColor = Color.Black;
-            BladeLengthLabel.ForeColor = Color.Black;
-            PeakLengthLabel.ForeColor = Color.Black;
-            BindingLengthLabel.ForeColor = Color.Black;
-            BladeWidthLabel.ForeColor = Color.Black;
-            BladeThickLabel.ForeColor = Color.Black;
-            EdgeWidthLabel.ForeColor = Color.Black;
-
-            if (_bladeLengthCurrent != 0)
+            if (_parametersLabels != null && _parametersTextBoxes != null)
             {
-                TextBoxLength.Text = _bladeLengthCurrent.ToString();
-            }
+                foreach (var parameter in _currentParameters)
+                {
+                    _parametersLabels[parameter.Key].ForeColor = Color.Black;
+                    _parametersTextBoxes[parameter.Key].ForeColor = Color.Black;
+                    _parametersTextBoxes[parameter.Key].Text = _currentParameters[parameter.Key].ToString();
 
-            if (_peakLengthCurrent != 0)
-            {
-                TextBoxPeakLength.Text = _peakLengthCurrent.ToString();
-            }
-
-            if (_bindingLengthCurrent != 0)
-            {
-                TextBoxBindingLength.Text = _bindingLengthCurrent.ToString();
-            }
-
-            if (_bladeWidthCurrent != 0)
-            {
-                TextBoxWidth.Text = _bladeWidthCurrent.ToString();
-            }
-
-            if (_edgeWidthCurrent != 0)
-            {
-                TextBoxEdgeWidth.Text = _edgeWidthCurrent.ToString();
-            }
-
-            if (_bladeThickCurrent != 0)
-            {
-                TextBoxBladeThickness.Text = _bladeThickCurrent.ToString();
+                }
             }
         }
 
@@ -808,52 +414,13 @@ namespace GUI
                 }
                 return true;
             }
+            //TODO: refactor DONE
             catch (ParameterException ex)
             {
-                if (ex.ExceptionType == ExceptionType.NullException)
-                {
-                    switch (ex.ParameterType)
-                    {
-                        case ParameterType.BindingType:
-                            BindingLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не выбран тип крепления!\n";
-                            break;
-                        case ParameterType.BladeType:
-                            BladeTypeLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не выбран тип клинка!\n";
-                            break;
-                        case ParameterType.BladeLength:
-                            BladeLengthLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не введено значение в поле " +
-                                "'Длина клинка'!\n";
-                            break;
-                        case ParameterType.PeakLenght:
-                            PeakLengthLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не введено значение в поле " +
-                                "'Длина острия'!\n";
-                            break;
-                        case ParameterType.BindingLength:
-                            BindingLengthLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не введено значение в поле " +
-                                "'Длина крепления'!\n";
-                            break;
-                        case ParameterType.BladeWidth:
-                            BladeWidthLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не введено значение в поле " +
-                                "'Ширина клинка'!\n";
-                            break;
-                        case ParameterType.BladeThickness:
-                            BladeThickLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не введено значение в поле " +
-                                "'Толщина клинка'!\n";
-                            break;
-                        case ParameterType.EdgeWidth:
-                            EdgeWidthLabel.ForeColor = Color.Red;
-                            TextBoxError.Text += "Не введено значение в поле " +
-                                "'Ширина Лезвия'!\n";
-                            break;
-                    }
-                }
+                _parametersLabels[ex.ParameterType].ForeColor
+                    = Color.Red;
+                    TextBoxError.Text += _parametersStrings[ex.ParameterType]
+                    +_exceptionsStrings[ex.ExceptionType]+"\n";
                 return false;
             }
         }
@@ -866,58 +433,8 @@ namespace GUI
         /// <param name="e">Аргументы, передаваемые с событием вызова</param>
         private void TextBoxBladeThicknessLeave(object sender, EventArgs e)
         {
-            try
-            {
-                if (TextBoxBladeThickness.Text != "")
-                {
-                    double value = 0;
-                    if (double.TryParse(TextBoxBladeThickness.Text, out value)
-                        || value != 0)
-                    {
-                        _parameters.NumericalParameters[
-                            ParameterType.BladeThickness].Value = value;
-                        _bladeThickCurrent = value;
-                    }
-                    else
-                    {
-                        throw new ParameterException(
-                            ExceptionType.InvalidException);
-                    }
-                }
-                else
-                {
-                    if (_bladeThickCurrent != 0)
-                    {
-                        TextBoxBladeThickness.Text =
-                            _bladeThickCurrent.ToString();
-                    }
-                }
-                SetDefault();
-            }
-            catch (ParameterException ex)
-            {
-                //TODO: refactor
-                TextBoxBladeThickness.ForeColor = Color.Red;
-                if (ex.ExceptionType == ExceptionType.InvalidException)
-                {
-                    TextBoxError.Text += "В поле 'Толщина клинка' было " +
-                        "введено некорректное значение /n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooSmallException)
-                {
-                    TextBoxError.Text += "В поле 'Толщина клинка' было " +
-                        "введено значение, что меньше диапазона " +
-                        "допустимых значений!/n";
-                }
-
-                if (ex.ExceptionType == ExceptionType.TooBigException)
-                {
-                    TextBoxError.Text += "В поле 'Толщина клинка' было " +
-                        "введено значение, что больше диапазона " +
-                        "допустимых значений!/n";
-                }
-            }
+            ParseTextBox(ParameterType.BladeThickness,
+                 new ParameterType[0]);
         }
 
         /// <summary>
@@ -934,6 +451,110 @@ namespace GUI
                 _builder.BuildBlade(_parameters);
                 Console.Write("Starting Building");
             }
+        }
+        /// <summary>
+        /// Функция, выполняющая действия при выходе
+        /// с текст бокса "Длина серрейтора"
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший данную функцию</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        private void SerreitorLengthTextBox_Leave(object sender, EventArgs e)
+        {
+            ParseTextBox(ParameterType.SerreitorLength,
+                new ParameterType[0]);
+        }
+
+        private void SerreitorDepthTextBox_Leave(object sender, EventArgs e)
+        {
+            ParseTextBox(ParameterType.SerreitorDepth,
+                new ParameterType[0]);
+        }
+
+        private void serreitorCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _parameters.SerreitorExistance = serreitorCheckBox.Checked;
+            SetDefault();
+        }
+
+        private void ParseTextBox(
+            ParameterType parameterType,
+            ParameterType[] dependentParameterType)
+            {
+            try
+            { 
+            TryParseTextBox(parameterType);
+            for (int i = 0; i < dependentParameterType.Length; i++)
+            {
+                SetDependenciesAndUpdate(parameterType, dependentParameterType[i]);
+                TryParseTextBox(dependentParameterType[i]);
+            }
+            SetDefault();
+            }
+            catch (ParameterException ex)
+            {
+                _parametersTextBoxes[ex.ParameterType].ForeColor = Color.Red;
+                TextBoxError.Text += _parametersStrings[parameterType] +
+               _exceptionsStrings[ex.ExceptionType] + "\n";
+            }
+        }
+   private void TryParseTextBox(ParameterType parameterType)
+        {
+            Control textBox = _parametersTextBoxes[parameterType];
+            try
+                {
+                if (textBox.Text != "")
+                {
+                    double value = 0;
+                    if (double.TryParse(textBox.Text, out value)
+                        || value != 0)
+                    {
+                        _parameters.NumericalParameters[
+                            parameterType].Value = value;
+                        _currentParameters[parameterType] = value;
+                    }
+                    else
+                    {
+                        throw new ParameterException(
+                            ExceptionType.InvalidException, parameterType);
+                    }
+                }
+                else
+                {
+                    if (_currentParameters[parameterType] != 0)
+                    {
+                        textBox.Text =
+                            _currentParameters[parameterType].ToString();
+                    }
+                }
+            }
+            catch(ParameterException ex) 
+            {
+                throw new ParameterException(ex.ExceptionType, parameterType);
+            }
+            
+            //TODO: refactor DONE
+            
+        }
+        private void SetDependenciesAndUpdate(ParameterType parameterType,ParameterType dependentParameter)
+        {
+            _parameters.SetDependencies(
+                _parameters.NumericalParameters[
+                    parameterType],
+                _parameters.NumericalParameters[
+                    dependentParameter],
+                _parametersRatios[(parameterType,
+                dependentParameter)].Item1,
+                _parametersRatios[(parameterType,
+                dependentParameter)].Item2
+            );
+
+            UpdateToolTip(
+                _parametersTextBoxes[dependentParameter],
+                _parameters.NumericalParameters[
+                    dependentParameter].MaxValue,
+                _parameters.NumericalParameters[
+                    dependentParameter].MinValue
+            );
         }
     }
 }
