@@ -56,13 +56,13 @@
             this.SerreitorLengthTextBox = new System.Windows.Forms.TextBox();
             this.SerreitorDepthTextBox = new System.Windows.Forms.TextBox();
             this.serreitorCheckBox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.SerreitorExistanceLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.SerreitorLengthLabel = new System.Windows.Forms.Label();
             this.SerreitorTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.SerreitorTypeLabel = new System.Windows.Forms.Label();
             this.SerreitorToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.label6 = new System.Windows.Forms.Label();
+            this.SerreitorDepthLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -332,15 +332,15 @@
             this.serreitorCheckBox.UseVisualStyleBackColor = true;
             this.serreitorCheckBox.CheckedChanged += new System.EventHandler(this.serreitorCheckBox_CheckedChanged);
             // 
-            // label2
+            // SerreitorExistanceLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label2.Location = new System.Drawing.Point(12, 376);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(211, 25);
-            this.label2.TabIndex = 26;
-            this.label2.Text = "Наличие серрейтора:";
+            this.SerreitorExistanceLabel.AutoSize = true;
+            this.SerreitorExistanceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.SerreitorExistanceLabel.Location = new System.Drawing.Point(12, 376);
+            this.SerreitorExistanceLabel.Name = "SerreitorExistanceLabel";
+            this.SerreitorExistanceLabel.Size = new System.Drawing.Size(211, 25);
+            this.SerreitorExistanceLabel.TabIndex = 26;
+            this.SerreitorExistanceLabel.Text = "Наличие серрейтора:";
             // 
             // label3
             // 
@@ -352,16 +352,16 @@
             this.label3.TabIndex = 28;
             this.label3.Text = "Параметры серрейтора";
             // 
-            // label4
+            // SerreitorLengthLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(12, 473);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(187, 25);
-            this.label4.TabIndex = 29;
-            this.label4.Text = "Длина серрейтора";
+            this.SerreitorLengthLabel.AutoSize = true;
+            this.SerreitorLengthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.SerreitorLengthLabel.ForeColor = System.Drawing.Color.Black;
+            this.SerreitorLengthLabel.Location = new System.Drawing.Point(12, 473);
+            this.SerreitorLengthLabel.Name = "SerreitorLengthLabel";
+            this.SerreitorLengthLabel.Size = new System.Drawing.Size(187, 25);
+            this.SerreitorLengthLabel.TabIndex = 29;
+            this.SerreitorLengthLabel.Text = "Длина серрейтора";
             // 
             // SerreitorTypeComboBox
             // 
@@ -377,15 +377,15 @@
             this.SerreitorTypeComboBox.TabIndex = 32;
             this.SerreitorToolTip.SetToolTip(this.SerreitorTypeComboBox, "Чередующийся /\\^^/\\\r\nПостоянный крупный /\\/\\/\\/\\\r\nПостоянный мелкий ^^^^");
             // 
-            // label5
+            // SerreitorTypeLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label5.Location = new System.Drawing.Point(12, 543);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(160, 25);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "Тип серрейтора";
+            this.SerreitorTypeLabel.AutoSize = true;
+            this.SerreitorTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.SerreitorTypeLabel.Location = new System.Drawing.Point(12, 543);
+            this.SerreitorTypeLabel.Name = "SerreitorTypeLabel";
+            this.SerreitorTypeLabel.Size = new System.Drawing.Size(160, 25);
+            this.SerreitorTypeLabel.TabIndex = 31;
+            this.SerreitorTypeLabel.Text = "Тип серрейтора";
             // 
             // SerreitorToolTip
             // 
@@ -393,31 +393,31 @@
             this.SerreitorToolTip.InitialDelay = 15;
             this.SerreitorToolTip.ReshowDelay = 100;
             // 
-            // label6
+            // SerreitorDepthLabel
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(12, 509);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(202, 25);
-            this.label6.TabIndex = 33;
-            this.label6.Text = "Глубина серрейтора";
+            this.SerreitorDepthLabel.AutoSize = true;
+            this.SerreitorDepthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.SerreitorDepthLabel.ForeColor = System.Drawing.Color.Black;
+            this.SerreitorDepthLabel.Location = new System.Drawing.Point(12, 509);
+            this.SerreitorDepthLabel.Name = "SerreitorDepthLabel";
+            this.SerreitorDepthLabel.Size = new System.Drawing.Size(202, 25);
+            this.SerreitorDepthLabel.TabIndex = 33;
+            this.SerreitorDepthLabel.Text = "Глубина серрейтора";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(824, 695);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(813, 695);
             this.Controls.Add(this.SerreitorDepthTextBox);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.SerreitorDepthLabel);
             this.Controls.Add(this.SerreitorTypeComboBox);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.SerreitorTypeLabel);
             this.Controls.Add(this.SerreitorLengthTextBox);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.SerreitorLengthLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.serreitorCheckBox);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.SerreitorExistanceLabel);
             this.Controls.Add(this.TextBoxError);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.ButtonBuild);
@@ -441,6 +441,7 @@
             this.Controls.Add(this.BladeLengthLabel);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Клинок для ножа";
             this.Load += new System.EventHandler(this.MainFormLoad);
@@ -476,14 +477,14 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolTip Max_Min_Value;
         private System.Windows.Forms.CheckBox serreitorCheckBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label SerreitorExistanceLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox SerreitorLengthTextBox;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label SerreitorLengthLabel;
         private System.Windows.Forms.ComboBox SerreitorTypeComboBox;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label SerreitorTypeLabel;
         private System.Windows.Forms.ToolTip SerreitorToolTip;
         private System.Windows.Forms.TextBox SerreitorDepthTextBox;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label SerreitorDepthLabel;
     }
 }
