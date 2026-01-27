@@ -519,6 +519,9 @@ namespace GUI
             EventArgs e)
         {
             _parameters.SerreitorExistance = serreitorCheckBox.Checked;
+            SerreitorLengthTextBox.Enabled = serreitorCheckBox.Checked;
+            SerreitorTypeComboBox.Enabled  = serreitorCheckBox.Checked;
+            SerreitorNumberTextBox.Enabled = serreitorCheckBox.Checked;
             SetDefault();
         }
 

@@ -178,7 +178,7 @@ namespace KompasBuilder
                 parameters.NumericalParameters[
                     ParameterType.PeakLenght].Value,
                 parameters.NumericalParameters[
-                    ParameterType.EdgeWidth].Value/2,
+                    ParameterType.EdgeWidth].Value,
                 parameters.NumericalParameters[
                     ParameterType.BladeWidth].Value,
                 parameters.BladeType,
@@ -190,13 +190,37 @@ namespace KompasBuilder
                 parameters.NumericalParameters[
                     ParameterType.BladeThickness].Value,
                 parameters.NumericalParameters[
-                    ParameterType.EdgeWidth].Value,
+                    ParameterType.EdgeWidth].Value/2,
                 parameters.NumericalParameters[
                     ParameterType.BladeWidth].Value,
                 false
                 );
 
             CreateEdge();
+
+            if (parameters.BindingType == BindingType.ForOverlays)
+            {
+                MakeHoles(
+                    parameters.NumericalParameters[
+                        ParameterType.BindingLength].Value,
+                    parameters.NumericalParameters[
+                        ParameterType.BladeWidth].Value
+                    );
+            }
+            if (parameters.SerreitorExistance)
+            {
+                DrawSerreitor(parameters.NumericalParameters
+                    [ParameterType.SerreitorLength].Value,
+                parameters.NumericalParameters
+                    [ParameterType.BladeWidth].Value,
+                parameters.NumericalParameters
+                    [ParameterType.BladeThickness].Value,
+               parameters.NumericalParameters
+                    [ParameterType.SerreitorNumber].Value,
+                parameters.SerreitorType
+                );
+                _wrapper.ExtrudeSerreitor();
+            }
         }
 
         /// <summary>
@@ -252,7 +276,7 @@ namespace KompasBuilder
             const double BindingLeftIntendDownFirst = 0.5;
             const double BindingLeftIntendDownSecond = 0.55;
             const double BindingLenghtShortage = 0.1;
-
+            const double WidthShortage = 0.05;
             _wrapper.ChooseSketch(SketchesTypes.MainString);
 
             if (existance)
@@ -288,7 +312,12 @@ namespace KompasBuilder
 
             if (binType == BindingType.None)
             {
-                _wrapper.DrawLine(0, 0, bladeWidth, 0);
+                _wrapper.DrawLine(0, 0, bladeWidth * WidthShortage,  - 25);
+                _wrapper.DrawLine(bladeWidth, 0, bladeWidth - bladeWidth
+                    * WidthShortage, -25);
+                _wrapper.DrawLine(bladeWidth * WidthShortage, -25, 
+                    bladeWidth - bladeWidth
+                    * WidthShortage, -25);
             }
 
             if (binType == BindingType.Insert)
@@ -329,9 +358,12 @@ namespace KompasBuilder
 
             if (binType == BindingType.ForOverlays)
             {
-                _wrapper.DrawLine(0, 0, 0, -binLength);
-                _wrapper.DrawLine(bladeWidth, 0, bladeWidth, -binLength);
-                _wrapper.DrawLine(0, -binLength, bladeWidth, -binLength);
+                _wrapper.DrawLine(0, 0, bladeWidth* WidthShortage,
+                    -binLength);
+                _wrapper.DrawLine(bladeWidth, 0, bladeWidth-bladeWidth 
+                    * WidthShortage, -binLength);
+                _wrapper.DrawLine(bladeWidth * WidthShortage, -binLength,
+                    bladeWidth - bladeWidth * WidthShortage, -binLength );
             }
 
             _wrapper.EndSkethEdit();
@@ -391,7 +423,7 @@ namespace KompasBuilder
                             SketchesTypes.EdgeDirectionString);
                         _wrapper.DrawLine(0, 0, 0, bladeLength - peakLength);
                         _wrapper.DrawLine(0, bladeLength - peakLength,
-                            bladeWidth / 2, bladeLength);
+                            bladeWidth/2, bladeLength);
                         _wrapper.EndSkethEdit();
                     }
                     else
@@ -401,7 +433,7 @@ namespace KompasBuilder
                         _wrapper.DrawLine(bladeWidth, 0, bladeWidth,
                             bladeLength - peakLength);
                         _wrapper.DrawLine(bladeWidth, bladeLength - peakLength,
-                            bladeWidth / 2, bladeLength);
+                            bladeWidth/2, bladeLength);
                         _wrapper.EndSkethEdit();
                     }
                 }
@@ -525,11 +557,14 @@ namespace KompasBuilder
             const double UpIntend = 0.2;
             const double DownIntend = 0.8;
             const double WidthShortage = 0.2;
+            const double WidthShortageForCords = 0.95;
 
             _wrapper.ChooseSketch(SketchesTypes.HolesString);
-            _wrapper.CreateCircle(width / 2, -binLen * UpIntend,
+            _wrapper.CreateCircle((width* WidthShortageForCords)
+                / 2, -binLen * UpIntend,
                 (width * WidthShortage) / 2);
-            _wrapper.CreateCircle(width / 2, -binLen * DownIntend,
+            _wrapper.CreateCircle((width * WidthShortageForCords) 
+                / 2, -binLen * DownIntend,
                 (width * WidthShortage) / 2);
             EndSketchEdit();
             _wrapper.Cut();
@@ -550,7 +585,7 @@ namespace KompasBuilder
             double serrNumber,
             SerreitorType serreitorType)
         {
-            const double widthIntedUp = 1.05;
+            const double widthIntedUp = 1.1;
             const double cutHeight = 3;
             _wrapper.Offset = bladeThick;
             _wrapper.ChooseSketch(SketchesTypes.SerreitorString);
