@@ -1,4 +1,4 @@
-using Core;
+п»їusing Core;
 using NUnit.Framework;
 using System;
 
@@ -9,15 +9,15 @@ namespace CoreUnitTests
     {
         //TODO: XML DONE
         /// <summary>
-        /// Поле хранящее в себе параметры
+        /// РџРѕР»Рµ С…СЂР°РЅСЏС‰РµРµ РІ СЃРµР±Рµ РїР°СЂР°РјРµС‚СЂС‹
         /// </summary>
         private Parameters _parameters;
 
         //TODO: refactor DONE
 
         /// <summary>
-        /// Функция инициализации
-        /// поля параметров
+        /// Р¤СѓРЅРєС†РёСЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+        /// РїРѕР»СЏ РїР°СЂР°РјРµС‚СЂРѕРІ
         /// </summary>
         public void Initialize()
         {
@@ -29,8 +29,8 @@ namespace CoreUnitTests
         //TODO: incoding done...
 
         [Test]
-        [Description("Тест установки зависимостей между числовыми параметрами " +
-                     "и проверки корректности вычисления максимальных и минимальных значений")]
+        [Description("РўРµСЃС‚ СѓСЃС‚Р°РЅРѕРІРєРё Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№ РјРµР¶РґСѓ С‡РёСЃР»РѕРІС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё " +
+                     "Рё РїСЂРѕРІРµСЂРєРё РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹С‡РёСЃР»РµРЅРёСЏ РјР°РєСЃРёРјР°Р»СЊРЅС‹С… Рё РјРёРЅРёРјР°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№")]
         [TestCase(3.0 / 4, 1.0 / 4)]
         [TestCase(2.0 / 4, 0.0)]
         public void SetDependenciesMaxMinTest(
@@ -76,8 +76,8 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест проверки выбрасывания исключения ParameterException " +
-                     "при передаче отрицательных коэффициентов в метод SetDependencies")]
+        [Description("РўРµСЃС‚ РїСЂРѕРІРµСЂРєРё РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ РёСЃРєР»СЋС‡РµРЅРёСЏ ParameterException " +
+                     "РїСЂРё РїРµСЂРµРґР°С‡Рµ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹С… РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РІ РјРµС‚РѕРґ SetDependencies")]
         [TestCase(3.0 / 4, -1.0 / 4)]
         [TestCase(-2.0 / 4, 0.0)]
         [TestCase(-2.0 / 4, 1 / 8)]
@@ -103,7 +103,7 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест установки и проверки значения типа крепления (BindingType)")]
+        [Description("РўРµСЃС‚ СѓСЃС‚Р°РЅРѕРІРєРё Рё РїСЂРѕРІРµСЂРєРё Р·РЅР°С‡РµРЅРёСЏ С‚РёРїР° РєСЂРµРїР»РµРЅРёСЏ (BindingType)")]
         public void SetBindingTypeTest()
         {
             Initialize();
@@ -114,7 +114,7 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест установки и проверки наличия лезвия (BladeExistence)")]
+        [Description("РўРµСЃС‚ СѓСЃС‚Р°РЅРѕРІРєРё Рё РїСЂРѕРІРµСЂРєРё РЅР°Р»РёС‡РёСЏ Р»РµР·РІРёСЏ (BladeExistence)")]
         public void SetBladeExistenceTest()
         {
             Initialize();
@@ -124,7 +124,7 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест установки и проверки типа лезвия (BladeType)")]
+        [Description("РўРµСЃС‚ СѓСЃС‚Р°РЅРѕРІРєРё Рё РїСЂРѕРІРµСЂРєРё С‚РёРїР° Р»РµР·РІРёСЏ (BladeType)")]
         public void SetBladeTypeTest()
         {
             Initialize();
@@ -134,8 +134,8 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест одновременной установки и проверки наличия лезвия " +
-                     "и типа крепления (BladeExistence и BindingType)")]
+        [Description("РўРµСЃС‚ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕР№ СѓСЃС‚Р°РЅРѕРІРєРё Рё РїСЂРѕРІРµСЂРєРё РЅР°Р»РёС‡РёСЏ Р»РµР·РІРёСЏ " +
+                     "Рё С‚РёРїР° РєСЂРµРїР»РµРЅРёСЏ (BladeExistence Рё BindingType)")]
         public void SetBladeExistenceAndBindingTypeTest()
         {
             Initialize();
@@ -151,8 +151,8 @@ namespace CoreUnitTests
         }
 
         [Test]
-        [Description("Тест установки и проверки параметров серрейтора " +
-                     "(SerreitorExistance и SerreitorType)")]
+        [Description("РўРµСЃС‚ СѓСЃС‚Р°РЅРѕРІРєРё Рё РїСЂРѕРІРµСЂРєРё РїР°СЂР°РјРµС‚СЂРѕРІ СЃРµСЂСЂРµР№С‚РѕСЂР° " +
+                     "(SerreitorExistance Рё SerreitorType)")]
         public void SetSerreitorParametersTest()
         {
             Initialize();
