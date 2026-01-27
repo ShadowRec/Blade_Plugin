@@ -7,32 +7,36 @@ namespace CoreUnitTests
     [TestFixture]
     public class ParametersUnitTests
     {
-        //TODO: XML
+        //TODO: XML DONE
+        /// <summary>
+        /// Поле хранящее в себе параметры
+        /// </summary>
         private Parameters _parameters;
 
-        //TODO: refactor
-        [SetUp]
-        public void Setup()
+        //TODO: refactor DONE
+
+        /// <summary>
+        /// Функция инициализации
+        /// поля параметров
+        /// </summary>
+        public void Initialize()
         {
             _parameters = new Parameters();
             _parameters.NumericalParameters[
                 ParameterType.BladeWidth].Value = 40;
         }
 
-        //TODO: incoding
-        /// <summary>
-        /// Тестирование функции SetDependencies класса Parameters
-        /// </summary>
-        /// <param name="maxRatio">
-        /// Соотношение величин для максимального значения</param>
-        /// <param name="minRatio">
-        /// Соотношение величин для минимального значения</param>
+        //TODO: incoding done...
+
         [Test]
+        [Description("Тест установки зависимостей между числовыми параметрами " +
+                     "и проверки корректности вычисления максимальных и минимальных значений")]
         [TestCase(3.0 / 4, 1.0 / 4)]
         [TestCase(2.0 / 4, 0.0)]
         public void SetDependenciesMaxMinTest(
             double maxRatio, double minRatio)
         {
+            Initialize();
             _parameters.SetDependencies(
                 _parameters.NumericalParameters[ParameterType.BladeWidth],
                 _parameters.NumericalParameters[ParameterType.EdgeWidth],
@@ -70,10 +74,10 @@ namespace CoreUnitTests
                 Is.EqualTo(expectedMinValue));
         }
 
-        /// <summary>
-        /// Проверка валидации значения maxratio и minratio
-        /// </summary>
+
         [Test]
+        [Description("Тест проверки выбрасывания исключения ParameterException " +
+                     "при передаче отрицательных коэффициентов в метод SetDependencies")]
         [TestCase(3.0 / 4, -1.0 / 4)]
         [TestCase(-2.0 / 4, 0.0)]
         [TestCase(-2.0 / 4, 1 / 8)]
@@ -81,6 +85,7 @@ namespace CoreUnitTests
         public void SetDependenciesExceptionTest(
             double minratio, double maxratio)
         {
+            Initialize();
             var exception = Assert.Throws<ParameterException>(() =>
             {
                 _parameters.SetDependencies(
@@ -96,44 +101,44 @@ namespace CoreUnitTests
                 Is.EqualTo(ExceptionType.RatioNegativeException));
         }
 
-        /// <summary>
-        /// Проверка присвоения свойству BindingType значения
-        /// </summary>
+
         [Test]
+        [Description("Тест установки и проверки значения типа крепления (BindingType)")]
         public void SetBindingTypeTest()
         {
+            Initialize();
             _parameters.BindingType = BindingType.Through;
             Assert.That(_parameters.BindingType,
                 Is.EqualTo(BindingType.Through));
         }
 
-        /// <summary>
-        /// Проверка присвоения свойству BladeExistence значения
-        /// </summary>
+
         [Test]
+        [Description("Тест установки и проверки наличия лезвия (BladeExistence)")]
         public void SetBladeExistenceTest()
         {
+            Initialize();
             _parameters.BladeExistence = true;
             Assert.That(_parameters.BladeExistence, Is.True);
         }
 
-        /// <summary>
-        /// Проверка присвоения свойству BladeType значения
-        /// </summary>
+
         [Test]
+        [Description("Тест установки и проверки типа лезвия (BladeType)")]
         public void SetBladeTypeTest()
         {
+            Initialize();
             _parameters.BladeType = true;
             Assert.That(_parameters.BladeType, Is.True);
         }
 
-        /// <summary>
-        /// Пример дополнительного теста 
-        /// с разными типами утверждений NUnit
-        /// </summary>
+
         [Test]
-        public void AdditionalNUnitFeaturesExample()
+        [Description("Тест одновременной установки и проверки наличия лезвия " +
+                     "и типа крепления (BladeExistence и BindingType)")]
+        public void SetBladeExistenceAndBindingTypeTest()
         {
+            Initialize();
             _parameters.BladeExistence = true;
             _parameters.BindingType = BindingType.Through;
 
@@ -142,6 +147,23 @@ namespace CoreUnitTests
                 Assert.That(_parameters.BladeExistence, Is.True);
                 Assert.That(_parameters.BindingType,
                     Is.EqualTo(BindingType.Through));
+            });
+        }
+
+        [Test]
+        [Description("Тест установки и проверки параметров серрейтора " +
+                     "(SerreitorExistance и SerreitorType)")]
+        public void SetSerreitorParametersTest()
+        {
+            Initialize();
+            _parameters.SerreitorExistance = true;
+            _parameters.SerreitorType = SerreitorType.ConstBigSerreitor;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(_parameters.SerreitorExistance, Is.True);
+                Assert.That(_parameters.SerreitorType,
+                    Is.EqualTo(SerreitorType.ConstBigSerreitor));
             });
         }
     }

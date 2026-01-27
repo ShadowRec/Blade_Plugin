@@ -19,19 +19,17 @@ namespace Core
         {
             //Инициализация параметра длины клинка
             NumericalParameter bladelength = new NumericalParameter();
-            bladelength.MinValue = 30;
-            bladelength.MaxValue = 1200;
+            bladelength.SetMinAndMax(80, 1200);
 
             //Инициализация параметра ширины клинка
             NumericalParameter bladewidth = new NumericalParameter();
-            bladewidth.MinValue = 9;
-            bladewidth.MaxValue = 60;
-
+            bladewidth.SetMinAndMax(9, 60);
             //Инициализация параметра толщины клинка
             NumericalParameter bladethick = new NumericalParameter();
-            bladethick.MinValue = 1;
-            bladethick.MaxValue = 3;
+            bladethick.SetMinAndMax(1, 3);
 
+            NumericalParameter serreitorNumber = new NumericalParameter();
+            serreitorNumber.SetMinAndMax(8, 32);
             //Инициализация параметра ширины лезвия
             NumericalParameter edgewidth = new NumericalParameter();
 
@@ -43,9 +41,6 @@ namespace Core
 
             //Инициализация параметра длины серрейтора
             NumericalParameter serrlength = new NumericalParameter();
-
-            //Инициализация параметра глубины серрейтора
-            NumericalParameter serrdepth =  new NumericalParameter();
 
             //Занесения значений параметров в словарь 
             //с соответствующими ключами
@@ -59,7 +54,8 @@ namespace Core
                 [ParameterType.PeakLenght] = peaklength,
                 [ParameterType.BindingLength] = binlength,
                 [ParameterType.SerreitorLength] = serrlength,
-                [ParameterType.SerreitorDepth] = serrdepth
+                [ParameterType.SerreitorNumber] = serreitorNumber,
+                
             };
         }
 
@@ -93,18 +89,6 @@ namespace Core
         public Dictionary<ParameterType, NumericalParameter> 
             NumericalParameters { get; set; }
 
-        //public void SetParameter(ParameterType type, double value)
-        //{
-        //    try
-        //    {
-        //        NumericalParameters[type].Value = value;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ParameterException(typeof(ex), type);
-        //    }
-        //}
-
         /// <summary>
         /// Выставляет максимальное и минимальное(Если такое задано) 
         /// значения для параметра
@@ -123,19 +107,23 @@ namespace Core
         {
             if (maxratio > 0 && minratio >= 0)
             {
-                depend.MaxValue = independ.Value * maxratio;
+                
                 if (minratio != 0)
                 {
-                    depend.MinValue = independ.Value * minratio;
+                    depend.SetMinAndMax(independ.Value * minratio,
+                        independ.Value*maxratio
+                        );
                 }
                 else
                 {
-                    depend.MinValue = depend.MaxValue * 0.1;
+                    depend.SetMinAndMax(independ.Value * maxratio * 0.1,
+                        independ.Value * maxratio);
                 }
             }
             else
             {
-                throw new ParameterException(ExceptionType.RatioNegativeException);
+                throw new ParameterException(
+                    ExceptionType.RatioNegativeException);
             }
         }
     }

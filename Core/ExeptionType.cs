@@ -46,12 +46,6 @@ namespace Core
         MinValueNegativeException,
 
         /// <summary>
-        /// Исключение максимального значение параметра
-        /// меньше минимального
-        /// </summary>
-        MaxLesserrMinException,
-
-        /// <summary>
         /// Исключение минимального значение параметра
         /// больше максимального
         /// </summary>

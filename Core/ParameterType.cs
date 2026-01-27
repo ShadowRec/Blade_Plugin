@@ -49,12 +49,13 @@ namespace Core
         /// </summary>
         SerreitorType,
         /// <summary>
-        /// Глубина серрейтора
-        /// </summary>
-        SerreitorDepth,
-        /// <summary>
         /// Длина серрейтора
         /// </summary>
-        SerreitorLength
+        SerreitorLength,
+        /// <summary>
+        /// Количество зубьев
+        /// </summary>
+        SerreitorNumber,
+
     }
 }

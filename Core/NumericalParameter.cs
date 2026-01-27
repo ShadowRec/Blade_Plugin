@@ -34,35 +34,6 @@ namespace Core
         public double MinValue
         {
             get { return _minValue; }
-            set {
-                //TODO: duplication
-                if (value > 0)
-                {
-                    if (MinValue != 0 && MaxValue != 0)
-                    {
-                        if (value < MaxValue)
-                        {
-                            _minValue = value;
-                        }
-                        else
-                        {
-                            throw new ParameterException(
-                                ExceptionType.MinGreaterMaxException
-                                );
-                        }
-                    }
-                    else
-                    {
-                        _minValue = value;
-                    }
-                }
-                else
-                {
-                    throw new ParameterException(
-                        ExceptionType.MinValueNegativeException
-                        );
-                }
-            }
         }
         /// <summary>
         /// Свойство, возвращающее _maxValue
@@ -70,36 +41,6 @@ namespace Core
         public double MaxValue
         {
             get { return _maxValue; }
-            set
-            {
-                if(value > 0)
-                {
-                    //TODO: duplication
-                    if (MinValue != 0 && MaxValue != 0)
-                    {
-                        if (value > MinValue)
-                        {
-                            _maxValue = value;
-                        }
-                        else
-                        {
-                            throw new ParameterException(
-                                ExceptionType.MaxLesserrMinException
-                                );
-                        }
-                    }
-                    else
-                    {
-                        _maxValue = value;
-                    }
-                }
-                else
-                {
-                    throw new ParameterException(
-                        ExceptionType.MaxValueNegativeException
-                        );
-                }
-            }
         }
 
         /// <summary>
@@ -136,6 +77,40 @@ namespace Core
                 throw new ParameterException(
                     ExceptionType.TooBigException);
             }
-        } 
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <exception cref="ParameterException"></exception>
+        public void SetMinAndMax(double min, double max)
+        {
+            if (min < 0)
+            {
+                throw new ParameterException(
+                ExceptionType.MinValueNegativeException);
+            }
+            if (max < 0)
+            {
+     
+               throw new ParameterException(
+               ExceptionType.MaxValueNegativeException);
+                
+            }
+            if (max < min)
+            {
+                throw new ParameterException(
+                ExceptionType.MinGreaterMaxException
+                );
+            }
+            if (max>min)
+            {
+                _maxValue = max;
+                _minValue = min;
+            }
+            
+        }
     }
 }
