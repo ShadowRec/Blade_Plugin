@@ -29,8 +29,10 @@ namespace CoreUnitTests
         //TODO: incoding done...
 
         [Test]
-        [Description("Тест установки зависимостей между числовыми параметрами " +
-                     "и проверки корректности вычисления максимальных и минимальных значений")]
+        [Description("Тест установки зависимостей между" +
+            " числовыми параметрами " +
+                     "и проверки корректности " +
+            "вычисления максимальных и минимальных значений")]
         [TestCase(3.0 / 4, 1.0 / 4)]
         [TestCase(2.0 / 4, 0.0)]
         public void SetDependenciesMaxMinTest(
@@ -76,8 +78,10 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест проверки выбрасывания исключения ParameterException " +
-                     "при передаче отрицательных коэффициентов в метод SetDependencies")]
+        [Description("Тест проверки выбрасывания " +
+            "исключения ParameterException " +
+                     "при передаче отрицательных " +
+            "коэффициентов в метод SetDependencies")]
         [TestCase(3.0 / 4, -1.0 / 4)]
         [TestCase(-2.0 / 4, 0.0)]
         [TestCase(-2.0 / 4, 1 / 8)]
@@ -103,7 +107,8 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест установки и проверки значения типа крепления (BindingType)")]
+        [Description("Тест установки и проверки " +
+            "значения типа крепления (BindingType)")]
         public void SetBindingTypeTest()
         {
             Initialize();
@@ -114,7 +119,8 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест установки и проверки наличия лезвия (BladeExistence)")]
+        [Description("Тест установки и проверки" +
+            " наличия лезвия (BladeExistence)")]
         public void SetBladeExistenceTest()
         {
             Initialize();
@@ -124,7 +130,8 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест установки и проверки типа лезвия (BladeType)")]
+        [Description("Тест установки и проверки" +
+            " типа лезвия (BladeType)")]
         public void SetBladeTypeTest()
         {
             Initialize();
@@ -134,8 +141,10 @@ namespace CoreUnitTests
 
 
         [Test]
-        [Description("Тест одновременной установки и проверки наличия лезвия " +
-                     "и типа крепления (BladeExistence и BindingType)")]
+        [Description("Тест одновременной " +
+            "установки и проверки наличия лезвия " +
+                     "и типа крепления " +
+            "(BladeExistence и BindingType)")]
         public void SetBladeExistenceAndBindingTypeTest()
         {
             Initialize();
@@ -152,16 +161,16 @@ namespace CoreUnitTests
 
         [Test]
         [Description("Тест установки и проверки параметров серрейтора " +
-                     "(SerreitorExistance и SerreitorType)")]
+                     "(SerreitorExistence и SerreitorType)")]
         public void SetSerreitorParametersTest()
         {
             Initialize();
-            _parameters.SerreitorExistance = true;
+            _parameters.SerreitorExistence = true;
             _parameters.SerreitorType = SerreitorType.ConstBigSerreitor;
 
             Assert.Multiple(() =>
             {
-                Assert.That(_parameters.SerreitorExistance, Is.True);
+                Assert.That(_parameters.SerreitorExistence, Is.True);
                 Assert.That(_parameters.SerreitorType,
                     Is.EqualTo(SerreitorType.ConstBigSerreitor));
             });

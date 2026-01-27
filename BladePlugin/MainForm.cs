@@ -4,26 +4,20 @@ using KompasAPI7;
 using KompasBuilder;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GUI
 {
     /// <summary>
-    /// Класс формы главного меню
+    /// Класс формы главного меню.
     /// </summary>
     public partial class MainForm : Form
     {
         /// <summary>
-        /// Конструктор класса MainForm
-        /// где расставляются все компоненты
+        /// Конструктор класса MainForm где расставляются все компоненты.
         /// </summary>
         public MainForm()
         {
@@ -31,17 +25,17 @@ namespace GUI
         }
 
         /// <summary>
-        /// Объект Builder
+        /// Объект Builder.
         /// </summary>
         private Builder _builder;
 
         /// <summary>
-        /// Параметры клинка
+        /// Параметры клинка.
         /// </summary>
         private Parameters _parameters;
 
         /// <summary>
-        /// Словарь, содержащий текущие значения параметров
+        /// Словарь, содержащий текущие значения параметров.
         /// </summary>
         private Dictionary<ParameterType, double> _currentParameters =
             new Dictionary<ParameterType, double>()
@@ -57,7 +51,7 @@ namespace GUI
             };
 
         /// <summary>
-        /// Словарь текстовых описаний параметров для сообщений об ошибках
+        /// Словарь текстовых описаний параметров для сообщений об ошибках.
         /// </summary>
         private Dictionary<ParameterType, string> _parametersStrings =
             new Dictionary<ParameterType, string>()
@@ -70,11 +64,10 @@ namespace GUI
                 [ParameterType.BindingLength] = "В поле 'Длина крепление'",
                 [ParameterType.SerreitorLength] = "В поле 'Длина серрейтора'",
                 [ParameterType.SerreitorNumber] = "В поле 'Количество зубьев'"
-
             };
 
         /// <summary>
-        /// Словарь текстовых описаний исключений
+        /// Словарь текстовых описаний исключений.
         /// </summary>
         private Dictionary<ExceptionType, string> _exceptionsStrings =
             new Dictionary<ExceptionType, string>()
@@ -102,35 +95,34 @@ namespace GUI
             };
 
         /// <summary>
-        /// Словарь связывающий тип параметра с TextBox
+        /// Словарь связывающий тип параметра с TextBox.
         /// </summary>
         private Dictionary<ParameterType, Control> _parametersTextBoxes;
 
         /// <summary>
-        /// Словарь связывающий тип параметра с Label
+        /// Словарь связывающий тип параметра с Label.
         /// </summary>
         private Dictionary<ParameterType, Control> _parametersLabels;
 
         /// <summary>
-        /// Словарь соотношений между параметрами
+        /// Словарь соотношений между параметрами.
         /// </summary>
         private Dictionary<(ParameterType, ParameterType), (double, double)>
             _parametersRatios = new Dictionary<(ParameterType, ParameterType),
                 (double, double)>()
             {
                 [(ParameterType.BladeLength, ParameterType.PeakLenght)]
-                    = (1.0 / 6.0,1.0/10),
+                    = (1.0 / 6.0, 1.0 / 10),
                 [(ParameterType.BladeLength, ParameterType.BindingLength)]
                     = (1, 0),
                 [(ParameterType.BladeWidth, ParameterType.EdgeWidth)] =
                     (3.0 / 6.0, 1.0 / 6.0),
                 [(ParameterType.BladeLength, ParameterType.SerreitorLength)] =
                     (5.0 / 10.0, 3 / 10.0),
-
             };
 
         /// <summary>
-        /// Словарь соотношений для типов креплений
+        /// Словарь соотношений для типов креплений.
         /// </summary>
         private Dictionary<BindingType, (double, double)> _bindingRatios =
             new Dictionary<BindingType, (double, double)>()
@@ -142,10 +134,10 @@ namespace GUI
             };
 
         /// <summary>
-        /// Функция, выполняющая действия при запуске программы
+        /// Функция, выполняющая действия при запуске программы.
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void MainFormLoad(object sender, EventArgs e)
         {
             _builder = new Builder();
@@ -159,7 +151,6 @@ namespace GUI
                 [ParameterType.BindingLength] = TextBoxBindingLength,
                 [ParameterType.SerreitorLength] = SerreitorLengthTextBox,
                 [ParameterType.SerreitorNumber] = SerreitorNumberTextBox,
-                
             };
 
             _parametersLabels = new Dictionary<ParameterType, Control>()
@@ -171,8 +162,7 @@ namespace GUI
                 [ParameterType.PeakLenght] = PeakLengthLabel,
                 [ParameterType.BindingLength] = BindingLabel,
                 [ParameterType.SerreitorLength] = SerreitorLengthLabel,
-                [ParameterType.SerreitorNumber]=SerreitorNumberLabel,
-                
+                [ParameterType.SerreitorNumber] = SerreitorNumberLabel,
             };
 
             _parameters = new Parameters();
@@ -211,6 +201,7 @@ namespace GUI
 
             _parameters.NumericalParameters[
                 ParameterType.SerreitorNumber].Value = 8;
+
             // Установка типа клинка по умолчанию (Односторонний)
             _parameters.BladeType = false;
 
@@ -226,20 +217,18 @@ namespace GUI
             _parameters.NumericalParameters[ParameterType.SerreitorLength]
                 .Value = 90;
 
-           
-
             // Установка типа серрейтора по умолчанию
             _parameters.SerreitorType = SerreitorType.AlternationSerreitor;
             SerreitorTypeComboBox.SelectedIndex = 0;
-            _parameters.SerreitorExistance = true;
+            _parameters.SerreitorExistence = true;
             serreitorCheckBox.Checked = true;
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Длина клинка"
+        /// Функция, выполняющая действия при выходе с поля "Длина клинка".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void TextBoxLengthLeave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.BladeLength,
@@ -252,11 +241,11 @@ namespace GUI
         }
 
         /// <summary>
-        /// Обновления текста ToolTip
+        /// Обновления текста ToolTip.
         /// </summary>
-        /// <param name="target">Ссылка на поле, чей ToolTip обновляется</param>
-        /// <param name="maxvalue">Максимальное значение допустимого диапазона</param>
-        /// <param name="minvalue">Минимальное значение допустимого диапазона</param>
+        /// <param name="target">Ссылка на поле, чей ToolTip обновляется.</param>
+        /// <param name="maxvalue">Максимальное значение допустимого диапазона.</param>
+        /// <param name="minvalue">Минимальное значение допустимого диапазона.</param>
         private void UpdateToolTip(object target, double maxvalue,
             double minvalue)
         {
@@ -265,10 +254,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Длина острия"
+        /// Функция, выполняющая действия при выходе с поля "Длина острия".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void TextBoxPeakLengthLeave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.PeakLenght,
@@ -276,10 +265,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Длина крепления"
+        /// Функция, выполняющая действия при выходе с поля "Длина крепления".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void TextBoxBindingLengthLeave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.BindingLength,
@@ -287,10 +276,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Ширина клинка"
+        /// Функция, выполняющая действия при выходе с поля "Ширина клинка".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void TextBoxWidthLeave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.BladeWidth,
@@ -301,10 +290,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Ширина лезвия"
+        /// Функция, выполняющая действия при выходе с поля "Ширина лезвия".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void TextBoxEdgeWidthLeave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.EdgeWidth,
@@ -312,10 +301,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при изменении индекса в комбо-боксе "Тип Крепления"
+        /// Функция, выполняющая действия при изменении индекса в комбо-боксе "Тип Крепления".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void ComboBoxTypeSelectedIndexChanged(object sender,
             EventArgs e)
         {
@@ -325,7 +314,7 @@ namespace GUI
                     (BindingType)ComboBoxTypeBinding.SelectedIndex;
 
                 _parametersRatios[(ParameterType.BladeLength,
-                    ParameterType.BindingType)] =
+                    ParameterType.BindingLength)] =
                     _bindingRatios[(BindingType)
                     ComboBoxTypeBinding.SelectedIndex];
 
@@ -340,24 +329,20 @@ namespace GUI
                 if (_parameters.NumericalParameters[
                     ParameterType.BladeLength].Value != 0)
                 {
-                    if ((BindingType)ComboBoxTypeBinding.SelectedIndex
-                        == BindingType.Insert)
-                    {
-                        SetDependenciesAndUpdate(ParameterType.BladeLength,
-                            ParameterType.BindingLength);
-                        TryParseTextBox(ParameterType.BindingLength);
-                        TextBoxBindingLength.ReadOnly = false;
-                    }
+                    SetDependenciesAndUpdate(ParameterType.BladeLength,
+                        ParameterType.BindingLength);
+                    TryParseTextBox(ParameterType.BindingLength);
+                    TextBoxBindingLength.ReadOnly = false;
                 }
                 SetDefault();
             }
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с комбо-бокса "Тип клинка"
+        /// Функция, выполняющая действия при выходе с комбо-бокса "Тип клинка".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void ComboBoxTypeBladeLeave(object sender, EventArgs e)
         {
             if (ComboBoxTypeBlade.SelectedIndex != -1)
@@ -369,10 +354,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при изменении статуса чек бокса "Наличие острия"
+        /// Функция, выполняющая действия при изменении статуса чек бокса "Наличие острия".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void CheckBoxEndBladeCheckedChanged(object sender,
             EventArgs e)
         {
@@ -382,7 +367,7 @@ namespace GUI
 
         /// <summary>
         /// Сброс окна ошибок и подсвечивания неверных значений, 
-        /// выставление текущих значений параметров
+        /// выставление текущих значений параметров.
         /// </summary>
         private void SetDefault()
         {
@@ -401,10 +386,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Полная проверка полноты параметров
+        /// Полная проверка полноты параметров.
         /// </summary>
         /// <returns>Возвращает TRUE, если все параметры заполнены, 
-        /// FALSE если есть пустой параметр</returns>
+        /// FALSE если есть пустой параметр.</returns>
         private bool CheckAll()
         {
             var exceptions = new List<ParameterException>();
@@ -455,7 +440,6 @@ namespace GUI
                     + _exceptionsStrings[ex.ExceptionType] + "\n";
                 return false;
             }
-
             catch (AggregateException ex)
             {
                 foreach (ParameterException exception in ex.InnerExceptions)
@@ -464,18 +448,17 @@ namespace GUI
                         = Color.Red;
                     TextBoxError.Text +=
                         _parametersStrings[exception.ParameterType]
-                        + 
-                        _exceptionsStrings[exception.ExceptionType] + "\n";
+                        + _exceptionsStrings[exception.ExceptionType] + "\n";
                 }
                 return false;
             }
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с текст бокса "Толщина клинка"
+        /// Функция, выполняющая действия при выходе с текст бокса "Толщина клинка".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void TextBoxBladeThicknessLeave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.BladeThickness,
@@ -483,10 +466,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при нажатии кнопки "Построить"
+        /// Функция, выполняющая действия при нажатии кнопки "Построить".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void ButtonBuildClick(object sender, EventArgs e)
         {
             if (CheckAll())
@@ -498,38 +481,36 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с текст бокса "Длина серрейтора"
+        /// Функция, выполняющая действия при выходе с текст бокса "Длина серрейтора".
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void SerreitorLengthTextBox_Leave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.SerreitorLength,
                 new ParameterType[0]);
         }
 
-        
-
         /// <summary>
-        /// Функция, выполняющая действия при изменении состояния чек-бокса серрейтора
+        /// Функция, выполняющая действия при изменении состояния чек-бокса серрейтора.
         /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова</param>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void serreitorCheckBox_CheckedChanged(object sender,
             EventArgs e)
         {
-            _parameters.SerreitorExistance = serreitorCheckBox.Checked;
+            _parameters.SerreitorExistence = serreitorCheckBox.Checked;
             SerreitorLengthTextBox.Enabled = serreitorCheckBox.Checked;
-            SerreitorTypeComboBox.Enabled  = serreitorCheckBox.Checked;
+            SerreitorTypeComboBox.Enabled = serreitorCheckBox.Checked;
             SerreitorNumberTextBox.Enabled = serreitorCheckBox.Checked;
             SetDefault();
         }
 
         /// <summary>
-        /// Парсинг значения из TextBox с обработкой зависимых параметров
+        /// Парсинг значения из TextBox с обработкой зависимых параметров.
         /// </summary>
-        /// <param name="parameterType">Тип параметра</param>
-        /// <param name="dependentParameterType">Массив зависимых параметров</param>
+        /// <param name="parameterType">Тип параметра.</param>
+        /// <param name="dependentParameterType">Массив зависимых параметров.</param>
         private void ParseTextBox(
             ParameterType parameterType,
             ParameterType[] dependentParameterType)
@@ -546,7 +527,7 @@ namespace GUI
                         dependentParameterType[i]);
                         TryParseTextBox(dependentParameterType[i]);
                     }
-                    catch(ParameterException ex) 
+                    catch (ParameterException ex)
                     {
                         exceptions.Add(ex);
                     }
@@ -559,13 +540,13 @@ namespace GUI
             }
             catch (ParameterException ex)
             {
-                    _parametersTextBoxes[ex.ParameterType].ForeColor = Color.Red;
-                    TextBoxError.Text += _parametersStrings[ex.ParameterType] +
-                        _exceptionsStrings[ex.ExceptionType] + "\n";
+                _parametersTextBoxes[ex.ParameterType].ForeColor = Color.Red;
+                TextBoxError.Text += _parametersStrings[ex.ParameterType] +
+                    _exceptionsStrings[ex.ExceptionType] + "\n";
             }
-            catch(AggregateException ex)
+            catch (AggregateException ex)
             {
-                foreach(ParameterException exception in ex.InnerExceptions)
+                foreach (ParameterException exception in ex.InnerExceptions)
                 {
                     _parametersTextBoxes[exception.ParameterType].ForeColor
                         = Color.Red;
@@ -577,9 +558,9 @@ namespace GUI
         }
 
         /// <summary>
-        /// Попытка парсинга значения из TextBox
+        /// Попытка парсинга значения из TextBox.
         /// </summary>
-        /// <param name="parameterType">Тип параметра</param>
+        /// <param name="parameterType">Тип параметра.</param>
         private void TryParseTextBox(ParameterType parameterType)
         {
             Control textBox = _parametersTextBoxes[parameterType];
@@ -617,10 +598,10 @@ namespace GUI
         }
 
         /// <summary>
-        /// Установка зависимостей между параметрами и обновление ToolTip
+        /// Установка зависимостей между параметрами и обновление ToolTip.
         /// </summary>
-        /// <param name="parameterType">Тип основного параметра</param>
-        /// <param name="dependentParameter">Тип зависимого параметра</param>
+        /// <param name="parameterType">Тип основного параметра.</param>
+        /// <param name="dependentParameter">Тип зависимого параметра.</param>
         private void SetDependenciesAndUpdate(ParameterType parameterType,
             ParameterType dependentParameter)
         {
@@ -638,19 +619,26 @@ namespace GUI
             );
         }
 
-        private void SerreitorTypeLabel_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Функция, выполняющая действия при выходе с комбо-бокса "Тип серрейтора".
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
+        private void SerreitorTypeComboBox_SelectedIndexChanged(object sender,
+            EventArgs e)
         {
-
-        }
-
-        private void SerreitorTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SerreitorTypeComboBox.SelectedIndex != -1) 
+            if (SerreitorTypeComboBox.SelectedIndex != -1)
             {
-                _parameters.SerreitorType=(SerreitorType) SerreitorTypeComboBox.SelectedIndex;
+                _parameters.SerreitorType =
+                    (SerreitorType)SerreitorTypeComboBox.SelectedIndex;
             }
         }
 
+        /// <summary>
+        /// Функция, выполняющая действия при выходе с текст бокса "Количество зубьев".
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
         private void SerreitorNumberTextBox_Leave(object sender, EventArgs e)
         {
             ParseTextBox(ParameterType.SerreitorNumber,

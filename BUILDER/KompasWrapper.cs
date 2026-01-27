@@ -1,11 +1,13 @@
 ﻿using Core;
 using Kompas6API5;
+using Kompas6Constants;
 using Kompas6Constants3D;
 using KompasAPI7;
 using SketchesType;
 using System;
 using System.Diagnostics.Eventing.Reader;
 using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 namespace KompasBuilder
 {

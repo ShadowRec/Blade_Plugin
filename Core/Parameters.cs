@@ -81,7 +81,7 @@ namespace Core
         /// </summary>
         public SerreitorType SerreitorType { get; set; }
 
-        public bool SerreitorExistance { get; set; }
+        public bool SerreitorExistence { get; set; }
 
         /// <summary>
         /// Перечень численных параметров

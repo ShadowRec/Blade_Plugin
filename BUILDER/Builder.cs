@@ -71,6 +71,7 @@ namespace KompasBuilder
                 parameters.NumericalParameters[
                     ParameterType.BladeWidth].Value,
                 parameters.BladeType,
+                true,
                 parameters.BladeExistence
                 );
 
@@ -99,18 +100,20 @@ namespace KompasBuilder
                         ParameterType.BladeWidth].Value
                     );
             }
-            if (parameters.SerreitorExistance)
+
+            if (parameters.SerreitorExistence)
             {
-                DrawSerreitor(parameters.NumericalParameters
+                DrawSerreitor(
+                    parameters.NumericalParameters
                     [ParameterType.SerreitorLength].Value,
-                parameters.NumericalParameters
+                    parameters.NumericalParameters
                     [ParameterType.BladeWidth].Value,
-                parameters.NumericalParameters
+                    parameters.NumericalParameters
                     [ParameterType.BladeThickness].Value,
-               parameters.NumericalParameters
+                    parameters.NumericalParameters
                     [ParameterType.SerreitorNumber].Value,
-                parameters.SerreitorType
-                );
+                    parameters.SerreitorType
+                    );
                 _wrapper.ExtrudeSerreitor();
             }
         }
@@ -158,7 +161,7 @@ namespace KompasBuilder
                 parameters.NumericalParameters[
                     ParameterType.BladeThickness].Value,
                 parameters.NumericalParameters[
-                    ParameterType.EdgeWidth].Value/2,
+                    ParameterType.EdgeWidth].Value / 2,
                 parameters.NumericalParameters[
                     ParameterType.BladeWidth].Value
                 );
@@ -190,7 +193,7 @@ namespace KompasBuilder
                 parameters.NumericalParameters[
                     ParameterType.BladeThickness].Value,
                 parameters.NumericalParameters[
-                    ParameterType.EdgeWidth].Value/2,
+                    ParameterType.EdgeWidth].Value / 2,
                 parameters.NumericalParameters[
                     ParameterType.BladeWidth].Value,
                 false
@@ -207,18 +210,20 @@ namespace KompasBuilder
                         ParameterType.BladeWidth].Value
                     );
             }
-            if (parameters.SerreitorExistance)
+
+            if (parameters.SerreitorExistence)
             {
-                DrawSerreitor(parameters.NumericalParameters
+                DrawSerreitor(
+                    parameters.NumericalParameters
                     [ParameterType.SerreitorLength].Value,
-                parameters.NumericalParameters
+                    parameters.NumericalParameters
                     [ParameterType.BladeWidth].Value,
-                parameters.NumericalParameters
+                    parameters.NumericalParameters
                     [ParameterType.BladeThickness].Value,
-               parameters.NumericalParameters
+                    parameters.NumericalParameters
                     [ParameterType.SerreitorNumber].Value,
-                parameters.SerreitorType
-                );
+                    parameters.SerreitorType
+                    );
                 _wrapper.ExtrudeSerreitor();
             }
         }
@@ -277,19 +282,18 @@ namespace KompasBuilder
             const double BindingLeftIntendDownSecond = 0.55;
             const double BindingLenghtShortage = 0.1;
             const double WidthShortage = 0.05;
+
             _wrapper.ChooseSketch(SketchesTypes.MainString);
 
             if (existance)
             {
                 if (!bladeType)
                 {
-                    _wrapper.DrawLine(0, 0, 0, 
-                        bladeLength - peakLength);
-                    _wrapper.DrawLine(bladeWidth,
-                        0, bladeWidth, bladeLength);
-                    _wrapper.CreateArc(0, 
-                        bladeLength - peakLength, edgeWidth,
-                        bladeLength * BladeShortage, 
+                    _wrapper.DrawLine(0, 0, 0, bladeLength - peakLength);
+                    _wrapper.DrawLine(bladeWidth, 0, bladeWidth,
+                        bladeLength);
+                    _wrapper.CreateArc(0, bladeLength - peakLength,
+                        edgeWidth, bladeLength * BladeShortage,
                         bladeWidth, bladeLength);
                 }
                 else
@@ -312,12 +316,11 @@ namespace KompasBuilder
 
             if (binType == BindingType.None)
             {
-                _wrapper.DrawLine(0, 0, bladeWidth * WidthShortage,  - 25);
-                _wrapper.DrawLine(bladeWidth, 0, bladeWidth - bladeWidth
-                    * WidthShortage, -25);
-                _wrapper.DrawLine(bladeWidth * WidthShortage, -25, 
-                    bladeWidth - bladeWidth
-                    * WidthShortage, -25);
+                _wrapper.DrawLine(0, 0, bladeWidth * WidthShortage, -25);
+                _wrapper.DrawLine(bladeWidth, 0,
+                    bladeWidth - bladeWidth * WidthShortage, -25);
+                _wrapper.DrawLine(bladeWidth * WidthShortage, -25,
+                    bladeWidth - bladeWidth * WidthShortage, -25);
             }
 
             if (binType == BindingType.Insert)
@@ -358,12 +361,12 @@ namespace KompasBuilder
 
             if (binType == BindingType.ForOverlays)
             {
-                _wrapper.DrawLine(0, 0, bladeWidth* WidthShortage,
+                _wrapper.DrawLine(0, 0, bladeWidth * WidthShortage,
                     -binLength);
-                _wrapper.DrawLine(bladeWidth, 0, bladeWidth-bladeWidth 
-                    * WidthShortage, -binLength);
+                _wrapper.DrawLine(bladeWidth, 0,
+                    bladeWidth - bladeWidth * WidthShortage, -binLength);
                 _wrapper.DrawLine(bladeWidth * WidthShortage, -binLength,
-                    bladeWidth - bladeWidth * WidthShortage, -binLength );
+                    bladeWidth - bladeWidth * WidthShortage, -binLength);
             }
 
             _wrapper.EndSkethEdit();
@@ -411,8 +414,9 @@ namespace KompasBuilder
                 {
                     _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
                     _wrapper.DrawLine(0, 0, 0, bladeLength - peakLength);
-                    _wrapper.CreateArc(0, bladeLength - peakLength, edgeWidth,
-                        bladeLength * LengthShortage, bladeWidth, bladeLength);
+                    _wrapper.CreateArc(0, bladeLength - peakLength,
+                        edgeWidth, bladeLength * LengthShortage,
+                        bladeWidth, bladeLength);
                     _wrapper.EndSkethEdit();
                 }
                 else
@@ -423,7 +427,7 @@ namespace KompasBuilder
                             SketchesTypes.EdgeDirectionString);
                         _wrapper.DrawLine(0, 0, 0, bladeLength - peakLength);
                         _wrapper.DrawLine(0, bladeLength - peakLength,
-                            bladeWidth/2, bladeLength);
+                            bladeWidth / 2, bladeLength);
                         _wrapper.EndSkethEdit();
                     }
                     else
@@ -433,7 +437,7 @@ namespace KompasBuilder
                         _wrapper.DrawLine(bladeWidth, 0, bladeWidth,
                             bladeLength - peakLength);
                         _wrapper.DrawLine(bladeWidth, bladeLength - peakLength,
-                            bladeWidth/2, bladeLength);
+                            bladeWidth / 2, bladeLength);
                         _wrapper.EndSkethEdit();
                     }
                 }
@@ -443,7 +447,7 @@ namespace KompasBuilder
                 if (!bladeType)
                 {
                     _wrapper.ChooseSketch(SketchesTypes.EdgeDirectionString);
-                    _wrapper.DrawLine(0, 0, 0, bladeLength - peakLength);
+                    _wrapper.DrawLine(0, 0, 0, bladeLength);
                     _wrapper.EndSkethEdit();
                 }
                 else
@@ -493,8 +497,10 @@ namespace KompasBuilder
                 _wrapper.ChooseSketch(SketchesTypes.EdgeString);
                 _wrapper.DrawLine(0, 0, 0, -thickness / 2);
                 _wrapper.DrawLine(0, 0, 0, thickness / 2);
-                _wrapper.DrawLine(0, thickness / 2, edgeWidth, thickness / 2);
-                _wrapper.DrawLine(0, -thickness / 2, edgeWidth, -thickness / 2);
+                _wrapper.DrawLine(0, thickness / 2,
+                    edgeWidth, thickness / 2);
+                _wrapper.DrawLine(0, -thickness / 2,
+                    edgeWidth, -thickness / 2);
                 _wrapper.DrawLine(edgeWidth, thickness / 2, 0, 0);
                 _wrapper.DrawLine(edgeWidth, -thickness / 2, 0, 0);
                 _wrapper.EndSkethEdit();
@@ -502,8 +508,10 @@ namespace KompasBuilder
             else
             {
                 _wrapper.ChooseSketch(SketchesTypes.EdgeString);
-                _wrapper.DrawLine(bladeWidth, 0, bladeWidth, -thickness / 2);
-                _wrapper.DrawLine(bladeWidth, 0, bladeWidth, thickness / 2);
+                _wrapper.DrawLine(bladeWidth, 0,
+                    bladeWidth, -thickness / 2);
+                _wrapper.DrawLine(bladeWidth, 0,
+                    bladeWidth, thickness / 2);
                 _wrapper.DrawLine(bladeWidth, thickness / 2,
                     bladeWidth - edgeWidth, thickness / 2);
                 _wrapper.DrawLine(bladeWidth, -thickness / 2,
@@ -560,26 +568,38 @@ namespace KompasBuilder
             const double WidthShortageForCords = 0.95;
 
             _wrapper.ChooseSketch(SketchesTypes.HolesString);
-            _wrapper.CreateCircle((width* WidthShortageForCords)
-                / 2, -binLen * UpIntend,
+            _wrapper.CreateCircle(
+                (width * WidthShortageForCords) / 2,
+                -binLen * UpIntend,
                 (width * WidthShortage) / 2);
-            _wrapper.CreateCircle((width * WidthShortageForCords) 
-                / 2, -binLen * DownIntend,
+            _wrapper.CreateCircle(
+                (width * WidthShortageForCords) / 2,
+                -binLen * DownIntend,
                 (width * WidthShortage) / 2);
             EndSketchEdit();
             _wrapper.Cut();
         }
 
-
         /// <summary>
-        /// Функцция рисования серрейтора
+        /// Функция рисования серрейтора (зубчатого лезвия).
         /// </summary>
-        /// <param name="serreitorLength"></param>
-        /// <param name="SerreitorNumber"></param>
-        /// <param name="bladeWidth"></param>
-        /// <param name="bladeThick"></param>
-        /// <param name="serreitorType"></param>
-        private void DrawSerreitor(double serreitorLength,
+        /// <param name="serreitorLength">
+        /// Общая длина серрейтора вдоль оси.
+        /// </param>
+        /// <param name="bladeWidth">
+        /// Ширина лезвия.
+        /// </param>
+        /// <param name="bladeThick">
+        /// Толщина лезвия.
+        /// </param>
+        /// <param name="serrNumber">
+        /// Количество зубцов на серрейторе.
+        /// </param>
+        /// <param name="serreitorType">
+        /// Тип серрейтора из перечисления SerreitorType.
+        /// </param>
+        private void DrawSerreitor(
+            double serreitorLength,
             double bladeWidth,
             double bladeThick,
             double serrNumber,
@@ -587,122 +607,113 @@ namespace KompasBuilder
         {
             const double widthIntedUp = 1.1;
             const double cutHeight = 3;
+
             _wrapper.Offset = bladeThick;
             _wrapper.ChooseSketch(SketchesTypes.SerreitorString);
             double totalLengt = 0;
             double peakLen = serreitorLength / serrNumber;
+
             switch (serreitorType)
             {
                 case SerreitorType.ConstBigSerreitor:
+                    while (true)
                     {
-                        while (true)
+                        if ((totalLengt + peakLen) < serreitorLength)
+                        {
+                            _wrapper.CreateArcBy2PointsAndCenter(
+                                bladeWidth * widthIntedUp,
+                                totalLengt + peakLen / 2,
+                                bladeWidth * widthIntedUp,
+                                totalLengt,
+                                bladeWidth * widthIntedUp,
+                                totalLengt + peakLen,
+                                peakLen / 2);
+                            totalLengt += peakLen;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    break;
+
+                case SerreitorType.ConstSmallSerreitor:
+                    while (true)
+                    {
+                        if ((totalLengt + peakLen / 2) < serreitorLength)
+                        {
+                            _wrapper.CreateArcBy2PointsAndCenter(
+                                bladeWidth * widthIntedUp,
+                                totalLengt + peakLen / 4,
+                                bladeWidth * widthIntedUp,
+                                totalLengt,
+                                bladeWidth * widthIntedUp,
+                                totalLengt + peakLen,
+                                peakLen / 4);
+                            totalLengt += peakLen / 2;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    break;
+
+                case SerreitorType.AlternationSerreitor:
+                    bool isLittlePeak = false;
+                    while (true)
+                    {
+                        if (isLittlePeak)
                         {
                             if ((totalLengt + peakLen) < serreitorLength)
                             {
-                                    _wrapper.CreateArcBy2PointsAndCenter(bladeWidth
-                                        * widthIntedUp, totalLengt + peakLen / 2,
-                                        bladeWidth * widthIntedUp
-                                        , totalLengt,
-                                      bladeWidth * widthIntedUp,
-                                       totalLengt +
-                                       peakLen,
-                                       peakLen / 2
-                                        );
-                                 totalLengt += peakLen;
+                                _wrapper.CreateArcBy2PointsAndCenter(
+                                    bladeWidth * widthIntedUp,
+                                    totalLengt + peakLen / 2,
+                                    bladeWidth * widthIntedUp,
+                                    totalLengt,
+                                    bladeWidth * widthIntedUp,
+                                    totalLengt + peakLen,
+                                    peakLen / 2);
+                                totalLengt += peakLen;
+                                isLittlePeak = !isLittlePeak;
                             }
                             else
                             {
                                 break;
                             }
                         }
-                        break;
-                    }
-                case SerreitorType.ConstSmallSerreitor:
-                    {
-                        while (true)
+                        else
                         {
-                            if ((totalLengt + peakLen/2) < serreitorLength)
+                            if ((totalLengt + peakLen / 2) < serreitorLength)
                             {
-                                _wrapper.CreateArcBy2PointsAndCenter(bladeWidth
-                                    * widthIntedUp, totalLengt + peakLen / 4,
-                                    bladeWidth * widthIntedUp
-                                    , totalLengt,
-                                  bladeWidth * widthIntedUp,
-                                   totalLengt +
-                                   peakLen,
-                                   peakLen / 4
-                                    );
-                                totalLengt += peakLen/2;
+                                _wrapper.CreateArcBy2PointsAndCenter(
+                                    bladeWidth * widthIntedUp,
+                                    totalLengt + peakLen / 4,
+                                    bladeWidth * widthIntedUp,
+                                    totalLengt,
+                                    bladeWidth * widthIntedUp,
+                                    totalLengt + peakLen,
+                                    peakLen / 4);
+                                totalLengt += peakLen / 2;
+                                isLittlePeak = !isLittlePeak;
                             }
                             else
                             {
                                 break;
                             }
                         }
-                        break;
                     }
-                case SerreitorType.AlternationSerreitor:
-                    {
-                        bool isLittlePeak = false;
-                        while (true)
-                        {
-                            if (isLittlePeak)
-                            {
-                                if ((totalLengt + peakLen) < serreitorLength)
-                                {
-                                    _wrapper.CreateArcBy2PointsAndCenter(bladeWidth
-                                        * widthIntedUp, totalLengt + peakLen / 2,
-                                        bladeWidth * widthIntedUp
-                                        , totalLengt,
-                                      bladeWidth * widthIntedUp,
-                                       totalLengt +
-                                       peakLen,
-                                       peakLen / 2
-                                        );
-                                    totalLengt += peakLen;
-                                    isLittlePeak = !isLittlePeak;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                if ((totalLengt + peakLen / 2) < serreitorLength)
-                                {
-                                    _wrapper.CreateArcBy2PointsAndCenter(bladeWidth
-                                        * widthIntedUp, totalLengt + peakLen / 4,
-                                        bladeWidth * widthIntedUp
-                                        , totalLengt,
-                                      bladeWidth * widthIntedUp,
-                                       totalLengt +
-                                       peakLen,
-                                       peakLen / 4
-                                        );
-                                    totalLengt += peakLen / 2;
-                                    isLittlePeak = !isLittlePeak;
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    
-            }
-                _wrapper.DrawLine(bladeWidth * widthIntedUp, 0,
-                   bladeWidth * widthIntedUp + cutHeight,0 );
-                _wrapper.DrawLine(bladeWidth * widthIntedUp + cutHeight, 0,
-                   bladeWidth * widthIntedUp + cutHeight, totalLengt);
-                _wrapper.DrawLine(bladeWidth * widthIntedUp +
-                    cutHeight, totalLengt,
-                    bladeWidth * widthIntedUp, totalLengt);
-                _wrapper.EndSkethEdit();
+                    break;
             }
 
+            _wrapper.DrawLine(bladeWidth * widthIntedUp, 0,
+                bladeWidth * widthIntedUp + cutHeight, 0);
+            _wrapper.DrawLine(bladeWidth * widthIntedUp + cutHeight, 0,
+                bladeWidth * widthIntedUp + cutHeight, totalLengt);
+            _wrapper.DrawLine(bladeWidth * widthIntedUp + cutHeight,
+                totalLengt, bladeWidth * widthIntedUp, totalLengt);
+            _wrapper.EndSkethEdit();
         }
-        
     }
+}
