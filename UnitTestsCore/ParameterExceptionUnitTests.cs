@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace UnitTestsCore
 {
-    //TODO: XML
+    /// <summary>
+    /// Тесты класса ParameterException
+    /// </summary>
     internal class ParameterExceptionUnitTests
     {
-        //TODO: description
+        //TODO: description DONE
         [Test]
+        [Description("Данный тест проверяет" +
+                "правильность вызванных исключений")]
         public void ParameterExceptionConstructorTests()
         {
             ParameterException param = new ParameterException(

@@ -12,14 +12,23 @@ namespace UnitTestsCore
 
     namespace CoreUnitTests
     {
+        //TODO:XML DONE
+        /// <summary>
+        /// Тесты для класса NumerialParameter
+        /// </summary>
         [TestFixture]
         public class NumericalParameterTest
         {
-            //TODO: XML
+            /// <summary>
+            /// Поле хранящее параметры
+            /// </summary>
             private Parameters _parameters;
-            //TODO: refactor
-            [SetUp]
-            public void Setup()
+            //TODO: refactor done
+            /// <summary>
+            /// Функция инициализации
+            /// поля параметров
+            /// </summary>
+            public void Initialize()
             {
                 _parameters = new Parameters();
             }
@@ -30,26 +39,21 @@ namespace UnitTestsCore
             private void FillValues()
             {
                 _parameters.NumericalParameters[
-                    ParameterType.PeakLenght].MaxValue = 30;
-                _parameters.NumericalParameters[
-                    ParameterType.PeakLenght].MinValue = 5;
-                _parameters.NumericalParameters[
+                      ParameterType.PeakLenght].SetMinAndMax(5, 30);
+                  _parameters.NumericalParameters[
                     ParameterType.PeakLenght].Value = 15;
             }
 
-            //TODO: description
-            /// <summary>
-            /// Проверка валидации значения
-            /// </summary>
-            /// <param name="expectedMessage">
-            /// Ожидаемое сообщение об ошибке</param>
-            /// <param name="value">Значение для тестирования</param>
+            
             [Test]
             [TestCase(ExceptionType.TooSmallException, 5)]
             [TestCase(ExceptionType.TooBigException, 100)]
+            [Description("Данный тест проверяет" +
+                "правильность возникающих исключений")]
             public void ValidateExceptionTest(
                 ExceptionType exceptionType, double value)
             {
+                Initialize();
                 ParameterException exception =
                     Assert.Throws<ParameterException>(() =>
                     {
@@ -61,13 +65,13 @@ namespace UnitTestsCore
                     Is.EqualTo(exceptionType));
             }
 
-            /// <summary>
-            /// Дополнительный тест для проверки 
-            /// корректного значения
-            /// </summary>
+            
             [Test]
+            [Description("Данный тест проверяет" +
+                "правильность присваивания значений")]
             public void ValidValueTest()
             {
+                Initialize();
                 double validValue = 50;
                 _parameters.NumericalParameters[
                     ParameterType.BladeWidth].Value = validValue;
@@ -77,15 +81,16 @@ namespace UnitTestsCore
                     Is.EqualTo(validValue));
             }
 
-            /// <summary>
-            /// Тест граничных значений 
-            /// </summary>
+            [Description("Данный тест проверяет" +
+               "правильность возникающих исключений" +
+                "при присваивании значений")]
             [Test]
             [TestCase(ExceptionType.TooSmallException, 0)]
             [TestCase(ExceptionType.TooBigException, 1000)]
             public void BoundaryValueTests(
                 ExceptionType exceptionType, double boundaryValue)
             {
+                Initialize();
                 ParameterException exception =
                     Assert.Throws<ParameterException>(() =>
                     {
@@ -99,16 +104,19 @@ namespace UnitTestsCore
             }
 
             [Test]
-            [TestCase(4, 7, ExceptionType.MaxLesserrMinException, false)]
             [TestCase(6, 7, ExceptionType.MinGreaterMaxException, false)]
             [TestCase(-20, 40,
                 ExceptionType.MaxValueNegativeException, true)]
             [TestCase(20, -40,
                 ExceptionType.MinValueNegativeException, true)]
+            [Description("Данный тест проверяет" +
+                "правильность возникающих исключений" +
+                "при присваивании Min Max значений")]
             public void MinMaxValueValidationTest(
                 double maxValue, double minValue,
                 ExceptionType exceptionType, bool valuesNULL)
             {
+                Initialize();
                 if (!valuesNULL)
                 {
                     FillValues();
@@ -118,50 +126,12 @@ namespace UnitTestsCore
                     Assert.Throws<ParameterException>(() =>
                     {
                         _parameters.NumericalParameters[
-                            ParameterType.PeakLenght].MaxValue = maxValue;
-                        _parameters.NumericalParameters[
-                            ParameterType.PeakLenght].MinValue = minValue;
+                            ParameterType.PeakLenght].SetMinAndMax(minValue,
+                            maxValue);
                     });
 
                 Assert.That(exception.ExceptionType,
                     Is.EqualTo(exceptionType));
-            }
-
-            [Test]
-            [TestCase(40, false)]
-            [TestCase(40, true)]
-            public void MaxSetTest(double maxValue, bool valuesNULL)
-            {
-                if (!valuesNULL)
-                {
-                    FillValues();
-                }
-
-                _parameters.NumericalParameters[
-                    ParameterType.PeakLenght].MaxValue = maxValue;
-
-                Assert.That(_parameters.NumericalParameters[
-                    ParameterType.PeakLenght].MaxValue,
-                    Is.EqualTo(maxValue));
-            }
-
-            [Test]
-            [TestCase(4, false)]
-            [TestCase(4, true)]
-            //TODO: rename
-            public void MinSetTest(double minValue, bool valuesNULL)
-            {
-                if (!valuesNULL)
-                {
-                    FillValues();
-                }
-
-                _parameters.NumericalParameters[
-                    ParameterType.PeakLenght].MinValue = minValue;
-
-                Assert.That(_parameters.NumericalParameters[
-                    ParameterType.PeakLenght].MinValue,
-                    Is.EqualTo(minValue));
             }
         }
     }
