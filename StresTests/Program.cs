@@ -31,24 +31,21 @@ namespace StresTests
                 .Value = 300;
 
             parameters.SetDependencies(
-                parameters.NumericalParameters[ParameterType.BladeLength],
-                parameters.NumericalParameters[ParameterType.PeakLenght],
-                1.0 / 6.0, 1.0 / 10
-            );
+     ParameterType.BladeLength,
+     ParameterType.PeakLenght
+ );
 
             parameters.SetDependencies(
-                parameters.NumericalParameters[ParameterType.BladeLength],
-                parameters.NumericalParameters[ParameterType.BindingLength],
-                1, 0
+                ParameterType.BladeLength,
+                ParameterType.BindingLength
             );
 
-            //Установка ширины по умолчанию
-            parameters.NumericalParameters[ParameterType.BladeWidth]
-                .Value = 40;
+            // Установка ширины по умолчанию
+            parameters.NumericalParameters[ParameterType.BladeWidth].Value = 40;
+
             parameters.SetDependencies(
-                parameters.NumericalParameters[ParameterType.BladeWidth],
-                parameters.NumericalParameters[ParameterType.EdgeWidth],
-                3.0 / 6.0, 1.0 / 6.0
+                ParameterType.BladeWidth,
+                ParameterType.EdgeWidth
             );
             //Установка толщины по умолчанию
             parameters.NumericalParameters[ParameterType.BladeThickness]
@@ -76,12 +73,9 @@ namespace StresTests
 
             //Установка Длины серрейтора по умолчанию
 
-           parameters.SetDependencies(
-                parameters.NumericalParameters[
-                    ParameterType.BladeLength],
-                parameters.NumericalParameters[
-                    ParameterType.SerreitorLength],
-                5.0 / 10.0, 3 / 10.0
+            parameters.SetDependencies(
+             ParameterType.BladeLength,
+                ParameterType.SerreitorLength
             );
 
             parameters.NumericalParameters[

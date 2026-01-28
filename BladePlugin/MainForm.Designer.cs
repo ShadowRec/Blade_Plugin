@@ -446,7 +446,6 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Клинок для ножа";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

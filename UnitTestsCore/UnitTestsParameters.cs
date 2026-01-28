@@ -1,4 +1,5 @@
 ﻿using Core;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
 
@@ -37,11 +38,12 @@ namespace CoreUnitTests
             double maxRatio, double minRatio)
         {
             Initialize();
+            _parameters.SetRatios(ParameterType.BladeWidth,
+                        ParameterType.EdgeWidth,
+                        (maxRatio, minRatio));
             _parameters.SetDependencies(
-                _parameters.NumericalParameters[ParameterType.BladeWidth],
-                _parameters.NumericalParameters[ParameterType.EdgeWidth],
-                maxRatio,
-                minRatio);
+                ParameterType.BladeWidth,
+                ParameterType.EdgeWidth);
 
             double expectedMaxValue =
                 _parameters.NumericalParameters[
@@ -85,18 +87,18 @@ namespace CoreUnitTests
         [TestCase(-2.0 / 4, 1 / 8)]
         [TestCase(-2.0 / 4, -1 / 2)]
         public void SetDependenciesExceptionTest(
-            double minratio, double maxratio)
+            double minRatio, double maxRatio)
         {
             Initialize();
             var exception = Assert.Throws<ParameterException>(() =>
             {
-                _parameters.SetDependencies(
-                    _parameters.NumericalParameters[
-                        ParameterType.BladeWidth],
-                    _parameters.NumericalParameters[
-                        ParameterType.EdgeWidth],
-                    maxratio,
-                    minratio);
+                _parameters.SetRatios(ParameterType.BladeWidth,
+                        ParameterType.EdgeWidth,
+                        (maxRatio, minRatio));
+                _parameters.SetDependencies(               
+                        ParameterType.BladeWidth,    
+                        ParameterType.EdgeWidth
+                  );
             });
 
             Assert.That(exception.ExceptionType,
@@ -172,6 +174,36 @@ namespace CoreUnitTests
                 Assert.That(_parameters.SerreitorType,
                     Is.EqualTo(SerreitorType.ConstBigSerreitor));
             });
+        }
+
+        [Test]
+        [Description("Проверка установки значения текущего параметра" +
+            " BladeWidth и его корректного сохранения в " +
+            "словаре CurrentParameters")]
+        public void SetCurrentParameterTest()
+        {
+            Initialize();
+            double value = 40;
+            _parameters.SetCurrentParameter(ParameterType.BladeWidth,
+                value);
+            Assert.That(_parameters.
+                CurrentParameters[ParameterType.BladeWidth],
+                Is.EqualTo(value));
+        }
+
+        [Test]
+        [Description("Проверка установки коэффициентов привязки" +
+            " для типа Insert и их соответствия в" +
+            " словарях ParametersRatios и BindingRatios")]
+        public void SetBindingRatioTest()
+        {
+            Initialize();
+            BindingType binType = BindingType.Insert;
+            _parameters.SetBindingRatios(binType);
+            Assert.That(_parameters.ParametersRatios[
+                (ParameterType.BladeLength,
+                ParameterType.BindingLength)],
+                Is.EqualTo(_parameters.BindingRatios[binType]));
         }
     }
 }

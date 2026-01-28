@@ -34,24 +34,12 @@ namespace GUI
         /// </summary>
         private Parameters _parameters;
 
-        //TODO: refactor move to parameters
+    
+        //TODO: XML DONE
         /// <summary>
-        /// Словарь, содержащий текущие значения параметров.
+        /// Словарь содержащий списки зависимых параметров
+        /// для независимых параметров
         /// </summary>
-        private Dictionary<ParameterType, double> _currentParameters =
-            new Dictionary<ParameterType, double>()
-            {
-                [ParameterType.BladeLength] = 300,
-                [ParameterType.BladeWidth] = 40,
-                [ParameterType.BladeThickness] = 2,
-                [ParameterType.EdgeWidth] = 14,
-                [ParameterType.PeakLenght] = 45,
-                [ParameterType.BindingLength] = 300,
-                [ParameterType.SerreitorLength] = 90,
-                [ParameterType.SerreitorNumber] = 8
-            };
-
-        //TODO: XML
         private Dictionary<ParameterType, List<ParameterType>>
             _parameterTypeDependencies =
             new Dictionary<ParameterType, List<ParameterType>>()
@@ -133,38 +121,7 @@ namespace GUI
         /// </summary>
         private Dictionary<ParameterType, Control> _parametersLabels;
 
-        //TODO: refactor move to parameters
-        /// <summary>
-        /// Словарь соотношений между параметрами.
-        /// </summary>
-        private Dictionary<(ParameterType, ParameterType), (double, double)>
-            _parametersRatios = new Dictionary<(ParameterType, ParameterType),
-                (double, double)>()
-            {
-                [(ParameterType.BladeLength, ParameterType.PeakLenght)]
-                    = (1.0 / 6.0, 1.0 / 10),
-                [(ParameterType.BladeLength, ParameterType.BindingLength)]
-                    = (1, 0),
-                [(ParameterType.BladeWidth, ParameterType.EdgeWidth)] =
-                    (3.0 / 6.0, 1.0 / 6.0),
-                [(ParameterType.BladeLength, 
-                    ParameterType.SerreitorLength)] =
-                    (5.0 / 10.0, 3 / 10.0),
-            };
-
-        //TODO: refactor move to parameters
-
-        /// <summary>
-        /// Словарь соотношений для типов креплений.
-        /// </summary>
-        private Dictionary<BindingType, (double, double)> _bindingRatios =
-            new Dictionary<BindingType, (double, double)>()
-            {
-                [BindingType.ForOverlays] = (1, 0),
-                [BindingType.Insert] = (3.0 / 4.0, 0),
-                [BindingType.Through] = (1, 0),
-                [BindingType.None] = (1, 0)
-            };
+        
 
         /// <summary>
         /// Функция, выполняющая действия при запуске программы.
@@ -200,60 +157,16 @@ namespace GUI
 
             _parameters = new Parameters();
 
-            // Установка длины по умолчанию
-            _parameters.NumericalParameters[ParameterType.BladeLength]
-                .Value = 300;
-            SetDependenciesAndUpdate(ParameterType.BladeLength,
-                ParameterType.PeakLenght);
-            SetDependenciesAndUpdate(ParameterType.BladeLength,
-                ParameterType.BindingLength);
+            UpdateToolTip(ParameterType.PeakLenght);
+            UpdateToolTip(ParameterType.BindingLength);
+            UpdateToolTip(ParameterType.EdgeWidth);
+            UpdateToolTip(ParameterType.SerreitorLength);
 
-            _parameters.NumericalParameters[ParameterType.BladeWidth]
-                .Value = 40;
-            SetDependenciesAndUpdate(ParameterType.BladeWidth,
-                ParameterType.EdgeWidth);
-
-            // Установка толщины по умолчанию
-            _parameters.NumericalParameters[ParameterType.BladeThickness]
-                .Value = 2;
-
-            // Установка длины острия по умолчанию
-            _parameters.NumericalParameters[ParameterType.PeakLenght]
-                .Value = 46;
-
-            // Установка ширины лезвия по умолчанию
-            _parameters.NumericalParameters[ParameterType.EdgeWidth]
-                .Value = 14;
-
-            // Установка длины крепления по умолчанию
-            _parameters.NumericalParameters[ParameterType.BindingLength]
-                .Value = 300;
-
-            // Установка наличия острия по умолчанию (Есть)
-            _parameters.BladeExistence = true;
-
-            _parameters.NumericalParameters[
-                ParameterType.SerreitorNumber].Value = 8;
-
-            // Установка типа клинка по умолчанию (Односторонний)
-            _parameters.BladeType = false;
-
-            // Установка типа крепления по умолчанию (Накладное)
-            _parameters.BindingType = BindingType.ForOverlays;
             ComboBoxTypeBlade.SelectedIndex = 0;
             ComboBoxTypeBinding.SelectedIndex = 2;
             CheckBoxPeakBlade.Checked = true;
 
-            // Установка Длины серрейтора по умолчанию
-            SetDependenciesAndUpdate(ParameterType.BladeLength,
-                ParameterType.SerreitorLength);
-            _parameters.NumericalParameters[ParameterType.SerreitorLength]
-                .Value = 90;
-
-            // Установка типа серрейтора по умолчанию
-            _parameters.SerreitorType = SerreitorType.AlternationSerreitor;
             SerreitorTypeComboBox.SelectedIndex = 0;
-            _parameters.SerreitorExistence = true;
             serreitorCheckBox.Checked = true;
         }
 
@@ -266,8 +179,18 @@ namespace GUI
         {
             var parameterType = _parametersTextBoxes.FirstOrDefault(
                 x => x.Value == (Control)sender).Key;
-            ParseTextBox(parameterType,
-               _parameterTypeDependencies[parameterType].ToArray());
+            var dependencies = _parameterTypeDependencies[parameterType];
+            if (dependencies != null) 
+            {
+                ParseTextBox(parameterType,
+               dependencies.ToArray());
+            }
+            else
+            {
+                ParseTextBox(parameterType, null);
+            }
+
+            
         }
 
         /// <summary>
@@ -279,10 +202,13 @@ namespace GUI
         /// значение допустимого диапазона.</param>
         /// <param name="minvalue">Минимальное 
         /// значение допустимого диапазона.</param>
-        private void UpdateToolTip(object target, double maxvalue,
-            double minvalue)
+        private void UpdateToolTip(ParameterType paramType)
         {
-            Max_Min_Value.SetToolTip((Control)target,
+            var minvalue = 
+                _parameters.NumericalParameters[paramType].MinValue;
+            var maxvalue =
+                _parameters.NumericalParameters[paramType].MaxValue;
+            Max_Min_Value.SetToolTip(_parametersTextBoxes[paramType],
                 $"Допустимые значения:{minvalue}..{maxvalue}");
         }
 
@@ -300,10 +226,8 @@ namespace GUI
                 _parameters.BindingType =
                     (BindingType)ComboBoxTypeBinding.SelectedIndex;
 
-                _parametersRatios[(ParameterType.BladeLength,
-                    ParameterType.BindingLength)] =
-                    _bindingRatios[(BindingType)
-                    ComboBoxTypeBinding.SelectedIndex];
+                _parameters.SetBindingRatios((BindingType)
+                    ComboBoxTypeBinding.SelectedIndex);
 
                 if ((BindingType)ComboBoxTypeBinding.SelectedIndex
                     == BindingType.None)
@@ -361,13 +285,13 @@ namespace GUI
         {
             if (_parametersLabels != null && _parametersTextBoxes != null)
             {
-                foreach (var parameter in _currentParameters)
+                foreach (var parameter in _parameters.CurrentParameters)
                 {
                     _parametersLabels[parameter.Key].ForeColor = Color.Black;
                     _parametersTextBoxes[parameter.Key].ForeColor =
                         Color.Black;
                     _parametersTextBoxes[parameter.Key].Text =
-                        _currentParameters[parameter.Key].ToString();
+                        _parameters.CurrentParameters[parameter.Key].ToString();
                 }
             }
             TextBoxError.Text = "";
@@ -489,22 +413,25 @@ namespace GUI
             try
             {
                 TryParseTextBox(parameterType);
-                for (int i = 0; i < dependentParameterType.Length; i++)
+                if (dependentParameterType != null)
                 {
-                    try
+                    for (int i = 0; i < dependentParameterType.Length; i++)
                     {
-                        SetDependenciesAndUpdate(parameterType,
-                        dependentParameterType[i]);
-                        TryParseTextBox(dependentParameterType[i]);
+                        try
+                        {
+                            SetDependenciesAndUpdate(parameterType,
+                            dependentParameterType[i]);
+                            TryParseTextBox(dependentParameterType[i]);
+                        }
+                        catch (ParameterException ex)
+                        {
+                            exceptions.Add(ex);
+                        }
                     }
-                    catch (ParameterException ex)
+                    if (exceptions.Count > 0)
                     {
-                        exceptions.Add(ex);
+                        throw new AggregateException(exceptions);
                     }
-                }
-                if (exceptions.Count > 0)
-                {
-                    throw new AggregateException(exceptions);
                 }
                 SetDefault();
             }
@@ -544,7 +471,7 @@ namespace GUI
                     {
                         _parameters.NumericalParameters[
                             parameterType].Value = value;
-                        _currentParameters[parameterType] = value;
+                       _parameters.SetCurrentParameter(parameterType,value);
                     }
                     else
                     {
@@ -554,10 +481,11 @@ namespace GUI
                 }
                 else
                 {
-                    if (_currentParameters[parameterType] != 0)
+                    if (_parameters.CurrentParameters[parameterType] != 0)
                     {
                         textBox.Text =
-                            _currentParameters[parameterType].ToString();
+                            _parameters.CurrentParameters[
+                                parameterType].ToString();
                     }
                 }
             }
@@ -577,16 +505,11 @@ namespace GUI
             ParameterType dependentParameter)
         {
             _parameters.SetDependencies(
-                _parameters.NumericalParameters[parameterType],
-                _parameters.NumericalParameters[dependentParameter],
-                _parametersRatios[(parameterType, dependentParameter)].Item1,
-                _parametersRatios[(parameterType, dependentParameter)].Item2
+                parameterType, dependentParameter
             );
 
             UpdateToolTip(
-                _parametersTextBoxes[dependentParameter],
-                _parameters.NumericalParameters[dependentParameter].MaxValue,
-                _parameters.NumericalParameters[dependentParameter].MinValue
+               dependentParameter
             );
         }
 
@@ -607,15 +530,5 @@ namespace GUI
             }
         }
 
-
-        /// <summary>
-        /// Дейстивие при закрытии формы
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            _builder.CLose();
-        }
     }
 }

@@ -20,27 +20,32 @@ namespace Core
             //Инициализация параметра длины клинка
             NumericalParameter bladelength = new NumericalParameter();
             bladelength.SetMinAndMax(80, 1200);
+            bladelength.Value = 300;
 
             //Инициализация параметра ширины клинка
             NumericalParameter bladewidth = new NumericalParameter();
             bladewidth.SetMinAndMax(9, 60);
+            bladewidth.Value = 40;
             //Инициализация параметра толщины клинка
             NumericalParameter bladethick = new NumericalParameter();
             bladethick.SetMinAndMax(1, 3);
-
+            bladethick.Value = 2;
             NumericalParameter serreitorNumber = new NumericalParameter();
             serreitorNumber.SetMinAndMax(8, 32);
+            serreitorNumber.Value = 8;    
             //Инициализация параметра ширины лезвия
             NumericalParameter edgewidth = new NumericalParameter();
-
             //Инициализация параметра длины острия
             NumericalParameter peaklength = new NumericalParameter();
-
             //Инициализация параметра длины крепления
             NumericalParameter binlength = new NumericalParameter();
-
             //Инициализация параметра длины серрейтора
             NumericalParameter serrlength = new NumericalParameter();
+            BladeExistence = true;
+            BladeType = false;
+            BindingType = BindingType.ForOverlays;
+            SerreitorType = SerreitorType.AlternationSerreitor;
+            SerreitorExistence = true;
 
             //Занесения значений параметров в словарь 
             //с соответствующими ключами
@@ -57,8 +62,87 @@ namespace Core
                 [ParameterType.SerreitorNumber] = serreitorNumber,
                 
             };
+            foreach (var param in _parametersRatios)
+            {
+                SetDependencies(param.Key.Item1, param.Key.Item2);
+            }
+            edgewidth.Value = 14;
+            peaklength.Value = 46;
+            binlength.Value = 300;
+            serrlength.Value = 90;
         }
 
+        //TODO: refactor move to parameters DONE
+        /// <summary>
+        /// Словарь, содержащий текущие значения параметров.
+        /// </summary>
+        private Dictionary<ParameterType, double> _currentParameters =
+            new Dictionary<ParameterType, double>()
+            {
+                [ParameterType.BladeLength] = 300,
+                [ParameterType.BladeWidth] = 40,
+                [ParameterType.BladeThickness] = 2,
+                [ParameterType.EdgeWidth] = 14,
+                [ParameterType.PeakLenght] = 45,
+                [ParameterType.BindingLength] = 300,
+                [ParameterType.SerreitorLength] = 90,
+                [ParameterType.SerreitorNumber] = 8
+            };
+
+        //TODO: refactor move to parameters DONE
+        /// <summary>
+        /// Словарь соотношений между параметрами.
+        /// </summary>
+        private Dictionary<(ParameterType, ParameterType), (double, double)>
+            _parametersRatios = new Dictionary<(ParameterType, ParameterType),
+                (double, double)>()
+            {
+                [(ParameterType.BladeLength, ParameterType.PeakLenght)]
+                    = (1.0 / 6.0, 1.0 / 10),
+                [(ParameterType.BladeLength, ParameterType.BindingLength)]
+                    = (1, 0),
+                [(ParameterType.BladeWidth, ParameterType.EdgeWidth)] =
+                    (3.0 / 6.0, 1.0 / 6.0),
+                [(ParameterType.BladeLength,
+                    ParameterType.SerreitorLength)] =
+                    (5.0 / 10.0, 3 / 10.0),
+            };
+
+        //TODO: refactor move to parameters DONE
+
+        /// <summary>
+        /// Словарь соотношений для типов креплений.
+        /// </summary>
+        private Dictionary<BindingType, (double, double)> _bindingRatios =
+            new Dictionary<BindingType, (double, double)>()
+            {
+                [BindingType.ForOverlays] = (1, 0),
+                [BindingType.Insert] = (3.0 / 4.0, 0),
+                [BindingType.Through] = (1, 0),
+                [BindingType.None] = (1, 0)
+            };
+
+        public Dictionary<(ParameterType, 
+            ParameterType), (double, double)> ParametersRatios
+        {
+            get
+            {
+                return _parametersRatios;
+            }
+        }
+        public  Dictionary<ParameterType, double> CurrentParameters
+        {
+            get
+            {
+                return _currentParameters;
+            }
+        }
+        public Dictionary<BindingType, (double, double)> BindingRatios
+        {
+            get {
+                return _bindingRatios;
+                }
+        }
         /// <summary>
         /// False - Острие у клинка нету, 
         /// True - Острие у клинка есть
@@ -81,7 +165,11 @@ namespace Core
         /// </summary>
         public SerreitorType SerreitorType { get; set; }
 
-        //TODO: XML
+        //TODO: XML DONE
+        /// <summary>
+        /// False - Серрейтора у клинка нету, 
+        /// True -  Серрейтор у клинка есть
+        /// </summary>
         public bool SerreitorExistence { get; set; }
 
         /// <summary>
@@ -94,18 +182,20 @@ namespace Core
         /// Выставляет максимальное и минимальное(Если такое задано) 
         /// значения для параметра
         /// </summary>
-        /// <param name="independ">Параметр на основе которого будет 
+        /// <param name="independType">Параметр на основе которого будет 
         /// вычисляться макс и мин значения</param>
-        /// <param name="depend">Параметр к которому будет применяться 
+        /// <param name="dependType">Параметр к которому будет применяться 
         /// максимально и минимальное значение</param>
-        /// <param name="maxratio">Соотношение величин для 
-        /// максимального значения</param>
-        /// <param name="minratio">Соотношение величин для 
-        /// минимального значения</param>
-        public void SetDependencies(NumericalParameter independ,
-            NumericalParameter depend, double maxratio,
-            double minratio = 0)
+        public void SetDependencies(ParameterType independType,
+            ParameterType dependType)
         {
+            var maxratio = _parametersRatios[(independType, 
+                dependType)].Item1;
+            var minratio = _parametersRatios[(independType, 
+                dependType)].Item2;
+            var independ = NumericalParameters[independType];
+            var depend = NumericalParameters[dependType];
+
             if (maxratio > 0 && minratio >= 0)
             {
                 var tmpMinRatioCoefficient =
@@ -122,6 +212,44 @@ namespace Core
                 throw new ParameterException(
                     ExceptionType.RatioNegativeException);
             }
+        }
+        /// <summary>
+        /// Установка соотношения для крепления
+        /// </summary>
+        /// <param name="binType">Тип крепления</param>
+        public void SetBindingRatios(
+            BindingType binType)
+        {
+            ParametersRatios[(ParameterType.BladeLength,
+                    ParameterType.BindingLength)] = _bindingRatios[binType];
+        }
+        /// <summary>
+        /// Функция установки текущего параметра
+        /// </summary>
+        /// <param name="paramType">Тип параметра</param>
+        /// <param name="value">Значение</param>
+        public void SetCurrentParameter(ParameterType paramType, 
+            double value)
+        {
+            _currentParameters[paramType] = value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="independParamType">Параметр на основе
+        /// которого будет 
+        /// вычисляться макс и мин значения</param>
+        /// <param name="dependParamType">Параметр к которому 
+        /// будет применяться 
+        /// максимально и минимальное значение</param>
+        /// <param name="ratios"> соотношение</param>
+        public void SetRatios(ParameterType independParamType,
+            ParameterType dependParamType,
+           (double maxratio, double minratio) ratios)
+        {
+            _parametersRatios[(independParamType,dependParamType)]=
+                ratios;
         }
     }
 }

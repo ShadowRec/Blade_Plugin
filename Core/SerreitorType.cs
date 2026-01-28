@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //TODO: XML
+    //TODO: XML DONE
+    /// <summary>
+    /// Тип серрейтора
+    /// </summary>
     public enum SerreitorType
     {
         /// <summary>

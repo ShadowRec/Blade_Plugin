@@ -78,7 +78,10 @@ namespace KompasBuilder
         /// </summary>
         private double _offset;
 
-        //TODO: XML
+        //TODO: XML DONE
+        /// <summary>
+        /// Смещенная плоскость
+        /// </summary>
         private ksEntity _customPlane;
         
         /// <summary>
@@ -96,7 +99,13 @@ namespace KompasBuilder
             }
         }
 
-        //TODO: XML
+        //TODO: XML DONE
+        /// <summary>
+        /// Функция создания смещенной плоскости
+        /// </summary>
+        /// <param name="offset"> отступ</param>
+        /// <param name="basePlane"> базовая плоскость, от 
+        /// которой производится смещение</param>
         private void CreateCustomPlane(double offset,ksEntity basePlane)
         {
             _customPlane = _part.NewEntity((short)Obj3dType.o3d_planeOffset);
@@ -493,7 +502,17 @@ namespace KompasBuilder
             _edgeSketch = null;
         }
 
-        //TODO: XML
+        //TODO: XML DONE
+        /// <summary>
+        /// Создание дуги по двум точкам и центру
+        /// </summary>
+        /// <param name="xc">X центра</param>
+        /// <param name="yc">Y центра</param>
+        /// <param name="x1">X 1ой точки</param>
+        /// <param name="y1">Y 1ой точки</param>
+        /// <param name="x2">X 2ой точки</param>
+        /// <param name="y2">Y 2ой точки</param>
+        /// <param name="rad">радиус</param>
         public void CreateArcBy2PointsAndCenter(double xc, double yc,
             double x1, double y1, double x2, double y2, double rad
             )
