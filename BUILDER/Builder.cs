@@ -24,8 +24,8 @@ namespace KompasBuilder
         /// </param>
         public void BuildBlade(Parameters parameters)
         {
-            _wrapper = new KompasWrapper();
-            StartCreating();
+            
+            _wrapper.CreateFile();
 
             if (!parameters.BladeType)
             {
@@ -231,10 +231,10 @@ namespace KompasBuilder
         /// <summary>
         /// Запуск процесса создания.
         /// </summary>
-        private void StartCreating()
+        public void StartCreating()
         {
+            _wrapper = new KompasWrapper();
             _wrapper.StartKompas();
-            _wrapper.CreateFile();
         }
 
         /// <summary>
@@ -714,6 +714,14 @@ namespace KompasBuilder
             _wrapper.DrawLine(bladeWidth * widthIntedUp + cutHeight,
                 totalLengt, bladeWidth * widthIntedUp, totalLengt);
             _wrapper.EndSkethEdit();
+        }
+
+        /// <summary>
+        /// Функция закрытия враппера
+        /// </summary>
+        public void CLose()
+        {
+            _wrapper.Close();
         }
     }
 }

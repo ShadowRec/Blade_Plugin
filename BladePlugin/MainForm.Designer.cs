@@ -54,6 +54,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Max_Min_Value = new System.Windows.Forms.ToolTip(this.components);
             this.SerreitorLengthTextBox = new System.Windows.Forms.TextBox();
+            this.SerreitorNumberTextBox = new System.Windows.Forms.TextBox();
             this.serreitorCheckBox = new System.Windows.Forms.CheckBox();
             this.SerreitorExistenceLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,7 +62,6 @@
             this.SerreitorTypeComboBox = new System.Windows.Forms.ComboBox();
             this.SerreitorTypeLabel = new System.Windows.Forms.Label();
             this.SerreitorToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.SerreitorNumberTextBox = new System.Windows.Forms.TextBox();
             this.SerreitorNumberLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -312,6 +312,17 @@
             this.Max_Min_Value.SetToolTip(this.SerreitorLengthTextBox, "Для отображения введите значение в поле \"Длина клинка\"\r\n");
             this.SerreitorLengthTextBox.Leave += new System.EventHandler(this.SerreitorLengthTextBox_Leave);
             // 
+            // SerreitorNumberTextBox
+            // 
+            this.SerreitorNumberTextBox.Location = new System.Drawing.Point(235, 557);
+            this.SerreitorNumberTextBox.Name = "SerreitorNumberTextBox";
+            this.SerreitorNumberTextBox.Size = new System.Drawing.Size(118, 22);
+            this.SerreitorNumberTextBox.TabIndex = 34;
+            this.SerreitorNumberTextBox.Text = "8";
+            this.Max_Min_Value.SetToolTip(this.SerreitorNumberTextBox, "Допустимые значения: 8..32\r\n(ПРИМЕЧАНИЕ - Если выбран мелкий серрейтор, то зубьев" +
+        " будет  в 2 раза больше!)\r\n");
+            this.SerreitorNumberTextBox.Leave += new System.EventHandler(this.SerreitorNumberTextBox_Leave);
+            // 
             // serreitorCheckBox
             // 
             this.serreitorCheckBox.AutoSize = true;
@@ -377,24 +388,12 @@
             this.SerreitorTypeLabel.Size = new System.Drawing.Size(160, 25);
             this.SerreitorTypeLabel.TabIndex = 31;
             this.SerreitorTypeLabel.Text = "Тип серрейтора";
-           
             // 
             // SerreitorToolTip
             // 
             this.SerreitorToolTip.AutoPopDelay = 5000;
             this.SerreitorToolTip.InitialDelay = 15;
             this.SerreitorToolTip.ReshowDelay = 100;
-            // 
-            // SerreitorNumberTextBox
-            // 
-            this.SerreitorNumberTextBox.Location = new System.Drawing.Point(235, 557);
-            this.SerreitorNumberTextBox.Name = "SerreitorNumberTextBox";
-            this.SerreitorNumberTextBox.Size = new System.Drawing.Size(118, 22);
-            this.SerreitorNumberTextBox.TabIndex = 34;
-            this.SerreitorNumberTextBox.Text = "8";
-            this.Max_Min_Value.SetToolTip(this.SerreitorNumberTextBox, "Допустимые значения: 8..32\r\n(ПРИМЕЧАНИЕ - Если выбран мелкий серрейтор, то зубьев" +
-        " будет  в 2 раза больше!)\r\n");
-            this.SerreitorNumberTextBox.Leave += new System.EventHandler(this.SerreitorNumberTextBox_Leave);
             // 
             // SerreitorNumberLabel
             // 
@@ -447,6 +446,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Клинок для ножа";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

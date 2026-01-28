@@ -105,13 +105,15 @@ namespace StresTests
             // Для расчёта времени 
             TimeSpan lastTotalProcessorTime = currentProcess.TotalProcessorTime;
             DateTime lastTime = DateTime.Now;
+            builder.StartCreating();
 
             while (true)
             {
-                countDown++;
+                //countDown++;
                 stopWatch.Start();
                 builder.BuildBlade(parameters);
                 stopWatch.Stop();
+                builder.CLose();
                 // ОЗУ
                 double usedMemory =
                     (computerInfo.TotalPhysicalMemory -

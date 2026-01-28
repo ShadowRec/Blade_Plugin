@@ -139,7 +139,6 @@ namespace KompasBuilder
                 StartKompas();
             }
         }
-
         /// <summary>
         /// Создание документа внутри Kompas-3D V23.
         /// </summary>
@@ -152,13 +151,13 @@ namespace KompasBuilder
                 _document = (ksDocument3D)_kompas.Document3D();
                 _document.Create();
                 _document = (ksDocument3D)_kompas.ActiveDocument3D();
+                _document.SetActive();
                 _part = (ksPart)_document.GetPart(
                     (short)Part_Type.pTop_Part);
             }
-            catch
+            catch(Exception ex)
             {
-                throw new ParameterException(
-                    ExceptionType.PartBuildingErrorException);
+                throw new Exception(ex.Message);
             }
         }
         
@@ -179,6 +178,39 @@ namespace KompasBuilder
         }
 
         /// <summary>
+        /// Сброс полей враппера
+        /// </summary>
+        private void Reset()
+        {
+            if (_editStatus && _sketchDefinition != null)
+            {
+                _sketchDefinition.EndEdit();
+            }
+
+            _mainSketch = null;
+            _edgeDircectionSketch = null;
+            _edgeSketch = null;
+            _serreitorSketch = null;
+            _holesSketch = null;
+            _sketchDefinition = null;
+            _sketchEdit = null;
+            _editStatus = false;
+            _customPlane = null;
+        }
+        /// <summary>
+        /// Закрытие враппера
+        /// </summary>
+        public void Close()
+        {
+            Reset(); // Сбрасываем все поля
+            if (_document != null)
+            {
+                _document.close();
+                _document = null;
+            }
+            _part = null;
+        }
+        /// <summary>
         /// Выбор текущего скетча.
         /// </summary>
         /// <param name="target">Целевой скетч</param>
@@ -193,100 +225,114 @@ namespace KompasBuilder
             switch (target)
             {
                 case SketchesTypes.MainString:
-                    if (_mainSketch == null)
                     {
-                        CreateSketch(
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY),
-                            ref _mainSketch);
+                        if (_mainSketch == null)
+                        {
+                            CreateSketch(
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY),
+                                ref _mainSketch);
+                        }
+                        else
+                        {
+                            _sketchDefinition = (ksSketchDefinition)
+                                _mainSketch.GetDefinition();
+                            _sketchDefinition.SetPlane((ksEntity)
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY));
+                        }
+                        _editStatus = true;
+                        break;
                     }
-                    else
-                    {
-                        _sketchDefinition = (ksSketchDefinition)
-                            _mainSketch.GetDefinition();
-                        _sketchDefinition.SetPlane((ksEntity)
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY));
-                    }
-                    _editStatus = true;
-                    break;
-
                 case SketchesTypes.EdgeDirectionString:
-                    if (_edgeDircectionSketch == null)
                     {
-                        CreateSketch(
-                           _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY),
-                            ref _edgeDircectionSketch);
+                        if (_edgeDircectionSketch == null)
+                        {
+                            CreateSketch(
+                               _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY),
+                                ref _edgeDircectionSketch);
+                        }
+                        else
+                        {
+                            _sketchDefinition = (ksSketchDefinition)
+                                _edgeDircectionSketch.GetDefinition();
+                            _sketchDefinition.SetPlane((ksEntity)
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY));
+                        }
+                        _editStatus = true;
+                        break;
                     }
-                    else
-                    {
-                        _sketchDefinition = (ksSketchDefinition)
-                            _edgeDircectionSketch.GetDefinition();
-                        _sketchDefinition.SetPlane((ksEntity)
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY));
-                    }
-                    _editStatus = true;
-                    break;
+                    
 
                 case SketchesTypes.EdgeString:
-                    if (_edgeSketch == null)
                     {
-                        CreateSketch(
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOZ),
-                            ref _edgeSketch);
+                        if (_edgeSketch == null)
+                        {
+                            CreateSketch(
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOZ),
+                                ref _edgeSketch);
+                        }
+                        else
+                        {
+                            _sketchDefinition = (ksSketchDefinition)
+                                _edgeSketch.GetDefinition();
+                            _sketchDefinition.SetPlane((ksEntity)
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOZ));
+                        }
+                        _editStatus = true;
+                        break;
                     }
-                    else
-                    {
-                        _sketchDefinition = (ksSketchDefinition)
-                            _edgeSketch.GetDefinition();
-                        _sketchDefinition.SetPlane((ksEntity)
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOZ));
-                    }
-                    _editStatus = true;
-                    break;
 
                 case SketchesTypes.HolesString:
-                    if (_holesSketch == null)
                     {
-                        CreateSketch(
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY),
-                            ref _holesSketch);
+                        if (_holesSketch == null)
+                        {
+                            CreateSketch(
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY),
+                                ref _holesSketch);
+                        }
+                        else
+                        {
+                            _sketchDefinition = (ksSketchDefinition)
+                                _holesSketch.GetDefinition();
+                            _sketchDefinition.SetPlane((ksEntity)
+                                _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY));
+                        }
+                        break;
                     }
-                    else
-                    {
-                        _sketchDefinition = (ksSketchDefinition)
-                            _holesSketch.GetDefinition();
-                        _sketchDefinition.SetPlane((ksEntity)
-                            _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY));
-                    }
-                    break;           
+                            
                 case SketchesTypes.SerreitorString:
-                    if (_serreitorSketch == null)
                     {
-                        CreateCustomPlane(Offset, 
-                             _part.GetDefaultEntity((short)
-                            Obj3dType.o3d_planeXOY));
-                        CreateSketch(
-                            _customPlane,
-                            ref _serreitorSketch);
+                        if (_serreitorSketch == null)
+                        {
+                            CreateCustomPlane(Offset,
+                                 _part.GetDefaultEntity((short)
+                                Obj3dType.o3d_planeXOY));
+                            CreateSketch(
+                                _customPlane,
+                                ref _serreitorSketch);
+                        }
+                        else
+                        {
+                            _sketchDefinition = (ksSketchDefinition)
+                                _serreitorSketch.GetDefinition();
+                            _sketchDefinition.SetPlane(_customPlane);
+                        }
+                        _editStatus = true;
+                        break;
                     }
-                    else
-                    {
-                        _sketchDefinition = (ksSketchDefinition)
-                            _serreitorSketch.GetDefinition();
-                        _sketchDefinition.SetPlane(_customPlane);
-                    }
-                    _editStatus = true;
-                    break;
-
+ 
                 default:
-                    break;
+                    {
+                        break;
+                    }
+                
             }
 
             _sketchEdit = (ksDocument2D)_sketchDefinition

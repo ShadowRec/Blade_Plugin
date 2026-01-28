@@ -80,11 +80,14 @@ namespace GUI
                 [ExceptionType.TooBigException] = "было введено " +
                     "значение больше диапазона допустимых значений!",
                 [ExceptionType.RatioNegativeException] = "возникла " +
-                    "ошибка на уровне кода, введенное соотношение ниже нуля!",
+                    "ошибка на уровне кода, введенное соотношение" +
+                " ниже нуля!",
                 [ExceptionType.MaxValueNegativeException] = "возникла " +
-                    "ошибка на уровне кода, максимальное значение ниже нуля!",
+                    "ошибка на уровне кода, максимальное значение " +
+                "ниже нуля!",
                 [ExceptionType.MinValueNegativeException] = "возникла " +
-                    "ошибка на уровне кода, минимальное значение ниже нуля!",
+                    "ошибка на уровне кода, минимальное значение" +
+                " ниже нуля!",
                 [ExceptionType.KompasOpenErrorException] = "Возникла " +
                     "ошибка при попытке открытия Kompas-3D",
                 [ExceptionType.MinGreaterMaxException] = "возникла " +
@@ -117,7 +120,8 @@ namespace GUI
                     = (1, 0),
                 [(ParameterType.BladeWidth, ParameterType.EdgeWidth)] =
                     (3.0 / 6.0, 1.0 / 6.0),
-                [(ParameterType.BladeLength, ParameterType.SerreitorLength)] =
+                [(ParameterType.BladeLength, 
+                    ParameterType.SerreitorLength)] =
                     (5.0 / 10.0, 3 / 10.0),
             };
 
@@ -243,9 +247,12 @@ namespace GUI
         /// <summary>
         /// Обновления текста ToolTip.
         /// </summary>
-        /// <param name="target">Ссылка на поле, чей ToolTip обновляется.</param>
-        /// <param name="maxvalue">Максимальное значение допустимого диапазона.</param>
-        /// <param name="minvalue">Минимальное значение допустимого диапазона.</param>
+        /// <param name="target">Ссылка на поле, 
+        /// чей ToolTip обновляется.</param>
+        /// <param name="maxvalue">Максимальное 
+        /// значение допустимого диапазона.</param>
+        /// <param name="minvalue">Минимальное 
+        /// значение допустимого диапазона.</param>
         private void UpdateToolTip(object target, double maxvalue,
             double minvalue)
         {
@@ -301,7 +308,8 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при изменении индекса в комбо-боксе "Тип Крепления".
+        /// Функция, выполняющая действия при изменении индекса 
+        /// в комбо-боксе "Тип Крепления".
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
@@ -354,7 +362,8 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при изменении статуса чек бокса "Наличие острия".
+        /// Функция, выполняющая действия при изменении статуса 
+        /// чек бокса "Наличие острия".
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
@@ -455,7 +464,8 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с текст бокса "Толщина клинка".
+        /// Функция, выполняющая действия при выходе
+        /// с текст бокса "Толщина клинка".
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
@@ -475,13 +485,15 @@ namespace GUI
             if (CheckAll())
             {
                 SetDefault();
+                _builder.StartCreating();
                 _builder.BuildBlade(_parameters);
                 Console.Write("Starting Building");
             }
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с текст бокса "Длина серрейтора".
+        /// Функция, выполняющая действия при 
+        /// выходе с текст бокса "Длина серрейтора".
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
@@ -492,7 +504,8 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при изменении состояния чек-бокса серрейтора.
+        /// Функция, выполняющая действия при изменении 
+        /// состояния чек-бокса серрейтора.
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
@@ -510,7 +523,8 @@ namespace GUI
         /// Парсинг значения из TextBox с обработкой зависимых параметров.
         /// </summary>
         /// <param name="parameterType">Тип параметра.</param>
-        /// <param name="dependentParameterType">Массив зависимых параметров.</param>
+        /// <param name="dependentParameterType">Массив 
+        /// зависимых параметров.</param>
         private void ParseTextBox(
             ParameterType parameterType,
             ParameterType[] dependentParameterType)
@@ -601,7 +615,8 @@ namespace GUI
         /// Установка зависимостей между параметрами и обновление ToolTip.
         /// </summary>
         /// <param name="parameterType">Тип основного параметра.</param>
-        /// <param name="dependentParameter">Тип зависимого параметра.</param>
+        /// <param name="dependentParameter">Тип 
+        /// зависимого параметра.</param>
         private void SetDependenciesAndUpdate(ParameterType parameterType,
             ParameterType dependentParameter)
         {
@@ -620,10 +635,12 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с комбо-бокса "Тип серрейтора".
+        /// Функция, выполняющая действия при выходе с комбо-бокса 
+        /// "Тип серрейтора".
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
+        /// <param name="e">Аргументы, 
+        /// передаваемые с событием вызова.</param>
         private void SerreitorTypeComboBox_SelectedIndexChanged(object sender,
             EventArgs e)
         {
@@ -635,7 +652,8 @@ namespace GUI
         }
 
         /// <summary>
-        /// Функция, выполняющая действия при выходе с текст бокса "Количество зубьев".
+        /// Функция, выполняющая действия при выходе с текст бокса 
+        /// "Количество зубьев".
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
@@ -643,6 +661,16 @@ namespace GUI
         {
             ParseTextBox(ParameterType.SerreitorNumber,
                 new ParameterType[0]);
+        }
+
+        /// <summary>
+        /// Дейстивие при закрытии формы
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший данную функцию.</param>
+        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _builder.CLose();
         }
     }
 }
