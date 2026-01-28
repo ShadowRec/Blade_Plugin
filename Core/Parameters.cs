@@ -81,6 +81,7 @@ namespace Core
         /// </summary>
         public SerreitorType SerreitorType { get; set; }
 
+        //TODO: XML
         public bool SerreitorExistence { get; set; }
 
         /// <summary>
@@ -107,18 +108,14 @@ namespace Core
         {
             if (maxratio > 0 && minratio >= 0)
             {
-                
-                if (minratio != 0)
-                {
-                    depend.SetMinAndMax(independ.Value * minratio,
-                        independ.Value*maxratio
-                        );
-                }
-                else
-                {
-                    depend.SetMinAndMax(independ.Value * maxratio * 0.1,
-                        independ.Value * maxratio);
-                }
+                var tmpMinRatioCoefficient =
+                    minratio != 0
+                    ? minratio
+                    : maxratio * 0.1;
+
+                depend.SetMinAndMax(
+                    independ.Value * tmpMinRatioCoefficient,
+                    independ.Value * maxratio);
             }
             else
             {

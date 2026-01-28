@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //XML
     /// <summary>
     /// Класс для исключений 
     /// </summary>
-    public class ParameterException:Exception
+    public class ParameterException: Exception
     {
         /// <summary>
         /// Конструктор класса ParameterException
@@ -24,6 +23,7 @@ namespace Core
         {
             _exceptionType = exceptionType;
         }
+
         /// <summary>
         /// Конструктор класса ParameterException
         /// с использованием обоих полей класса
@@ -36,14 +36,17 @@ namespace Core
             _exceptionType = exceptionType;
             _parameterType = paramType;
         }
+
         /// <summary>
         /// Тип параметра
         /// </summary>
         private ParameterType _parameterType;
+
         /// <summary>
         /// Тип исключения
         /// </summary>
         private ExceptionType _exceptionType;
+
         /// <summary>
         /// Свойство для поля "Тип параметров"
         /// </summary>
@@ -51,6 +54,7 @@ namespace Core
         {
             get { return _exceptionType; }
         }
+
         /// <summary>
         /// Свойство для поля "Тип параметров"
         /// </summary>

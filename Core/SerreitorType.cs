@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    //TODO: XML
     public enum SerreitorType
     {
         /// <summary>
         /// Чередующийся тип серрейтора
         /// </summary>
         AlternationSerreitor,
+
         /// <summary>
         /// Постоянный большой тип серрейтора
         /// </summary>
         ConstBigSerreitor,
+
         /// <summary>
         /// Постоянный маленький тип серрейтора
         /// </summary>

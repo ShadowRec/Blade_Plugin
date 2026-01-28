@@ -77,6 +77,8 @@ namespace KompasBuilder
         /// плоскостей
         /// </summary>
         private double _offset;
+
+        //TODO: XML
         private ksEntity _customPlane;
         
         /// <summary>
@@ -94,6 +96,7 @@ namespace KompasBuilder
             }
         }
 
+        //TODO: XML
         private void CreateCustomPlane(double offset,ksEntity basePlane)
         {
             _customPlane = _part.NewEntity((short)Obj3dType.o3d_planeOffset);
@@ -104,6 +107,7 @@ namespace KompasBuilder
             planehDefinition.offset= offset;
             _customPlane.Create();
         }
+
         /// <summary>
         /// Запуск Kompas-3D V23.
         /// </summary>
@@ -139,6 +143,7 @@ namespace KompasBuilder
                 StartKompas();
             }
         }
+
         /// <summary>
         /// Создание документа внутри Kompas-3D V23.
         /// </summary>
@@ -488,6 +493,7 @@ namespace KompasBuilder
             _edgeSketch = null;
         }
 
+        //TODO: XML
         public void CreateArcBy2PointsAndCenter(double xc, double yc,
             double x1, double y1, double x2, double y2, double rad
             )

@@ -95,7 +95,7 @@
             this.TextBoxLength.TabIndex = 3;
             this.TextBoxLength.Text = "300";
             this.Max_Min_Value.SetToolTip(this.TextBoxLength, "Допустимые значения: 80..1200мм");
-            this.TextBoxLength.Leave += new System.EventHandler(this.TextBoxLengthLeave);
+            this.TextBoxLength.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // TextBoxWidth
             // 
@@ -105,7 +105,7 @@
             this.TextBoxWidth.TabIndex = 5;
             this.TextBoxWidth.Text = "40";
             this.Max_Min_Value.SetToolTip(this.TextBoxWidth, "Допустимые значения: 9..60мм");
-            this.TextBoxWidth.Leave += new System.EventHandler(this.TextBoxWidthLeave);
+            this.TextBoxWidth.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // BladeWidthLabel
             // 
@@ -135,7 +135,7 @@
             this.TextBoxBladeThickness.TabIndex = 7;
             this.TextBoxBladeThickness.Text = "2";
             this.Max_Min_Value.SetToolTip(this.TextBoxBladeThickness, "Допустимые значения:1..3мм");
-            this.TextBoxBladeThickness.Leave += new System.EventHandler(this.TextBoxBladeThicknessLeave);
+            this.TextBoxBladeThickness.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // BladeThickLabel
             // 
@@ -155,7 +155,7 @@
             this.TextBoxEdgeWidth.TabIndex = 13;
             this.TextBoxEdgeWidth.Text = "14";
             this.Max_Min_Value.SetToolTip(this.TextBoxEdgeWidth, "Для отображения введите значение в поле \"Ширина Клинка\"");
-            this.TextBoxEdgeWidth.Leave += new System.EventHandler(this.TextBoxEdgeWidthLeave);
+            this.TextBoxEdgeWidth.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // EdgeWidthLabel
             // 
@@ -195,7 +195,7 @@
             this.TextBoxPeakLength.TabIndex = 15;
             this.TextBoxPeakLength.Text = "45";
             this.Max_Min_Value.SetToolTip(this.TextBoxPeakLength, "Для отображения введите значение в поле \"Длина клинка\"");
-            this.TextBoxPeakLength.Leave += new System.EventHandler(this.TextBoxPeakLengthLeave);
+            this.TextBoxPeakLength.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // PeakLengthLabel
             // 
@@ -254,7 +254,7 @@
             this.TextBoxBindingLength.Text = "300";
             this.Max_Min_Value.SetToolTip(this.TextBoxBindingLength, "Для отображения введите значение в поле \"Длина клинка\" и выберете \"Тип Крепления\"" +
         "");
-            this.TextBoxBindingLength.Leave += new System.EventHandler(this.TextBoxBindingLengthLeave);
+            this.TextBoxBindingLength.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // BindingLengthLabel
             // 
@@ -310,7 +310,7 @@
             this.SerreitorLengthTextBox.TabIndex = 30;
             this.SerreitorLengthTextBox.Text = "90";
             this.Max_Min_Value.SetToolTip(this.SerreitorLengthTextBox, "Для отображения введите значение в поле \"Длина клинка\"\r\n");
-            this.SerreitorLengthTextBox.Leave += new System.EventHandler(this.SerreitorLengthTextBox_Leave);
+            this.SerreitorLengthTextBox.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // SerreitorNumberTextBox
             // 
@@ -321,7 +321,7 @@
             this.SerreitorNumberTextBox.Text = "8";
             this.Max_Min_Value.SetToolTip(this.SerreitorNumberTextBox, "Допустимые значения: 8..32\r\n(ПРИМЕЧАНИЕ - Если выбран мелкий серрейтор, то зубьев" +
         " будет  в 2 раза больше!)\r\n");
-            this.SerreitorNumberTextBox.Leave += new System.EventHandler(this.SerreitorNumberTextBox_Leave);
+            this.SerreitorNumberTextBox.Leave += new System.EventHandler(this.TextBoxLeave);
             // 
             // serreitorCheckBox
             // 

@@ -12,7 +12,6 @@ namespace UnitTestsCore
     /// </summary>
     internal class ParameterExceptionUnitTests
     {
-        //TODO: description DONE
         [Test]
         [Description("Данный тест проверяет" +
                 "правильность вызванных исключений")]

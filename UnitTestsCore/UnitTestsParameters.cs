@@ -7,13 +7,11 @@ namespace CoreUnitTests
     [TestFixture]
     public class ParametersUnitTests
     {
-        //TODO: XML DONE
         /// <summary>
         /// Поле хранящее в себе параметры
         /// </summary>
         private Parameters _parameters;
 
-        //TODO: refactor DONE
 
         /// <summary>
         /// Функция инициализации

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //TODO: XML done
     /// <summary>
     /// Типы параметров
     /// </summary>
@@ -16,42 +15,52 @@ namespace Core
         /// Длина клинка
         /// </summary>
         BladeLength, 
+
         /// <summary>
         /// Длина крепления
         /// </summary>
         BindingLength, 
+
         /// <summary>
         /// Ширина клинка
         /// </summary>
         BladeWidth, 
+
         /// <summary>
         /// Толщина клинка
         /// </summary>
         BladeThickness, 
+
         /// <summary>
         /// Ширина лезвия
         /// </summary>
         EdgeWidth, 
+
         /// <summary>
         /// Длина острия
         /// </summary>
         PeakLenght,
+
         /// <summary>
         /// Тип крепления
         /// </summary>
         BindingType,
+
         /// <summary>
         /// Тип клинка
         /// </summary>
         BladeType,
+
         /// <summary>
         /// Тип серрейтора
         /// </summary>
         SerreitorType,
+
         /// <summary>
         /// Длина серрейтора
         /// </summary>
         SerreitorLength,
+
         /// <summary>
         /// Количество зубьев
         /// </summary>

@@ -35,6 +35,7 @@ namespace Core
         {
             get { return _minValue; }
         }
+
         /// <summary>
         /// Свойство, возвращающее _maxValue
         /// </summary>

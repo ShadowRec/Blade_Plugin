@@ -12,7 +12,6 @@ namespace UnitTestsCore
 
     namespace CoreUnitTests
     {
-        //TODO:XML DONE
         /// <summary>
         /// Тесты для класса NumerialParameter
         /// </summary>
@@ -23,7 +22,7 @@ namespace UnitTestsCore
             /// Поле хранящее параметры
             /// </summary>
             private Parameters _parameters;
-            //TODO: refactor done
+
             /// <summary>
             /// Функция инициализации
             /// поля параметров

@@ -34,6 +34,7 @@ namespace GUI
         /// </summary>
         private Parameters _parameters;
 
+        //TODO: refactor move to parameters
         /// <summary>
         /// Словарь, содержащий текущие значения параметров.
         /// </summary>
@@ -48,6 +49,31 @@ namespace GUI
                 [ParameterType.BindingLength] = 300,
                 [ParameterType.SerreitorLength] = 90,
                 [ParameterType.SerreitorNumber] = 8
+            };
+
+        //TODO: XML
+        private Dictionary<ParameterType, List<ParameterType>>
+            _parameterTypeDependencies =
+            new Dictionary<ParameterType, List<ParameterType>>()
+            {
+                [ParameterType.BladeLength] = 
+                    new List<ParameterType>
+                        {
+                            ParameterType.BindingLength,
+                            ParameterType.PeakLenght,
+                            ParameterType.SerreitorLength
+                        },
+                [ParameterType.BladeWidth] = 
+                    new List<ParameterType>
+                        {
+                            ParameterType.EdgeWidth
+                        },
+                [ParameterType.BladeThickness] = null,
+                [ParameterType.EdgeWidth] = null,
+                [ParameterType.PeakLenght] = null,
+                [ParameterType.BindingLength] = null,
+                [ParameterType.SerreitorLength] = null,
+                [ParameterType.SerreitorNumber] = null
             };
 
         /// <summary>
@@ -107,6 +133,7 @@ namespace GUI
         /// </summary>
         private Dictionary<ParameterType, Control> _parametersLabels;
 
+        //TODO: refactor move to parameters
         /// <summary>
         /// Словарь соотношений между параметрами.
         /// </summary>
@@ -124,6 +151,8 @@ namespace GUI
                     ParameterType.SerreitorLength)] =
                     (5.0 / 10.0, 3 / 10.0),
             };
+
+        //TODO: refactor move to parameters
 
         /// <summary>
         /// Словарь соотношений для типов креплений.
@@ -233,15 +262,12 @@ namespace GUI
         /// </summary>
         /// <param name="sender">Объект, вызвавший данную функцию.</param>
         /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void TextBoxLengthLeave(object sender, EventArgs e)
+        private void TextBoxLeave(object sender, EventArgs e)
         {
-            ParseTextBox(ParameterType.BladeLength,
-               new ParameterType[3]
-               {
-                   ParameterType.BindingLength,
-                   ParameterType.PeakLenght,
-                   ParameterType.SerreitorLength
-               });
+            var parameterType = _parametersTextBoxes.FirstOrDefault(
+                x => x.Value == (Control)sender).Key;
+            ParseTextBox(parameterType,
+               _parameterTypeDependencies[parameterType].ToArray());
         }
 
         /// <summary>
@@ -258,53 +284,6 @@ namespace GUI
         {
             Max_Min_Value.SetToolTip((Control)target,
                 $"Допустимые значения:{minvalue}..{maxvalue}");
-        }
-
-        /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Длина острия".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void TextBoxPeakLengthLeave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.PeakLenght,
-               new ParameterType[0]);
-        }
-
-        /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Длина крепления".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void TextBoxBindingLengthLeave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.BindingLength,
-               new ParameterType[0]);
-        }
-
-        /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Ширина клинка".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void TextBoxWidthLeave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.BladeWidth,
-               new ParameterType[1]
-               {
-                   ParameterType.EdgeWidth
-               });
-        }
-
-        /// <summary>
-        /// Функция, выполняющая действия при выходе с поля "Ширина лезвия".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void TextBoxEdgeWidthLeave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.EdgeWidth,
-                new ParameterType[0]);
         }
 
         /// <summary>
@@ -462,18 +441,7 @@ namespace GUI
                 return false;
             }
         }
-
-        /// <summary>
-        /// Функция, выполняющая действия при выходе
-        /// с текст бокса "Толщина клинка".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void TextBoxBladeThicknessLeave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.BladeThickness,
-                 new ParameterType[0]);
-        }
+                
 
         /// <summary>
         /// Функция, выполняющая действия при нажатии кнопки "Построить".
@@ -489,18 +457,6 @@ namespace GUI
                 _builder.BuildBlade(_parameters);
                 Console.Write("Starting Building");
             }
-        }
-
-        /// <summary>
-        /// Функция, выполняющая действия при 
-        /// выходе с текст бокса "Длина серрейтора".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void SerreitorLengthTextBox_Leave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.SerreitorLength,
-                new ParameterType[0]);
         }
 
         /// <summary>
@@ -651,17 +607,6 @@ namespace GUI
             }
         }
 
-        /// <summary>
-        /// Функция, выполняющая действия при выходе с текст бокса 
-        /// "Количество зубьев".
-        /// </summary>
-        /// <param name="sender">Объект, вызвавший данную функцию.</param>
-        /// <param name="e">Аргументы, передаваемые с событием вызова.</param>
-        private void SerreitorNumberTextBox_Leave(object sender, EventArgs e)
-        {
-            ParseTextBox(ParameterType.SerreitorNumber,
-                new ParameterType[0]);
-        }
 
         /// <summary>
         /// Дейстивие при закрытии формы
