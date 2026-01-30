@@ -177,21 +177,6 @@ namespace CoreUnitTests
         }
 
         [Test]
-        [Description("Проверка установки значения текущего параметра" +
-            " BladeWidth и его корректного сохранения в " +
-            "словаре CurrentParameters")]
-        public void SetCurrentParameterTest()
-        {
-            Initialize();
-            double value = 40;
-            _parameters.SetCurrentParameter(ParameterType.BladeWidth,
-                value);
-            Assert.That(_parameters.
-                CurrentParameters[ParameterType.BladeWidth],
-                Is.EqualTo(value));
-        }
-
-        [Test]
         [Description("Проверка установки коэффициентов привязки" +
             " для типа Insert и их соответствия в" +
             " словарях ParametersRatios и BindingRatios")]

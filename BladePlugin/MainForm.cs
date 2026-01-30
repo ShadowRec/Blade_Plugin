@@ -285,13 +285,13 @@ namespace GUI
         {
             if (_parametersLabels != null && _parametersTextBoxes != null)
             {
-                foreach (var parameter in _parameters.CurrentParameters)
+                foreach (var parameter in _parameters.NumericalParameters)
                 {
                     _parametersLabels[parameter.Key].ForeColor = Color.Black;
                     _parametersTextBoxes[parameter.Key].ForeColor =
                         Color.Black;
                     _parametersTextBoxes[parameter.Key].Text =
-                        _parameters.CurrentParameters[parameter.Key].ToString();
+                        parameter.Value.Value.ToString();
                 }
             }
             TextBoxError.Text = "";
@@ -471,7 +471,6 @@ namespace GUI
                     {
                         _parameters.NumericalParameters[
                             parameterType].Value = value;
-                       _parameters.SetCurrentParameter(parameterType,value);
                     }
                     else
                     {
@@ -481,11 +480,12 @@ namespace GUI
                 }
                 else
                 {
-                    if (_parameters.CurrentParameters[parameterType] != 0)
+                    if (_parameters.NumericalParameters[
+                        parameterType].Value != 0)
                     {
                         textBox.Text =
-                            _parameters.CurrentParameters[
-                                parameterType].ToString();
+                            _parameters.NumericalParameters[
+                        parameterType].Value.ToString();
                     }
                 }
             }

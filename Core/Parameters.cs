@@ -74,23 +74,6 @@ namespace Core
 
         //TODO: refactor move to parameters DONE
         /// <summary>
-        /// Словарь, содержащий текущие значения параметров.
-        /// </summary>
-        private Dictionary<ParameterType, double> _currentParameters =
-            new Dictionary<ParameterType, double>()
-            {
-                [ParameterType.BladeLength] = 300,
-                [ParameterType.BladeWidth] = 40,
-                [ParameterType.BladeThickness] = 2,
-                [ParameterType.EdgeWidth] = 14,
-                [ParameterType.PeakLenght] = 45,
-                [ParameterType.BindingLength] = 300,
-                [ParameterType.SerreitorLength] = 90,
-                [ParameterType.SerreitorNumber] = 8
-            };
-
-        //TODO: refactor move to parameters DONE
-        /// <summary>
         /// Словарь соотношений между параметрами.
         /// </summary>
         private Dictionary<(ParameterType, ParameterType), (double, double)>
@@ -128,13 +111,6 @@ namespace Core
             get
             {
                 return _parametersRatios;
-            }
-        }
-        public  Dictionary<ParameterType, double> CurrentParameters
-        {
-            get
-            {
-                return _currentParameters;
             }
         }
         public Dictionary<BindingType, (double, double)> BindingRatios
@@ -223,16 +199,7 @@ namespace Core
             ParametersRatios[(ParameterType.BladeLength,
                     ParameterType.BindingLength)] = _bindingRatios[binType];
         }
-        /// <summary>
-        /// Функция установки текущего параметра
-        /// </summary>
-        /// <param name="paramType">Тип параметра</param>
-        /// <param name="value">Значение</param>
-        public void SetCurrentParameter(ParameterType paramType, 
-            double value)
-        {
-            _currentParameters[paramType] = value;
-        }
+
 
         /// <summary>
         /// 
