@@ -72,7 +72,6 @@ namespace Core
             serrlength.Value = 90;
         }
 
-        //TODO: refactor move to parameters DONE
         /// <summary>
         /// Словарь соотношений между параметрами.
         /// </summary>
@@ -91,7 +90,6 @@ namespace Core
                     (5.0 / 10.0, 3 / 10.0),
             };
 
-        //TODO: refactor move to parameters DONE
 
         /// <summary>
         /// Словарь соотношений для типов креплений.
@@ -105,6 +103,7 @@ namespace Core
                 [BindingType.None] = (1, 0)
             };
 
+        //TODO: XML
         public Dictionary<(ParameterType, 
             ParameterType), (double, double)> ParametersRatios
         {
@@ -113,11 +112,14 @@ namespace Core
                 return _parametersRatios;
             }
         }
+
+        //TODO: XML
         public Dictionary<BindingType, (double, double)> BindingRatios
         {
-            get {
+            get 
+            {
                 return _bindingRatios;
-                }
+            }
         }
         /// <summary>
         /// False - Острие у клинка нету, 
@@ -141,7 +143,6 @@ namespace Core
         /// </summary>
         public SerreitorType SerreitorType { get; set; }
 
-        //TODO: XML DONE
         /// <summary>
         /// False - Серрейтора у клинка нету, 
         /// True -  Серрейтор у клинка есть

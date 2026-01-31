@@ -35,7 +35,6 @@ namespace GUI
         private Parameters _parameters;
 
     
-        //TODO: XML DONE
         /// <summary>
         /// Словарь содержащий списки зависимых параметров
         /// для независимых параметров
