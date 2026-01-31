@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    //TODO: XML DONE
     /// <summary>
     /// Тип серрейтора
     /// </summary>

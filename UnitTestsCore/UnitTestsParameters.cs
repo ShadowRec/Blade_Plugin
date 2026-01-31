@@ -25,8 +25,6 @@ namespace CoreUnitTests
                 ParameterType.BladeWidth].Value = 40;
         }
 
-        //TODO: incoding done...
-
         [Test]
         [Description("Тест установки зависимостей между" +
             " числовыми параметрами " +

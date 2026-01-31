@@ -78,7 +78,6 @@ namespace KompasBuilder
         /// </summary>
         private double _offset;
 
-        //TODO: XML DONE
         /// <summary>
         /// Смещенная плоскость
         /// </summary>
@@ -99,7 +98,6 @@ namespace KompasBuilder
             }
         }
 
-        //TODO: XML DONE
         /// <summary>
         /// Функция создания смещенной плоскости
         /// </summary>
@@ -502,7 +500,6 @@ namespace KompasBuilder
             _edgeSketch = null;
         }
 
-        //TODO: XML DONE
         /// <summary>
         /// Создание дуги по двум точкам и центру
         /// </summary>
