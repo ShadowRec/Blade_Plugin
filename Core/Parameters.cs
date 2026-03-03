@@ -103,7 +103,10 @@ namespace Core
                 [BindingType.None] = (1, 0)
             };
 
-        //TODO: XML
+        //TODO: XML DONE
+        /// <summary>
+        /// Свойство для получения словаря _ParametersRatios
+        /// </summary>
         public Dictionary<(ParameterType, 
             ParameterType), (double, double)> ParametersRatios
         {
@@ -114,6 +117,9 @@ namespace Core
         }
 
         //TODO: XML
+        /// <summary>
+        /// Свойство для получения словаря _bindingRatios
+        /// </summary>
         public Dictionary<BindingType, (double, double)> BindingRatios
         {
             get 
